@@ -1,0 +1,43 @@
+﻿@model Loregroup.Core.ViewModels.BaseEntityViewModel
+@{
+    ViewBag.Title = "FrontendContent";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<style>
+    ul, li, p {
+        line-height: 1.50;
+        margin: 0 0 25px;
+        font-size: 16px;
+        font-family: Poppins-Regular;
+        text-align: justify;
+    }
+
+    h3 {
+        font-size: 1.30rem;
+        font-weight: 600;
+        line-height: 1.9;
+        font-family: Poppins-Regular;
+    }
+
+    ul, li {
+        margin: 0px;
+        list-style-type: disc;
+    }
+</style>
+
+
+<section class="bg-img1 txt-center p-lr-15 p-tb-70" style="background:#fff;padding-bottom: 0px;">
+    <h2 class="ltext-103 cl2 txt-center">
+       Privacy Policy<hr>
+    </h2>
+</section>
+
+<section class="bg0 p-t-10 p-b-50">
+    <div class="container">
+        <div class="col-md-12">
+            @Html.Raw(@Model.TextData)
+        </div>
+    </div>
+ 
+</section>

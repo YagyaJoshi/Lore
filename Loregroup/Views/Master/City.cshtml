@@ -1,0 +1,173 @@
+﻿@model Loregroup.Core.ViewModels.CityViewModel
+@{
+    ViewBag.Title = "Zone";
+}
+<script type="text/javascript">
+
+    function Cancel()
+    {
+        document.location = '@Url.Action("ShowAllCity", "Master")';
+    }
+
+   
+    $(document).ready(function () {
+
+        $('#CountryId').change(function () {
+
+            $('#StateId').empty();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetState", "Master")',
+                dataType: 'json',
+                data: { CountryId: $("#CountryId").val() },
+                success: function (states) {
+                    $('#StateId').append($('<option/>', {
+                        value: 0,
+                        text: "--Select State Name--"
+                    }));
+                    $.each(states, function (i, state) {
+                        $('#StateId').append('<option value ="' + state.Value + '">' + state.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve States.' + ex);
+                }
+            });
+
+            return false
+        })
+    });
+    
+
+    @*$(document).ready(function () {
+        //clearing district dropdown when page is loaded
+        $("#DistricId").empty();
+      
+        //selection change event of State
+        $("#StateId").change(function () {
+            $("#DistricId").empty();
+           
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDistricts")',
+                dataType: 'json',
+                data: { SelectedStateId: $("#StateId").val() },
+                success: function (states) {
+                    $("#DistricId").append($('<option/>', {
+                        value: 0,
+                        text: "--Select District--"
+                    }));
+                    $.each(states, function (i, state) {
+                        $("#DistricId").append('<option value="'
+                                    + state.Value + '">'
+                                    + state.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Districts.' + ex);
+                }
+            });
+            return false;
+        });
+    });*@
+
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+<div class="col-md-12">
+    @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+            <h4>Validation Errors</h4>
+            @Html.ValidationSummary()
+        </div>
+    }
+    @using (Html.BeginForm("City", "Master", FormMethod.Post))
+    {
+        
+
+       
+        <div class="box-header">
+          
+        </div>
+        <div class="box box-info col-md-12">
+           
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CountryId)
+                            @Html.BootstrapDropDownListFor(m => m.CountryId, new SelectList(Model.CountryList, "Id", "CountryName", Model.CountryId))
+                            @Html.ValidationMessageFor(model => model.CountryId)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StateId)
+                            @Html.BootstrapDropDownListFor(m => m.StateId, new SelectList(Model.StateList, "Id", "Statename", Model.StateId))
+                            @Html.ValidationMessageFor(model => model.StateId)
+                        </div>
+                    </div>
+                    @*<div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DistricId)
+                            @Html.BootstrapDropDownListFor(m => m.DistricId, new SelectList(Model.DistrictsViewModel.DistrictList, "Id", "DistrictName", Model.DistricId))
+                            @Html.ValidationMessageFor(model => model.DistricId)
+                        </div>
+                    </div>*@                  
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Cityname)
+                            @Html.BsTextBoxWithPHFor(model => model.Cityname)
+                            @Html.ValidationMessageFor(model => model.Cityname)
+                        </div>
+                    </div>
+                </div>
+                
+               
+              </div>
+        </div>
+
+
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px" id="btn_save">Save</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $('#btn_save').click(function () {
+
+        var city = $('#Cityname').val();
+        if (!/^[a-zA-Z]*$/g.test(city)) {
+            $('#Cityname').focus();
+            alert("Please Enter a valid City Name");
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    });
+
+
+   
+    
+
+</script>

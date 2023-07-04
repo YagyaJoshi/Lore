@@ -1,0 +1,2034 @@
+﻿@model Loregroup.Core.ViewModels.StoreMasterViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<head>
+    <meta charset="utf-8">
+    <title>::Loregroup::</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Link Swiper's CSS -->
+    <link href="~/Content/css1/Loregroup.css" rel="stylesheet" /><!-- Resource style -->
+
+    <script src="~/Content/js1/modernizr.js"></script>
+
+
+    <style>
+               /* [Object] Modal
+        * =============================== */
+               .modal {
+                   opacity: 0;
+                   visibility: hidden;
+                   position: fixed;
+                   top: 0;
+                   right: 0;
+                   bottom: 0;
+                   left: 0;
+                   text-align: left;
+                   background: rgba(0,0,0, .9);
+                   transition: opacity .25s ease;
+               }
+
+               .modal__bg {
+                   position: absolute;
+                   top: 0;
+                   right: 0;
+                   bottom: 0;
+                   left: 0;
+                   cursor: pointer;
+               }
+
+               .modal-state {
+                   display: none;
+               }
+
+                   .modal-state:checked + .modal {
+                       opacity: 1;
+                       visibility: visible;
+                       z-index: 9999;
+                   }
+
+                       .modal-state:checked + .modal .modal__inner {
+                           top: 0;
+                       }
+
+               .modal__inner {
+                   transition: top .25s ease;
+                   position: absolute;
+                   top: -20%;
+                   right: 0;
+                   bottom: 0;
+                   left: 0;
+                   width: 50%;
+                   margin: auto;
+                   overflow: auto;
+                   background: #fff;
+                   border-radius: 5px;
+                   padding: 1em 2em;
+                   height: 82%;
+               }
+
+               .modal__close {
+                   position: absolute;
+                   right: 0.5em;
+                   top: 1.7em;
+                   width: 1.1em;
+                   height: 1.1em;
+                   cursor: pointer;
+               }
+
+                   .modal__close:after,
+                   .modal__close:before {
+                       content: '';
+                       position: absolute;
+                       width: 2px;
+                       height: 1.5em;
+                       background: #ccc;
+                       display: block;
+                       transform: rotate(45deg);
+                       left: 50%;
+                       margin: -3px 0 0 -1px;
+                       top: 0;
+                   }
+
+                   .modal__close:hover:after,
+                   .modal__close:hover:before {
+                       background: #aaa;
+                   }
+
+                   .modal__close:before {
+                       transform: rotate(-45deg);
+                   }
+
+               .nnn {
+                   width: 48%;
+               }
+
+               media screen and (max-width: 768px) {
+                   .modal__inner;
+
+               {
+                   width: 90%;
+                   height: 90%;
+                   box-sizing: border-box;
+               }
+
+               .login_left_popup {
+                   float: left;
+                   width: 98%;
+               }
+
+               .login_right_popup {
+                   float: right;
+                   width: 98%;
+               }
+
+               }
+
+
+               /* Other
+        * =============================== */
+               .btn {
+                   cursor: pointer;
+                   background: #27ae60;
+                   display: inline-block;
+                   padding: .5em 1em;
+                   color: #fff;
+                   border-radius: 3px;
+               }
+
+                   .btn:hover,
+                   .btn:focus {
+                       background: #2ecc71;
+                   }
+
+                   .btn:active {
+                       background: #27ae60;
+                       box-shadow: 0 1px 2px rgba(0,0,0, .2) inset;
+                   }
+
+               .btn--blue {
+                   background: #2980b9;
+               }
+
+                   .btn--blue:hover,
+                   .btn--blue:focus {
+                       background: #3498db;
+                   }
+
+                   .btn--blue:active {
+                       background: #2980b9;
+                   }
+    </style>
+
+
+
+</head>
+@using (Html.BeginForm("Store", "Account", FormMethod.Post, new { @enctype = "multipart/form-data", id = "profilePictureForm" }))
+{
+    <!--header start-->
+    <div class="new_header">
+        <div class="inner_wrapper">
+            <div class="hed_left_new">
+                <a href="index.html"><img src="~/Content/images1/logo.jpg"></a>
+            </div>
+            <div class="hed_right_new">
+                <ul>
+                    <li><a href="#">Download App</a></li>
+                    <li><a href="#">Find Deals</a></li>
+                    <li><a href="#">Post Classifieds</a></li>
+                    <li><a href="#">Post Deals</a></li>
+                    <li><a href="#">Advertise</a></li>
+                </ul>
+                <ul>
+                    <li>
+                        <div class="search_left">
+                            <input type="text" placeholder=" Search" />
+                        </div>
+                        <div class="search_right">
+                            <input type="submit" value=" ">
+                        </div>
+                    </li>
+                    <li>
+                        <select>
+                            <option>Indore</option>
+                            <option>Indore</option>
+                            <option>Indore</option>
+                            <option>Indore</option>
+                        </select>
+                    </li>
+                    @*<li><a><label for="modal-1">Login/Signup</lable></a></li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <header>
+         <div class="inner_wrapper">
+             <div class="hed_left_new">
+                 <a href="#"><img src="~/Content/images1/logo.jpg"></a>
+             </div>
+             <div class="hed_right_new">
+                 <ul>
+                     <li><a href="#">Indore</a></li>
+                     <li><a href="#">Login/Signup</a></li>
+                 </ul>
+             </div>
+         </div>
+     </header>-->
+    <!--header end-->
+    <!--content start-->
+   
+    <div class="content">
+    <div class="slider">
+        <div class="inner_wrapper">
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="~/Content/images1/slider1.jpg"></div>
+                    <div class="swiper-slide"><img src="~/Content/images1/slider2.jpg"></div>
+                    <div class="swiper-slide"><img src="~/Content/images1/slider3.jpg"></div>
+                    <div class="swiper-slide"><img src="~/Content/images1/slider1.jpg"></div>
+                    <div class="swiper-slide"><img src="~/Content/images1/slider2.jpg"></div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </div>
+    <div class="inner_wrapper">
+        @*<div class="hed_line">
+                <marquee>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</marquee>
+            </div>*@
+    </div>
+    <div class="con_i">
+        <div class="inner_wrapper">
+
+            <div class="con_i_left left_bg">
+                <div class="my_left_serach">
+                    <form>
+                        <ul>
+                            <li><input type="text" placeholder=" Search"></li>
+                            <li><input type="submit" value="Search" /></li>
+                        </ul>
+                    </form>
+                </div>
+                <div class="store_i">
+                    <a href="offer.html">
+                        <div class="store_i_left">
+                            <table>
+                                <tr>
+                                    <td><h3>Offers</h3></td>
+                                    <td><img src="~/Content/images1/store1.png"></td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </a>
+                    <div class="store_i_right">
+                        <a href="store.html">
+                            <table>
+                                <tr>
+                                    <td><h3>Stores</h3></td>
+                                    <td><img src="~/Content/images1/store2.png"></td>
+                                </tr>
+                            </table>
+                        </a>
+                    </div>
+                </div>
+                <div class="store_ii">
+                    <div class="store_ii_left">
+                        <a href="mall.html">
+                            <h3>Malls</h3>
+                            <p><img src="~/Content/images1/store3.png"></p>
+                        </a>
+                    </div>
+                    <div class="store_ii_right">
+                        <div class="">
+                            <div class="store_ii_i">
+                                <a href="food_drink.html">
+                                    <p><img src="~/Content/images1/store4.png"></p>
+                                    <h3>CD Deals</h3>
+                                </a>
+                            </div>
+                            <div class="store_ii_ii">
+                                <a href="Classifieds.html">
+                                    <p><img src="~/Content/images1/store5.png"></p>
+                                    <h3>Classifieds</h3>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="red_box">
+                            <a href="event_store.html">
+                                <table>
+                                    <tr>
+                                        <td><h3>New Openings</h3></td>
+                                        <td><img src="~/Content/images1/store6.png"></td>
+                                    </tr>
+                                </table>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="store_iii">
+                    <div class="store_iii_title">
+                        <div class="store_iii_left">
+                            <h3>Offers</h3>
+                        </div>
+                        <div class="store_iii_right">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/images1/ref.jpg"></a></li>
+                                <li><a href="#">View All</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="store_iii_box">
+                        <!-- Swiper -->
+                        <div class="swiper-container_one">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/off1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/off2.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/off3.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/off4.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/sto1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/sto1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="store_iii">
+                    <div class="store_iii_title">
+                        <div class="store_iii_left">
+                            <h3>Stores</h3>
+                        </div>
+                        <div class="store_iii_right">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/images1/ref.jpg"></a></li>
+                                <li><a href="#">View All</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="store_iii_box">
+                        <!-- Swiper -->
+                        <div class="swiper-container_one">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/sto1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/sto2.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/sto3.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/sto4.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="store_iii">
+                    <div class="store_iii_title">
+                        <div class="store_iii_left">
+                            <h3>Malls</h3>
+                        </div>
+                        <div class="store_iii_right">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/images1/ref.jpg"></a></li>
+                                <li><a href="#">View All</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="store_iii_box">
+                        <!-- Swiper -->
+                        <div class="swiper-container_one">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/mall1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/mall2.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/mall3.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/mall4.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="store_iii">
+                    <div class="store_iii_title">
+                        <div class="store_iii_left">
+                            <h3>Classifieds</h3>
+                        </div>
+                        <div class="store_iii_right">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/images1/ref.jpg"></a></li>
+                                <li><a href="#">View All</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="store_iii_box">
+                        <!-- Swiper -->
+                        <div class="swiper-container_one">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="store_iii">
+                    <div class="store_iii_title">
+                        <div class="store_iii_left">
+                            <h3>New Openings</h3>
+                        </div>
+                        <div class="store_iii_right">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/images1/ref.jpg"></a></li>
+                                <li><a href="#">View All</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="store_iii_box">
+                        <!-- Swiper -->
+                        <div class="swiper-container_one">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="my_box">
+                                        <p><img src="~/Content/images1/p1.jpg"></p>
+                                        <h5>KFC King Combo</h5>
+                                        <div class="my_bo_i">
+                                            <div class="my_bo_i_left">
+
+                                                <table>
+                                                    <tr>
+                                                        <td><img src="~/Content/images1/clock.jpg"></td>
+                                                        <td>02 : 20 : 33</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="my_bo_i_right">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/dil.jpg"></td>
+                                                                    <td>283</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><img src="~/Content/images1/clock.jpg"></td>
+                                                                    <td>376</td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="con_i_right">
+                <div class="right_i">
+                    <div class="search">
+                        <h3>
+                            Mobile
+
+                            Appliations
+                        </h3>
+                        <!--<ul>
+                            <li><input type="text" placeholder=" Search"></li>
+                            <li><input type="submit" value="SEARCH"></li>
+                        </ul>-->
+                        <p>
+                            <select>
+                                <option>Select Category...</option>
+                                <option>option</option>
+                                <option>option</option>
+                                <option>option</option>
+                            </select>
+                        </p>
+                    </div>
+
+                    <div class="slider_i">
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="slidr_box">
+                                        <div class="slidr_box_left">
+                                            <img src="~/Content/images1/box1.jpg">
+                                        </div>
+                                        <div class="slidr_box_right">
+                                            <h3>Roll the Ball™ - slide puzzle</h3>
+                                            <small>BitMango Puzzle</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slidr_box">
+                                        <div class="slidr_box_left">
+                                            <img src="~/Content/images1/box1.jpg">
+                                        </div>
+                                        <div class="slidr_box_right">
+                                            <h3>Roll the Ball™ - slide puzzle</h3>
+                                            <small>BitMango Puzzle</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slidr_box">
+                                        <div class="slidr_box_left">
+                                            <img src="~/Content/images1/box1.jpg">
+                                        </div>
+                                        <div class="slidr_box_right">
+                                            <h3>Roll the Ball™ - slide puzzle</h3>
+                                            <small>BitMango Puzzle</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="slidr_box">
+                                        <div class="slidr_box_left">
+                                            <img src="~/Content/images1/box1.jpg">
+                                        </div>
+                                        <div class="slidr_box_right">
+                                            <h3>Roll the Ball™ - slide puzzle</h3>
+                                            <small>BitMango Puzzle</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Add Pagination -->
+                            <!-- Add Arrows -->
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                    <div class="right_ii">
+                        <ul>
+                            <li><img src="~/Content/images1/app1.jpg"></li>
+                            <li><img src="~/Content/images1/app2.jpg"></li>
+                        </ul>
+                    </div>
+                    <div class="right_iii">
+                        <div class="right_iii_left">
+                            <strong>About:</strong>
+                        </div>
+                        <div class="right_iii_right">
+                            <p>
+                                Move the blocks with your finger to
+                                create a path for moving the ball to
+                                the red GOAL block. But riveted
+                                blocks can't be moved. Are you
+                                ready to play? Download and start
+                                solving puzzles now!
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="right_iv">
+                    <ul>
+                        <li>Download:</li>
+                        <li><a href="#"><img src="~/Content/images1/app.jpg"></a></li>
+                        <li><a href="#"><img src="~/Content/images1/app_a.jpg"></a></li>
+                        <li><a href="#"><img src="~/Content/images1/windo.jpg"></a></li>
+                        <li>
+                            <a href="#"></a>Advertise  with us!!</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="my_link">
+                    <ul>
+                        <li><a href="#">View All</a></li>
+                        <li><a href="#">Advertise with us!!</a></li>
+                    </ul>
+                </div>
+
+                <div class="blue_box">
+                    <p><img src="~/Content/images1/add1.jpg"></p>
+                    <p>Please read them. They apply to the software named above, which includes the media on which you received it, if any. Printed-paper license terms.</p>
+                </div>
+                <div class="blue_box">
+                    <p><img src="~/Content/images1/add2.jpg"></p>
+                    <p>Please read them. They apply to the software named above, which includes the media on which you received it, if any. Printed-paper license terms.</p>
+                </div>
+                <div class="blue_box">
+                    <p><img src="~/Content/images1/add3.jpg"></p>
+                    <p>Please read them. They apply to the software named above, which includes the media on which you received it, if any. Printed-paper license terms.</p>
+                </div>
+                <div class="blue_box">
+                    <p><img src="~/Content/images1/add2.jpg"></p>
+                    <p>Please read them. They apply to the software named above, which includes the media on which you received it, if any. Printed-paper license terms.</p>
+                </div>
+                <div class="blue_box">
+                    <p><img src="~/Content/images1/add1.jpg"></p>
+                    <p>Please read them. They apply to the software named above, which includes the media on which you received it, if any. Printed-paper license terms.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom_slider">
+        <div class="inner_wrapper">
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="margin-right:0;">
+                        <div class="bottom_box">
+                            <h4>Nikon D7200 24.2MP Digital SLR Body + 18-300mm f/3.5-6.3G ED</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                        <div class="bottom_box">
+                            <h4>Apple MacBook Pro 15.4" Laptop + Retina Display 2015 + Bills</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                        <div class="bottom_box">
+                            <h4>Nikon D7200 24.2MP Digital SLR Body + 18-300mm f/3.5-6.3G ED</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" style="margin-right:0;">
+                        <div class="bottom_box">
+                            <h4>Nikon D7200 24.2MP Digital SLR Body + 18-300mm f/3.5-6.3G ED</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                        <div class="bottom_box">
+                            <h4>Apple MacBook Pro 15.4" Laptop + Retina Display 2015 + Bills</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                        <div class="bottom_box">
+                            <h4>Nikon D7200 24.2MP Digital SLR Body + 18-300mm f/3.5-6.3G ED</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide" style="margin-right:0;">
+                        <div class="bottom_box">
+                            <h4>Nikon D7200 24.2MP Digital SLR Body + 18-300mm f/3.5-6.3G ED</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                        <div class="bottom_box">
+                            <h4>Apple MacBook Pro 15.4" Laptop + Retina Display 2015 + Bills</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                        <div class="bottom_box">
+                            <h4>Nikon D7200 24.2MP Digital SLR Body + 18-300mm f/3.5-6.3G ED</h4>
+                            <div class="bottom_box_left">
+                                <div class="swiper-container">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid1.jpg"></div>
+                                        <div class="swiper-slide"><img src="~/Content/images1/b_slid2.jpg"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom_box_right">
+                                <p>Type - Digital Camera | Less than 1 month old | Locality - Anand Bazar Rd</p>
+                                <p><strong> <span class="blue">$</span> 28,000 (negotiable)</strong></p>
+                                <p class="gry">Nikon D7200 24.2MP Digital SLR Body + 18-300mm</p>
+                                <p>Pf/o3s.t5e-d6:. 31G6 EdDa y..s. ago by business | Camera - Indore</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <!--content end-->
+    <!--first popup-->
+    <input class="modal-state" id="modal-1" type="checkbox" />
+    <div class="modal">
+        <label class="modal__bg" for="modal-1"></label>
+        <div class="modal__inner">
+            <label class="modal__close" for="modal-1"></label>
+            <div>
+                <!--class="login_right"-->
+                <div style="text-align:center;">
+                    <div class="hed_left_new_popup">
+                        <a href="index.html"><img src="~/Content/images1/logo.jpg"></a>
+                    </div>
+                </div>
+                <div class="login_box" style="width:90%;padding:4%;line-height: 2em;">
+                    <h3 style="color:#e03440;border-bottom: 2px solid;padding: 6px;">Signup as a Store</h3>
+                    <ul>
+                        <li>
+                            <label>Store Name</label>
+                            @*<input type="text" placeholder=" Enter your desired Username" />*@
+                            @Html.BsTextBoxWithPHFor(model => model.StoreName)
+                        </li>
+                        <li>
+                            <label>Email ID</label>
+                            @*<input type="text" placeholder=" Enter your Email ID" />*@
+                            @Html.BsTextBoxWithPHFor(model => model.EmailId)
+                        </li>
+                        <li>
+                            <label>Mobile Number</label>
+                            @*<input type="text" placeholder=" Enter Mobile No." />*@
+                            @Html.BsTextBoxWithPHFor(model => model.MobileNo)
+                        </li>
+                        <li>
+                            <label>Password</label>
+                            @*<input type="text" placeholder=" Password" />*@
+                            @Html.BsTextBoxWithPHFor(model => model.Password)
+
+                        </li>
+                        <li>
+                            <input type="checkbox"> Notify me with Awesome Deals
+                        </li>
+                        <li><input class="continue" type="submit" value="Continue"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="login_left login_left_popup" style="background:#cc0000;color: #fff;padding:5px;position:relative;top: 83px;font-size:19px;">
+                <input style="margin-right:10px;" type="radio" name="store" value="register">Register to get Deals
+            </div>
+            <div class="login_right login_right_popup nnn" style="background:#cc0000;color: #fff;padding:5px;position:relative;top: 83px;font-size:19px;">
+                <input style="margin-right:10px;" type="radio" name="store" value="register">Register for your Mail
+            </div>
+        </div>
+    </div>
+
+    <!--first popup end-->
+    <!--footer start-->
+    <footer>
+        <div class="inner_wrapper">
+
+            <div class="foot_left">
+                <ul>
+                    <li><a href="@Url.Action("AboutUs", "Loregroup")">About us </a></li>
+                    <li><a href="@Url.Action("ContactUs", "Loregroup")">Contact us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="@Url.Action("Policies", "Loregroup")">Policies</a></li>
+                    <li><a href="@Url.Action("TermsAndConditions", "Loregroup")">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="foot_right">
+                <ul>
+                    <li><a href="#"><img src="~/Content/images1/fb.png"></a></li>
+                    <li><a href="#"><img src="~/Content/images1/in.png"></a></li>
+                    <li><a href="#"><img src="~/Content/images1/google.png"></a></li>
+                    <li><a href="#"><img src="~/Content/images1/yt.png"></a></li>
+                    <li><a href="#"><img src="~/Content/images1/tw.png"></a></li>
+                </ul>
+            </div>
+            <!--<ul>
+                <li><a href="#"><img src="~/Content/images1/fb.png"></a></li>
+                <li><a href="#"><img src="~/Content/images1/in.png"></a></li>
+                <li><a href="#"><img src="~/Content/images1/google.png"></a></li>
+                <li><a href="#"><img src="~/Content/images1/yt.png"></a></li>
+                <li><a href="#"><img src="~/Content/images1/tw.png"></a></li>
+            </ul>-->
+        </div>
+    </footer>
+    <!--footer end-->
+
+}
+
+
+
+<script src="~/Content/js1/swiper.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        paginationClickable: true,
+        //spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: 2500,
+        autoplayDisableOnInteraction: false
+    });
+
+    var swiper = new Swiper('.swiper-container_one', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 4,
+        slidesPerColumn: 1,
+        paginationClickable: true,
+        spaceBetween: 10
+    });
+</script>
+<script src="~/Content/js1/jquery-2.1.1.js"></script>
+<script src="~/Content/js1/jquery.mixitup.min.js"></script>
+<script src="~/Content/js1/main.js"></script>

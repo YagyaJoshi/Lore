@@ -1,0 +1,73 @@
+﻿@model Loregroup.Core.ViewModels.FaqViewModel
+
+@{
+    ViewBag.Title = "FAQ";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-70" style="background:#fff;">
+    <h2 class="ltext-103 cl2 txt-center">
+        FAQ <hr>
+    </h2>
+</section>
+
+<!-- Content page -->
+<section class="bg0 p-t-10 p-b-50">
+    <div class="container">
+        <div class="row">
+
+            <div class="accordion">
+                @{int i = 0;}
+                @foreach (var item in Model.FaqList)
+                {
+                    i++;
+                <div class="accordion-item">
+                    <a>@i @item.Question</a>
+                    <div class="content">
+                        <p>@item.Answer</p>
+                    </div>
+                </div>
+                <br /><br />
+                }
+
+                @*<div class="accordion-item">
+                        <a>CAN I ORDER MY DRESSES AND GOWNS DIRECTLY?</a>
+                        <div class="content">
+                            <p>Since we are a wholesale designer we can only sell directly to retailers and cannot sell directly to the customer. Therefore, we have provided you with a store locator in which you can locate a retailer closest to you to find your dream dress!</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <a>WHAT LINES DO YOU CARRY?</a>
+                        <div class="content">
+                            <p>We carry Rachel Allan, Rachel Allan Curves, Rachel Allan Prima Donna, Rachel Allan Couture, Rachel Allan LBD, Rachel Allan Perfect Angels, and Lo'Adoro. Rachel Allan is our main line made up of long dresses in the spring for prom and short dresses in the fall for homecoming. Curves goes along to match Rachel Allan as our plus size collection. Prima Donna is our pageant line, as well as Perfect Angels which is our pageant line for younger girls. Couture is our higher end line. LBD is our "Little Black Dress" collection, made up of different styles only being offered in the colors black, white, and red. Finally, Lo'Adoro is our bridal line.</p>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <a>WHAT SIZE DO YOUR DRESSES COME IN?</a>
+                        <div class="content">
+                            <p>
+                                Rachel Allan prom, homecoming, LBD, and couture dresses come in sizes 0-12, 0-16, or 0-20. Curves dresses come in sizes 14W-24W or 14W-30W. Prima Donna dresses are only available in sizes 0-12. Perfect Angel dresses come in sizes 2-14. Lo'Adoro bridal dresses come in sizes 0-30W Please note that all measurements shown in the size chart are body measurements. All dresses have wearing ease built into them. When in doubt what size to buy, we recommend the next size up. You can always have a dress taken in, but you can't let much out. Since the sizes for each collection vary slightly, please contact your nearest retailer for all questions about sizes.
+                            </p>
+                        </div>
+                    </div>*@
+
+            </div>
+
+        </div>        
+    </div>
+</section>
+
+<!-- Start FAQ Script -->
+<script type="text/javascript">
+    const items = document.querySelectorAll(".accordion a");
+
+    function toggleAccordion(){
+        this.classList.toggle('active');
+        this.nextElementSibling.classList.toggle('active');
+    }
+
+    items.forEach(item => item.addEventListener('click', toggleAccordion));
+</script>

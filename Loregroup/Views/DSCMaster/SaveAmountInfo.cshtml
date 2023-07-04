@@ -1,0 +1,70 @@
+﻿@model Loregroup.Core.ViewModels.AccountInfoViewModel
+@{
+    ViewBag.Title = "SaveAmountInfo";
+}
+
+@using (Html.BeginForm("SaveAmountInfo", "DSCMaster", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PaidApplicationNumber)
+                        @Html.BsTextBoxWithPHFor(model => model.PaidApplicationNumber)
+                        @*@Html.TextAreaFor(model => model.PaidApplicationNumber, new { style = "width: 400px; height: 200px;" })*@
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UnPaidApplicationNo)
+                        @Html.BsTextBoxWithPHFor(model => model.UnPaidApplicationNo)
+                        @*@Html.TextAreaFor(model => model.UnPaidApplicationNo, new { style = "width: 400px; height: 200px;" })*@
+                        @*@Html.LabelFor(model => model.PODNumber)
+                            @Html.BsTextBoxWithPHFor(model => model.PODNumber)
+                            @Html.ValidationMessageFor(model => model.PODNumber)*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TotalAmount)
+                        @Html.BsTextBoxWithPHFor(model => model.TotalAmount)
+                        @Html.ValidationMessageFor(model => model.TotalAmount)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PaidAmount)
+                        @Html.BsTextBoxWithPHFor(model => model.PaidAmount)
+                        @Html.ValidationMessageFor(model => model.PaidAmount)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DueAmount)
+                        @Html.BsTextBoxWithPHFor(model => model.DueAmount)
+                        @Html.ValidationMessageFor(model => model.DueAmount)
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px">Pay Now </button>
+            </div>
+        </div>
+    </div>
+
+}

@@ -1,0 +1,51 @@
+﻿@model Loregroup.Core.ViewModels.ColourViewModel
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("GetAllColour", "Product")';
+    }
+
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+@using (Html.BeginForm("AddNewColour", "Product", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Colour)
+                        @Html.BsTextBoxWithPHFor(model => model.Colour)
+                        @Html.ValidationMessageFor(model => model.Colour)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description)
+                        @Html.BsTextAreaFor(m => m.Description)
+                        @Html.ValidationMessageFor(m => m.Description)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+}

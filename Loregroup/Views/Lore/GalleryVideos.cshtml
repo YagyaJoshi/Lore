@@ -1,0 +1,52 @@
+﻿@model Loregroup.Core.ViewModels.GalleryViewModel
+
+@{
+    ViewBag.Title = "GalleryVideos";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-70" style="background:#fff;">
+    <h2 class="ltext-103 cl2 txt-center">
+        Gallery Videos<hr>
+    </h2>
+</section>
+
+<!-- Content page -->
+<section class="bg0 p-b-50">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model.GalleryList)
+            {
+                <div class="col-md-6">
+                    <div class="video">
+                        <a href="@item.VideoUrl?autoplay=1" class="fancy_zoom fancybox fancybox.iframe">
+                            <img class="videoThumb" src="@item.image">
+                        </a>
+                    </div>
+                    <h2 class="videoTitle">@item.Title</h2>
+                </div>
+            }
+
+            @*<div class="col-md-6">
+                    <div class="video">
+                        <a class="fancy_zoom fancybox fancybox.iframe" href="video/Rachel_Allan_-_Website.mp4">
+                            <img class="videoThumb" src="collections/Homecoming.jpg">
+                        </a>
+                    </div>
+                    <h2 class="videoTitle">PROM 2019 RUNWAY HIGHLIGHTS</h2>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="video">
+                        <a href="https://player.vimeo.com/video/178776419?autoplay=1" class="fancy_zoom fancybox fancybox.iframe">
+                            <img class="videoThumb" src="collections/Homecoming.jpg">
+                        </a>
+                    </div>
+                    <h2 class="videoTitle">SPRING/SUMMER 2019 GORGEOUS DRESSES</h2>
+                </div>*@
+        </div>
+        <hr>
+
+    </div>
+</section>

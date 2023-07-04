@@ -1,0 +1,67 @@
+﻿@model Loregroup.Core.ViewModels.SizeViewModel
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("GetAllSize", "Product")';
+    }
+
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+@using (Html.BeginForm("AddNewSize", "Product", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SizeUS)
+                        @Html.BsTextBoxWithPHFor(model => model.SizeUS)
+                        @Html.ValidationMessageFor(model => model.SizeUS)
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SizeUK)
+                        @Html.BsTextBoxWithPHFor(model => model.SizeUK)
+                        @Html.ValidationMessageFor(model => model.SizeUK)
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SizeEU)
+                        @Html.BsTextBoxWithPHFor(model => model.SizeEU)
+                        @Html.ValidationMessageFor(model => model.SizeEU)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description)
+                        @Html.BsTextAreaFor(m => m.Description)
+                        @Html.ValidationMessageFor(m => m.Description)
+                    </div>
+                </div>
+           </div>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+}

@@ -1,0 +1,335 @@
+﻿@model Loregroup.Core.ViewModels.StoreLocatorViewModel
+@{
+    ViewBag.Title = "StoreLocator";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+<head>
+    <title>Google Maps Multiple Markers</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtc3taqG0VBdfkFWyKqhWqjeZnYSLYV54&callback=initMap" type="text/javascript"></script>
+</head>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+@*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>*@
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        //if ($("#CountryId").val() == "2") {
+        //    $('#StateName').attr('disabled', 'disabled');
+        //    $('#StateId').removeAttr("disabled");
+        //}
+        //else {
+        //    $("#StateId").empty();
+        //    $('#StateId').attr('disabled', 'disabled');
+        //    $('#StateName').removeAttr('disabled');
+        //}
+
+
+
+         //selection change event of State
+        $("#CountryId").change(function () {
+
+        /*  if ($("#CountryId").val() == "2")*/
+            if ($("#CountryId").val() != "0")
+            {
+
+                ///('#StateName').attr('disabled', 'disabled');
+                $('#StateId').removeAttr("disabled");
+
+                $("#StateId").empty();
+                //$("#TownId").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetState", "Master")',
+                    dataType: 'json',
+                    data: { CountryId: $("#CountryId").val() },
+                    success: function (states) {
+                        $("#StateId").append($('<option/>', {
+                            value: 0,
+                            text: "--Select State--"
+                        }));
+                        $.each(states, function (i, state) {
+                            $("#StateId").append('<option value="'
+                                        + state.Value + '">'
+                                        + state.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve States.' + ex);
+                    }
+                });
+
+            }
+            else {
+
+                $('#StateId').attr('disabled', 'disabled');
+                //$('#StateName').removeAttr('disabled');
+
+            }
+
+            return false;
+        });
+
+
+
+
+
+    });
+</script>
+
+
+<section class="store-locator p-t-30 p-b-50">
+    <div class="container" id="dashboard">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="map-navbar">
+                    <div class="col-sm-9 col-lg-12 col-xs-12 map-search-region-box">
+
+                        @using (Html.BeginForm("StoreLocator", "Setting", FormMethod.Post))
+                        {
+
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.CountryId)*@
+                                    @Html.BootstrapDropDownListFor(m => m.CountryId, new SelectList(Model.CountryList, "Id", "CountryName", Model.CountryId))
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.StateId)*@
+                                    @Html.BootstrapDropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "StateName", Model.StateId))
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.Zipcode)*@
+                                    @Html.BsTextBoxWithPHFor(model => model.Zipcode)
+                                   
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-3">
+                                <div class="form-group">
+                                    <input type="submit" id="submit" class="btn-lg btn btn-danger" value="Search" />
+                                </div>
+                            </div>
+
+                        }
+
+                        @*<div class="col-sm-4">
+            <div class="col-md-3 col-lg-2 p-t-10">Country:</div>
+            <div class="col-md-9 col-lg-9">
+                <select class="form-control filter-combo" name="country" id="country" onchange="render_states();populate_store();">
+                    <option value="">All Countries</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="col-md-3 col-lg-2 p-t-10">State:</div>
+            <div class="col-md-9 col-lg-9">
+                <select class="form-control filter-combo" name="state" id="state" onchange="render_cities(); populate_store();">
+                    <option value="">Select Country First</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="col-md-3 col-lg-2 p-t-10">City:</div>
+            <div class="col-md-9 col-lg-9">
+                <select class="form-control filter-combo" name="city" id="city" onchange="populate_store();">
+                    <option value="">Select State First</option>
+                </select>
+            </div>
+        </div>*@
+
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                        <div>
+                            <div class="search_filter col-md-12">
+                                @*<div class="col-sm-12 map-search-region-box">
+                                        <form name="form" method="post">
+                                            <div class="row">
+                                                <div class="col-sm-6 margin-bottom-10"><input type="text" class="input-lg form-control" name="zipcode" id="zipcode" value="" placeholder="Enter Zipcode" /></div>
+                                                <div class="col-sm-6">
+                                                    <select class="input-lg form-control" name="distance" id="distance">
+                                                        <option value="50">Around 50 Miles</option>
+                                                        <option value="100">Around 100 Miles</option>
+                                                        <option value="200">Around 200 Miles</option>
+                                                        <option value="500">Around 500 Miles</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="p-t-10"></div>
+                                            <input type="submit" class="col-md-12 btn-lg btn btn-danger" value="Search" style="background-color:#1e1e27;border-color:#1e1e27;" />
+                                        </form>
+                                    </div>*@
+                                @*<h1 style="text-align: center;margin-bottom:10px;margin-top:10px;font-size:24px; font-family:Montserrat-Bold;">
+                                    STORES
+                                </h1>*@
+                                <div id="store-list" class=" modern-skin demo scroll-style" style="overflow:overlay;">
+
+                                    @foreach (var item in Model.CustomerList)
+                                    {
+                                        <div class="col-xs-12">
+                                            <div class="store-box">
+                                                <div class="event_title">@item.ShopName</div>
+                                                <div class="event_address">@item.AddressLine1, @item.StateName, @item.City</div>                                                
+                                                @if (item.ZipCode != null && item.ZipCode != "")
+                                                {
+                                                    <div class="event_address2">@item.ZipCode</div>
+                                                }
+                                                @if (item.MobileNo != null && item.MobileNo != "")
+                                                {
+                                                    <div class="event_phone">T: @item.MobileNo</div>
+                                                }
+                                                @*<div class="event_web"><a href="http://www.peachesboutique.com" target="_blank">www.peachesboutique.com</a></div>*@
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    }
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 map-box">
+                        @*<div id="map" style="height: 500px; width: 140%;left: 5%;" width="100%" height="650" allowfullscreen></div>*@
+                        <div id="map" style="height: 550px; width: 100%;"></div>
+                        <br />
+                    </div>
+                    <div class="clearfix"></div>
+                    <style>
+                        @@media only screen and (max-width: 768px) {
+                            .map-box {
+                                p-t-10: 10px;
+                                border-top: 2px solid #666;
+                                margin-top: 10px;
+                            }
+                        }
+                    </style>
+
+                    <div id="LoaderImage" style="display:none; position:absolute; width:100px; height:100px; left:50%; top:50%; z-index:100">
+                        <img src="~/Content/img/ajax-loader1.gif" height=100px width="100px" alt="Loading..." />
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var locations = [];
+
+        $(document).ready(function () {
+            var cid = $('#CountryId option:selected').val();
+            var sid = $('#StateId option:selected').val();
+            var Zip = $("#Zipcode").val();
+            //alert(Zip);
+            $.ajax({
+                url: "/Setting/GetAllLocationsForStoreLocator",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    CountryId: cid,
+                    StateId: sid,
+                    Zipcode: Zip
+                },
+                dataFilter: function (data) {
+                    return data;
+                },
+                beforeSend: function () {
+                    $("#LoaderImage").show();
+                },
+                complete: function () {
+                    $("#LoaderImage").hide();
+                },
+                success: function (data) {
+                    //alert(data[0][1]);
+                    //alert(CountryName);
+                    //$("#Country").val(CountryName);
+                    //$("#location").val(data);
+                    //alert($("#Country").val());
+
+                    $.each(data, function (i) {
+                        var Location = [];
+                        Location.push(data[i].ShopName);
+                        Location.push(data[i].Latitude);
+                        Location.push(data[i].Longitude);
+                        locations.push(Location);
+                    });
+
+                    ShowMap();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                }
+            })
+
+        })
+
+
+        function ShowMap() {
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 2,
+                center: new google.maps.LatLng(locations[0][1], locations[0][2]),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
+            var infowindow = new google.maps.InfoWindow();
+
+            var marker, i;
+
+            for (i = 0; i < locations.length; i++) {
+
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map
+                });
+
+                google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+                    return function () {
+                        infowindow.setContent(locations[i][0]);
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+        }
+
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

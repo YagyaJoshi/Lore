@@ -1,0 +1,294 @@
+﻿
+@model Loregroup.Core.ViewModels.WidgetViewModels
+
+@*RoleId
+    1    SuperAdmin
+    2    Admin
+    3    Shop
+    4    Distributor
+    5    Agent
+    6    Public
+    7    Supplier
+*@
+
+@*<link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/dist/css/AdminLTE.css">*@
+
+<div class="box-header">
+
+</div>
+
+@if (Model.RoleId == 1)
+{
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("GetAllUsers", "User")">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>Users</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-person-add"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("GetOrderList", "Order")">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>Orders</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-ios7-cart"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("GetPurchaseOrderList", "Order")">
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>PO</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-settings"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("GetAllProduct", "Product")">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>Products</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-filing"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("UpdateInventory", "Product")">
+            <div class="small-box bg-maroon">
+                <div class="inner">
+                    <h3>Stock</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-ios7-cloud-download"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("ManageInventory", "Order")">
+            <div class="small-box bg-purple">
+                <div class="inner">
+                    <h3>Inventory</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-code"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("TransferPO", "Order")">
+            <div class="small-box bg-orange">
+                <div class="inner">
+                    <h3>Transfer</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-shuffle"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("UserMap", "User")">
+            <div class="small-box bg-lime">
+                <div class="inner">
+                    <h3>Mapping</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-location"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+}
+
+@if (Model.RoleId == 2)
+{
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("GetAllUsers", "User")">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>Users</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-person-add"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("GetOrderList", "Order")">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>Orders</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-ios7-cart"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("GetPurchaseOrderList", "Order")">
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>PO</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-settings"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("GetAllProduct", "Product")">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>Products</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-filing"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("UpdateInventory", "Product")">
+            <div class="small-box bg-maroon">
+                <div class="inner">
+                    <h3>Stock</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-ios7-cloud-download"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("ManageInventory", "Order")">
+            <div class="small-box bg-purple">
+                <div class="inner">
+                    <h3>Inventory</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-code"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("TransferPO", "Order")">
+            <div class="small-box bg-orange">
+                <div class="inner">
+                    <h3>Transfer</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-shuffle"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("UserMap", "User")">
+            <div class="small-box bg-lime">
+                <div class="inner">
+                    <h3>Mapping</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-location"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+}
+@if (Model.RoleId == 3)
+{ 
+}
+@if (Model.RoleId == 4)
+{
+
+}
+@if (Model.RoleId == 5)
+{
+
+<div class="col-lg-3 col-xs-4">
+    <a href="@Url.Action("CustmerOrder", "Order")">
+        <div class="small-box bg-lime">
+            <div class="inner">
+                <h3>Custmer Order</h3>
+                <p>.</p>
+            </div>
+            <div class="icon" style="bottom: -10px;">
+                <i class="ion ion-person-add"></i>
+            </div>
+        </div>
+    </a>
+</div>
+}
+@if (Model.RoleId == 6)
+{
+
+}
+@if (Model.RoleId == 7)
+{
+    <div class="col-lg-3 col-xs-4">
+        <a href="@Url.Action("MyPurchaseOrders", "Order")">
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>PO</h3>
+                    <p>.</p>
+                </div>
+                <div class="icon" style="bottom: -10px;">
+                    <i class="ion ion-settings"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+}

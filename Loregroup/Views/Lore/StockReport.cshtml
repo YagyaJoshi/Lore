@@ -1,0 +1,164 @@
+﻿@model Loregroup.Core.ViewModels.PurchaseOrderViewModel
+
+@{
+    ViewBag.Title = "Stock Report";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<style type="text/css">
+    input:focus, select:focus, option:focus, textarea:focus, form:focus, button:focus {
+        outline: 0;
+    }
+
+    *:focus {
+        outline: 0;
+    }
+</style>
+
+@using (Html.BeginForm("StockReport", "Lore", FormMethod.Post))
+{
+    <div class="bg0 m-t-23 p-b-140">
+        <div class="container">
+
+            <div class="flex-w flex-sb-m p-b-52" style="margin-top: 5%;">
+
+                @*<div class="size-221 m-lr-auto">
+                        <div class="form-group">
+                            <center>@Html.LabelFor(model => model.CategoryId)<br /></center>
+                            @Html.DropDownList("CategoryId", new SelectList(Model.CategoryList, "Id", "Category", Model.CategoryId), new { @class = "select_mate", onchange = "this.form.submit();" })
+                            @Html.ValidationMessageFor(model => model.CategoryId)
+                        </div>
+                    </div>*@
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Category")
+                        @Html.DropDownList("CategoryId", new SelectList(Model.CategoryList, "Id", "Category", Model.CategoryId), new { @class = "select_mate" })
+                        @*@Html.BootstrapDropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList, "Id", "Category", Model.CategoryId), new { @class = "select_mate" })*@
+                    </div>
+                </div>
+
+                @*<div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Label("Collection Year")
+                            @Html.DropDownList("CollectionYearId", new SelectList(Model.CollectionYearList, "Id", "CollectionYear", Model.CollectionYearId), new { @class = "select_mate" })
+                        </div>
+                    </div>*@
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Warehouse")
+                        @Html.DropDownList("WareHouseId", new SelectList(Model.WareHouseList, "Id", "WareHouseName", Model.WareHouseId), new { @class = "select_mate" })
+                        @*@Html.BootstrapDropDownListFor(m => m.WareHouseId, new SelectList(Model.WareHouseList, "Id", "WareHouseName", Model.WareHouseId), new { @class = "select_mate" })*@
+                    </div>
+                </div>
+                @*<div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Label("Select Style Range")
+                            @Html.BootstrapDropDownListFor(m => m.PageValue, new SelectList(Model.StockPaging, "Value", "Text", Model.PageValue))
+                        </div>
+                    </div>*@
+                <div class="col-md-3">
+                    <label style="visibility:hidden" id="kapil">@Model.ColourId</label>
+                    <button id="Search" type="submit" class="btn btn-primary pull-right" style="background-color:lightblue; margin-top: 22px;">Get Report</button>
+                </div>
+            </div>
+
+            <div class="row" style="height:auto;">
+                @if (Model.ProductListModel.StockSizeModel.Count > 0)
+                {
+                    <table id="DataTable" border="1" class="table">
+                        <thead>
+                            <tr>
+                                <th> Style Number </th>
+                                <th> Color </th>
+                                @*<th> Size (USA/UK/EU)</th>*@
+                                <th>
+                                    <label> US </label>
+                                    <label> UK </label>
+                                    <label> EU </label>
+                                </th>
+
+                                @for (int i = 2; i <= 34; i = i + 2)
+                                {
+                                    <th style="width:5px;">
+                                        @if (i == 2)
+                                        {
+                                            <label style="width:30px;"> 00 </label>
+                                        }
+                                        else if (i == 4)
+                                        {
+                                            <label style="width:30px;"> 0 </label>
+                                        }
+                                        else
+                                        {
+                                            <label style="width:30px;"> @(i - 4) </label>
+                                        }
+                                        <label style="width:30px;"> @i </label>
+                                        <label style="width:30px;"> @(i + 28) </label>
+                                    </th>
+                                }
+                                <th> Total </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var stock in Model.ProductListModel.StockSizeModel)
+                            {
+                                var total = 0;
+
+                                <tr id="@stock[0].SizeUK">
+                                    <td>
+                                        <a style="color:blue;" href="@Url.Action("ProductDetails", "Lore", new { ProductId = stock[0].ProductId })" target="_blank">
+                                            @stock[0].StyleNumber
+                                        </a>
+                                    </td>
+                                    @*<td>@stock[0].StyleNumber</td>*@
+                                    <td>@stock[0].ColourName</td>
+                                    <td>  </td>
+                                    @foreach (var size in stock)
+                                    {
+                                        <td>
+                                            @if ((size.InStockQty) > 0)
+                                            {
+                                                <b style="font-size: 16px;color: black;">@(size.InStockQty )</b>
+                                                var avai = size.InStockQty;
+                                                total += (int)avai;
+                                            }
+                                            else
+                                            {
+                                                <label>-</label>
+                                            }
+                                            @*else
+                                                {
+                                                    <b style="font-size: 16px;color: red;">@(size.InStockQty - size.Qty + size.POQty)</b>
+                                                }*@
+                                        </td>
+                                    }
+                                    <td>
+                                        @if (total > 0)
+                                        {
+                                            <b style="font-size: 16px;color: black;">@total</b> }
+                                        else
+                                        { @total}
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else if (Model.ProductModel.ProductName != null && Model.IsDataAvailable == false)
+                {
+                    //<h3>@Model.ProductModel.ProductName</h3>
+                    //<h3>@Model.ProductListModel.SizeModel.Count</h3>
+                    <h3>No Record Found</h3>
+                }
+
+            </div>
+
+        </div>
+    </div>
+
+    @Html.HiddenFor(x => x.Id);
+    @Html.HiddenFor(x => x.ProductModel.Id);
+}

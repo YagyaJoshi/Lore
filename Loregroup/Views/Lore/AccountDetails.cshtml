@@ -1,0 +1,313 @@
+﻿@model Loregroup.Core.ViewModels.FrontendAccountdetailViewModel
+@{
+    ViewBag.Title = "AccountDetails";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<h2>AccountDetails</h2>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        @*$('#btn_submit').click(function () {
+            var password = $("#Password").val();
+            var confirmPassword = $("#ConfirmPassword").val();
+            if (password != confirmPassword) {
+                alert("Passwords do not match");
+                return false;
+            }
+            return true;
+        });
+
+        $('#btn_submit').click(function () {
+            if(@Model.Id==0)
+            {
+                if($("#FirstName").val()=="")
+                {
+                    alert("Please Enter Firstname");
+                    return false;
+                }
+            }
+        });
+
+        $('#btn_submit').click(function () {
+            if(@Model.Id==0)
+            {
+                if($("#Password").val()=="")
+                {
+                    alert("Please Enter Password");
+                    return false;
+                }
+            }
+        });
+
+        $('#btn_submit').click(function () {
+            if(@Model.Id==0)
+            {
+                if($("#LastName").val()=="")
+                {
+                    alert("Please Enter LastName");
+                    return false;
+                }
+            }
+        });
+
+        $('#btn_submit').click(function () {
+            if(@Model.Id==0)
+            {
+
+                if($("#Email").val()=="")
+                {
+                    alert("Please Enter Email");
+                    return false;
+                }
+            }
+        });*@
+
+    });
+</script>
+
+
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+            Account Details
+        </span>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row bg0 p-t-30 p-b-85">
+        <div class="nav_col">
+            <div class="h-100 nav_side_box nav_list">
+                <div class="nav-side-container">
+                    <ul class="nav_side">
+                        <li>
+                            <a href="@Url.Action("DashBoard", "Lore")">
+                                <span class="icon-dashboard"></span>
+                                <span class="text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="activet">
+                            <a href="@Url.Action("AccountDetails","Lore")">
+                                <span class="icon-user"></span>
+                                <span class="text">Account Details</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Addresses","Lore")">
+                                <span class="icon-map-marker"></span>
+                                <span class="text">Addresses</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("OrderHistory","Lore")">
+                                <span class="icon-shopping-cart"></span>
+                                <span class="text">Order History</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("DownloadImages","Lore")">
+                                <span class="icon-shopping-cart"></span>
+                                <span class="text">Download Order Images</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("SignOut", "Lore")">
+                                <span class="icon-signout"></span>
+                                <span class="text">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col_right m-l-15">
+            <div class="nav_side_box p-tb-15 p-lr-30">
+                <h1 class="box_h1">My Account</h1>
+            </div>
+
+
+            <div class="nav_side_box m-t-20 p-t-30 p-b-15 p-lr-10 h-100">
+
+                @using (Html.BeginForm("AccountDetails", "Lore", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="col-md-6 col-sm-6 col_1">
+                        <h1 class="box_h1_big txt-center">Account details </h1>
+                        <label class="field a-field a-field_a3 page__field m-t-15 w-100">
+                            @Html.LabelFor(model => model.FirstName)<span class="required_red">*</span>
+                            @Html.BsTextBoxWithPHFor(model => model.FirstName)
+                            @Html.ValidationMessageFor(model => model.FirstName)
+                        </label>
+
+                        <label class="field a-field a-field_a3 page__field m-t-15 w-100">
+                            @Html.LabelFor(model => model.LastName)<span class="required_red">*</span>
+                            @Html.BsTextBoxWithPHFor(model => model.LastName)
+                            @Html.ValidationMessageFor(model => model.LastName)
+                        </label>
+
+                        <label class="field a-field a-field_a3 page__field m-t-15 w-100">
+                            @Html.LabelFor(model => model.EmailId)<span class="required_red">*</span>
+                            @Html.BsTextBoxWithPHFor(model => model.EmailId)
+                            @Html.ValidationMessageFor(model => model.EmailId)
+                        </label>
+
+                        <div class="div_a w-100 m-t-30 " style="text-align:center;">
+                            <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="background-color:lightblue ; margin-right: 10px">Save/Change</button>
+                        </div>
+                    </div>
+                }
+
+                @*@using (Html.BeginForm("FrontendChangePassword", "Lore", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {*@
+                    <div class="col-md-6 col-sm-6 col_1">
+                        <h1 class="box_h1_big txt-center">Password Change</h1>
+                        <label class="field a-field a-field_a3 page__field m-t-15 w-100">
+                            @Html.LabelFor(model => model.CurrentPassword)
+                            @Html.BsPasswordWithPhFor(model => model.CurrentPassword)
+                            @Html.ValidationMessageFor(model => model.CurrentPassword)
+                        </label>
+
+                        <label class="field a-field a-field_a3 page__field m-t-15 w-100">
+                            @Html.LabelFor(model => model.Password)<span class="required_red">*</span>
+                            @Html.BsTextBoxWithPHFor(model => model.Password)
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </label>
+
+                        <label class="field a-field a-field_a3 page__field m-t-15 w-100">
+                            @Html.LabelFor(model => model.ConfirmPassword)<span class="required_red">*</span>
+                            @Html.BsTextBoxWithPHFor(model => model.ConfirmPassword)
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                        </label>
+
+                        <div class="div_a w-100 m-t-30 " style="text-align:center;">
+                            <button type="submit" id="btn_submit" onclick="changepasswordfunction()" class="btn btn-primary pull-right" style="background-color:lightblue ; margin-right: 10px">Save/Change</button>
+                        </div>
+
+                    </div>
+                @*}*@
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    let passwordRegex = /^\S$/;   
+
+    $("#CurrentPassword,#Password,#ConfirmPassword").keydown(function (event) {
+        var k = event ? event.which : window.event.keyCode;
+        if (k == 32) return false;
+    });
+
+    function changepasswordfunction() {
+
+        var cpas = $("#CurrentPassword").val();
+        if (cpas != "" && cpas != null) {            
+        }
+        else {
+            alert("Please Enter Current Password.");
+            $("#CurrentPassword").focus();
+            return false;
+        }
+
+        var npas = $("#Password").val();
+        if (npas != "" && npas != null) {            
+        }
+        else {
+            alert("Please Enter New Password.");
+            $("#Password").focus();
+            return false;
+        }
+
+        var comparepas = $("#ConfirmPassword").val();
+        if (comparepas != "" && comparepas != null) {
+        }
+        else {
+            alert("Please Enter Confirm Password.");
+            $("#ConfirmPassword").focus();
+            return false;
+        }
+
+        if (npas == comparepas) {
+        }
+        else {
+            alert("New Password & Confirm Password is not matched");
+            return false;
+        }
+
+        //var pcategoryid = $("#categoryidvalue").text();
+        //alert(pcategoryid);
+        $.ajax({
+
+            url: '/Lore/ChangePasswordFunction?OldPassword=' + cpas + '&NewPassword='+npas,
+            //type: 'GET',
+            crossDomain: true,
+            //data: JSON.stringify(employee),
+            //data: { emailid: abc, password: def },
+            //dataType: 'json',
+            contentType: "application/json",
+            //contentType: "application/xml; charset=utf-8",
+            beforeSend: function () {
+                $("#myLoadingElement").show();
+            },
+            complete: function () {
+                $("#myLoadingElement").hide();
+            },
+            success: function (data) {
+                //alert("Thank you for contacting us!");
+                if (data == 1) {
+                    alert("Password Changed Successfully!");
+
+                    $("#CurrentPassword").val('');
+                    $("#Password").val('');
+                    $("#ConfirmPassword").val('');
+
+                    //window.location.href = "http://www.dev1.connekt.in/Lore/ResetPasswordSuccess";
+                    //document.location = '/Lore/Products?CategoryId=' + pcategoryid;
+                    //Url.Action("Products", "Lore", new { CategoryId = Model.CategoryId })';
+                    return true;
+                }
+                else if (data == 2) {
+                    alert("Current Password Not Correct!");
+                    $("#CurrentPassword").val('');
+                    return false;
+                }
+                else if (data == 3) {
+                    alert("Please Login again to change our passord.");
+                    document.location = '/Lore/Login';
+                    return false;
+                }
+                else {
+                    alert("Server Error ! please try later.");
+                    return false;
+                }
+                //window.location.href = "http://www.bookcommerce.com/";
+                return false;
+            },
+            error: function (data) {
+                console.log(data);
+                alert("Some error occured");
+                return false;
+            }
+
+        });
+        //return false;
+        
+        //$("#cartid").append(lidata);
+    }
+
+
+</script>

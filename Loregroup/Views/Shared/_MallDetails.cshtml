@@ -1,0 +1,71 @@
+﻿@model  Loregroup.Core.ViewModels.MallMasterViewModel
+
+<div class="turnover fadetoggle" >
+    <div class="turnover-inner" style="top:-50px;">
+        <div class="turnover-title" >
+            <h3><a class="close">x</a></h3>
+            <h3 id="turnoverHeading"></h3>
+        </div>
+        <div class="turnover-content" id="turnoverContent">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box-body">
+                    @*<div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                        </div>*@
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @*<img src="@Model.Image2" style="height: 150px; width: 700px; " />*@
+
+                                <label>Mall :</label>   @Model.MallName
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Email Id :</label>   @Model.EmailId
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Cheque Image :</label>   <img src="@Model.Picture" style="height: 150px; width: 700px; " />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @* <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <img src="@Model.Image4" style="height: 150px; width: 700px; " />
+                                </div>
+                            </div>
+                        </div>*@
+
+                    @*<div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <h4 class="page-header">Business Details</h4>
+                                </div>
+                            </div>
+                        </div>*@
+
+                </div>
+                <!-- /.box-body -->
+                @*@Html.HiddenFor(m => m.Id)
+                    @Html.HiddenFor(m => m.CreatedById)*@
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</div>

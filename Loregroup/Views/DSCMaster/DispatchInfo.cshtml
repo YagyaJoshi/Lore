@@ -1,0 +1,89 @@
+﻿@model Loregroup.Core.ViewModels.DSCMaster 
+@{
+    ViewBag.Title = "DispatchInfo";
+}
+
+@using (Html.BeginForm("DSCEnrollment", "DSCMaster", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ApplicationNumber)
+                        @Html.TextAreaFor(model => model.ApplicationNumber, new { style = "width: 400px; height: 200px;" })
+                      
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PODNumber)
+                        @Html.BsTextBoxWithPHFor(model => model.PODNumber)
+                        @Html.ValidationMessageFor(model => model.PODNumber)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                       
+                                <label>Dispatch Date<span style="color: red; font-weight: bold"></span></label>
+
+                                @Html.TextBoxFor(model => model.DispatchDate, new { @class = "form-control datepicker", placeholder = "Select Dispatch Date.." })
+                                @Html.ValidationMessageFor(model => model.DispatchDate)
+                            
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DispatchCarrierTypy)
+                        @Html.BootstrapDropDownListFor(m => m.DispatchCarrierTypy, new SelectList(Model.DispatchcarrierTypelist, Model.DispatchCarrierTypy))
+                        @Html.ValidationMessageFor(model => model.DispatchCarrierTypy)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DispatchCarrierName)
+                        @Html.BsTextBoxWithPHFor(model => model.DispatchCarrierName)
+                        @Html.ValidationMessageFor(model => model.DispatchCarrierName)
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ApplicationStatus)
+
+                        @Html.RadioButtonFor(m => m.ApplicationStatus, "Paid")
+                        @Html.Label("Paid", "  Paid")
+
+                        @Html.RadioButtonFor(m => m.ApplicationStatus, "UnPaid")
+                        @Html.Label("UnPaid", "UnPaid")
+                       
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                       
+                    </div>
+                </div>
+            </div>*@
+
+
+        </div>
+    </div>
+
+
+    <div class="box-footer">
+        <div class="row">
+            <div class="col-md-12">
+                <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+            </div>
+        </div>
+    </div>
+
+}
+

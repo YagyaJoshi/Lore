@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+     <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+        
+        <!-- Main content -->
+        <section class="content">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                @Html.ValidationSummaryBootstrap()
+                @RenderBody()
+                
+            </div>
+        </section>
+    </aside>
+</div>
+<div class="three-quarters spinner hide" id="pageLoader">
+    Loading...
+</div>

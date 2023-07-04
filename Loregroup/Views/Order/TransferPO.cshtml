@@ -1,0 +1,507 @@
+﻿@model Loregroup.Core.ViewModels.TransferPOViewModel
+
+@{
+    ViewBag.Title = "TransferPO";
+}
+
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+@*AutoComplete For POReferenceNo Start*@
+<script>
+    $(document).ready(function () {
+        $("#POReferenceNo").autocomplete({
+
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Order/SearchByPORefrenceNo",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        Prefix: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.OrderRefrence, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (e, ui) {
+
+                var vn = ui.item.value;
+                $("#POId").val(vn);
+                //var currency = $('#CustomerModel_CurrencyName').val();
+                $.ajax({
+                    url: "/Order/GetProductsOfPO",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        POId: vn,
+                        //currency: currency
+                    },
+                    dataFilter: function (data) {
+                        return data;
+                    },
+                    success: function (data) {
+                        $("#FromProductModel_Id").empty();
+                        $('#FromColorId').empty();
+                        // $('#POReferenceNo').val(data.OrderRefrence)
+                        //alert(ui.item.label);
+                        $('#POReferenceNo').val(ui.item.label);
+                        //alert("Hello")
+                        $('#FromProductModel_Id').append($('<option/>', {
+                            value: 0,
+                            text: "--Select Product--"
+                        }));
+                        $.each(data, function (i, Product)
+                        {
+                            $('#FromProductModel_Id').append('<option value ="' + Product.Value + '">' + Product.Text + '</option>');
+                        });
+                        //$('#FromProductModel_ProductName').val(data.ProductName);
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                    }
+                })
+
+                //$('#FromColorId').empty();
+                //GetFromColours();
+
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+
+</script>
+@*AutoComplete For POReferenceNo End*@
+
+
+@*Auto Complete For - From Product Start*@
+<script type="text/javascript">
+
+    function GetToColoursFromProduct(Colourid) {
+        if (Colourid == null) {
+            Colourid = 0;
+        }
+
+        //alert("")
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetColoursForProduct", "Order")',
+            dataType: 'json',
+            data: { ProductId: $("#FromProductModel_Id").val() },
+            success: function (states) {
+                $('#FromColorId').append($('<option/>', {
+                    value: 0,
+                    text: "--Select Color--"
+                }));
+                $.each(states, function (i, color) {
+                    $('#FromColorId').append('<option value ="' + color.Value + '">' + color.Text + '</option>');
+                });
+
+                $('#FromColorId').val(Colourid);
+            },
+            error: function (ex) {
+                alert('Failed to retrieve Colors.' + ex);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $("#FromProductModel_ProductName").autocomplete({
+
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Order/SearchByProductName",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        Prefix: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.ProductName, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (e, ui) {
+                var vn = ui.item.value;
+                $("#FromProductModel_Id").val(vn);
+                //var currency = $('#CustomerModel_CurrencyName').val();
+                $.ajax({
+                    url: "/Order/GetProductById",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        number: vn,
+                        //currency: currency
+                    },
+                    dataFilter: function (data) {
+                        return data;
+                    },
+                    success: function (data) {
+                        $('#FromProductModel_ProductName').val(data.ProductName);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                    }
+                })
+
+                $('#FromColorId').empty();
+                GetToColoursFromProduct();
+
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+@*@Auto Complete For - From Product End*@
+
+
+@*Auto Complete For To Product Start*@
+<script type="text/javascript">
+
+    function GetToColours(Colourid) {
+        if (Colourid == null) {
+            Colourid = 0;
+        }
+
+        //alert("")
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetColoursForProduct", "Order")',
+            dataType: 'json',
+            data: { ProductId: $("#ToProductModel_Id").val() },
+            success: function (states) {
+                $('#ToColorId').append($('<option/>', {
+                    value: 0,
+                    text: "--Select Color--"
+                }));
+                $.each(states, function (i, color) {
+                    $('#ToColorId').append('<option value ="' + color.Value + '">' + color.Text + '</option>');
+                });
+
+                $('#ToColorId').val(Colourid);
+            },
+            error: function (ex) {
+                alert('Failed to retrieve Colors.' + ex);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $("#ToProductModel_ProductName").autocomplete({
+
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Order/SearchByProductName",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        Prefix: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.ProductName, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (e, ui) {
+                var vn = ui.item.value;
+                $("#ToProductModel_Id").val(vn);
+                //var currency = $('#CustomerModel_CurrencyName').val();
+                $.ajax({
+                    url: "/Order/GetProductById",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        number: vn,
+                        //currency: currency
+                    },
+                    dataFilter: function (data) {
+                        return data;
+                    },
+                    success: function (data) {
+                        $('#ToProductModel_ProductName').val(data.ProductName);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                    }
+                })
+
+                $('#ToColorId').empty();
+                GetToColours();
+
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+
+
+</script>
+@*@Auto Complete For - To Product End*@
+
+@using (Html.BeginForm("TransferPO", "Order", FormMethod.Post))
+{
+    if (TempData["TransferResult"] != null)
+    {
+        <div class="red">
+            <h4 style="color:#cb493f"><strong>Message: </strong>@TempData["TransferResult"]</h4>
+        </div>
+    }
+
+    <div class="box box-info col-md-12">
+        <h3>
+            Transfer From
+        </h3>
+        <div class="box-body">
+            <div class="row">
+                @*<div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Reference No")
+                        @Html.BsTextBoxFor(x => x.POReferenceNo)                        
+                    </div>
+                </div>*@
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WareHouseId)
+                        @Html.BootstrapDropDownListFor(m => m.WareHouseId, new SelectList(Model.WareHouseList, "Id", "WareHouseName", Model.WareHouseId))
+                        @Html.ValidationMessageFor(model => model.WareHouseId)
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Style")
+                        @Html.BsTextBoxFor(x => x.FromProductModel.ProductName)
+                        @*@Html.Label("Style")
+                            @Html.BootstrapDropDownListFor(x => x.FromProductModel.Id, new SelectList(Model.FromProductModel.ProductList, "Id", "ProductName", Model.FromProductModel.Id))*@
+                        @*@Html.ValidationMessageFor(x => x.ProductModel.ProductName)*@
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Color")
+                        @Html.BootstrapDropDownListFor(m => m.FromColorId, new SelectList(Model.FromColorList, "Id", "Colour", Model.FromColorId))
+                        @*@Html.ValidationMessageFor(model => model.ColourId)*@
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Size(US/UK/EU)")
+                        @Html.BootstrapDropDownListFor(m => m.FromSizeId, new SelectList(Model.FromSizeList, "Id", "SizeUK", Model.FromSizeId))
+                        @*@Html.ValidationMessageFor(model => model.ColourId)*@
+                    </div>
+                </div>              
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 center">
+                    <div class="form-group">
+                        @*@Html.Label("Available Qty")
+                            @Html.BsTextBoxFor(x => x.AvailableQty, new { @readonly = "readonly" })*@
+                    </div>
+                </div>
+                <div class="col-md-3 center">
+                    <div class="form-group">
+                        @Html.Label("Available Qty")
+                        @Html.BsTextBoxFor(x => x.AvailableQty, new { @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="col-md-3 center">
+                    <div class="form-group">
+                        @Html.Label("Transfer Qty")
+                        @Html.BsTextBoxFor(x => x.TransferQty)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="box box-info col-md-12">
+        <h3>
+            Transfer To
+        </h3>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Select To Warehouse")
+                        @Html.BootstrapDropDownListFor(m => m.ToWareHouseId, new SelectList(Model.WareHouseList, "Id", "WareHouseName", Model.ToWareHouseId))
+                        @Html.ValidationMessageFor(model => model.ToWareHouseId)
+                    </div>
+                </div>
+                @*<div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Style")
+                        @Html.BsTextBoxFor(x => x.ToProductModel.ProductName)
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Color")
+                        @Html.BootstrapDropDownListFor(m => m.ToColorId, new SelectList(Model.FromColorList, "Id", "Colour", Model.ToColorId))
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Size(US/UK/EU)")
+                        @Html.BootstrapDropDownListFor(m => m.ToSizeId, new SelectList(Model.FromSizeList, "Id", "SizeUK", Model.ToSizeId))
+                    </div>
+                </div>*@
+
+            </div>
+            <div class="col-md-12">
+                @*<label style="visibility:hidden" id="kapil">@Model.ColourId</label>*@
+                <button id="Submit" type="submit" class="btn btn-primary pull-right" onclick="return SubmitClick();">Submit</button>
+            </div>
+
+        </div>
+    </div>
+    
+    @Html.HiddenFor(x => x.FromProductModel.Id)    
+    @Html.HiddenFor(x => x.ToProductModel.Id)
+    @Html.HiddenFor(x => x.POId)
+    @Html.HiddenFor(x => x.FromProductPODetailId)
+}
+
+<script>
+
+    @*$("#FromProductModel_Id").change(function () {
+        //alert("Hello");
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetColoursForProduct", "Order")',
+            dataType: 'json',
+            data: { ProductId: $("#FromProductModel_Id").val() },
+            success: function (data) {
+                $('#FromColorId').empty();
+
+                $('#FromColorId').append($('<option/>', {
+                    value: 0,
+                    text: "--Select Color--"
+                }));
+                $.each(data, function (i, color) {
+                    $('#FromColorId').append('<option value ="' + color.Value + '">' + color.Text + '</option>');
+                });
+
+                $('#FromColorId').val(Colourid);
+            },
+            error: function (ex) {
+                alert('Failed to retrieve Colors.' + ex);
+            }
+        });
+        //return false;
+    });*@
+
+    
+
+    function SubmitClick() {
+       
+        //if ($("#POReferenceNo").val() == 0 || $("#POReferenceNo").val() == null) {
+        //    alert("Select Reference No.")
+        //    return false;
+        //}
+        //else
+        if (($("#FromProductModel_Id").val() == 0 || $("#FromProductModel_Id").val() == null)) {
+            alert("Select From Product.")
+            return false;
+        }
+
+        else if (($("#FromColorId").val() == 0 || $("#FromColorId").val() == null)) {
+            alert("Select From Color.")
+            return false;
+        }
+        else if (($("#FromSizeId").val() == 0 || $("#FromSizeId").val() == null)) {
+            alert("Select From Size.")
+            return false;
+        }
+        else if (($("#WareHouseId").val() == 0 || $("#WareHouseId").val() == null)) {
+            alert("Select From Warehouse.")
+            return false;
+        }
+        else if (($("#ToWareHouseId").val() == 0 || $("#ToWareHouseId").val() == null)) {
+            alert("Select To Warehouse.")
+            return false;
+        }
+        //else if (($("#ToProductModel_ProductName").val() == 0 || $("#ToProductModel_ProductName").val() == null)) {
+        //    alert("Select To Product.")
+        //    return false;
+        //}
+        //else if (($("#ToColorId").val() == 0 || $("#ToColorId").val() == null)) {
+        //    alert("Select To color.")
+        //    return false;
+        //}
+        //else if (($("#ToSizeId").val() == 0 || $("#ToSizeId").val() == null)) {
+        //    alert("Select To size.")
+        //    return false;
+        //}
+        
+        if ($("#TransferQty").val() > $("#AvailableQty").val()) {
+            alert("Transfer quantity cannot be greater than available quantity.");
+            return false;
+        }
+        else {
+            // alert("Submit");
+            return true;
+        }
+        return false;
+
+    }
+
+
+    $("#FromSizeId").change(function () {
+        if ($("#FromProductModel_Id").val() != 0 && $("#FromSizeId").val() != null &&
+            $("#FromSizeId").val() != 0 && $("#FromColorId").val() != 0 &&
+            $("#FromProductModel_Id").val() != null && $("#FromColorId").val() != null &&
+            $("#WareHouseId").val() != 0 && $("#WareHouseId").val() != null
+            ) {
+            //alert($("#WareHouseId").val());
+            //alert($("#FromProductModel_Id").val());
+            //alert($("#FromColorId").val());
+            //alert($("#FromSizeId").val());
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetOrderDetails", "Order")',
+                dataType: 'json',
+                data: {
+                    WhId: $("#WareHouseId").val(),
+                    ProductId: $("#FromProductModel_Id").val(),
+                    ProductColorId: $("#FromColorId").val(),
+                    ProductSize: $("#FromSizeId").val()
+                },
+                success: function (data) {
+                    if (data == 0) {
+                        alert("No Record found")
+                        $("#AvailableQty").val(0);
+                    }
+                    else {
+                        $("#AvailableQty").val(data);
+                        //$("#FromProductPODetailId").val(data.Id);
+                    }
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve data.' + ex);
+                }
+            });
+            //return false;
+        };
+    });
+
+</script>

@@ -1,0 +1,59 @@
+﻿@model Loregroup.Core.ViewModels.GalleryViewModel
+
+@{
+    ViewBag.Title = "GalleryImages";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+	<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-70" style="background:#fff;">
+    <h2 class="ltext-103 cl2 txt-center">
+        Gallery Images / News Feed<hr>
+    </h2>
+</section>
+
+	<!-- Content page -->
+<section class="bg0 p-b-50">
+    <div class="container">
+        <div class="row">
+
+            @foreach (var item in Model.GalleryList)
+            {
+                <div class="col-md-4">
+                    <div class="fancy-img">
+                        <a class="fancybox" rel="gallery1" href="@item.image" title="@item.Title">
+                            <img src="@item.image" alt="" />
+                        </a>
+                    </div>
+                    <h2 class="videoTitle">@item.Title</h2>
+                </div>
+            }
+
+            @*<div class="col-md-4">
+                <div class="fancy-img">
+                    <a class="fancybox" rel="gallery1" href="collections/ODS-0329.jpg" title="PROM 2019 RUNWAY HIGHLIGHTS">
+                        <img src="collections/ODS-0329.jpg" alt="" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="fancy-img">
+                    <a class="fancybox" rel="gallery1" href="collections/big-1.png" title="PROM 2019 RUNWAY HIGHLIGHTS">
+                        <img src="collections/big-1.png" alt="" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="fancy-img">
+                    <a class="fancybox" rel="gallery1" href="collections/Homecoming.jpg" title="PROM 2019 RUNWAY HIGHLIGHTS">
+                        <img src="collections/Homecoming.jpg" alt="" />
+                    </a>
+                </div>
+            </div>*@
+            
+
+        </div>
+    </div>
+</section>	

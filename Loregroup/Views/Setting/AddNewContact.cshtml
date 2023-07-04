@@ -1,0 +1,78 @@
+﻿@model Loregroup.Core.ViewModels.ContactViewModel
+
+@{
+    ViewBag.Title = "AddNewContact";
+}
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("GetAllContact", "Setting")';
+    }
+
+</script>
+
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+@using (Html.BeginForm("AddNewContact", "Setting", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OfficeName)
+                        @Html.BsTextBoxWithPHFor(model => model.OfficeName)
+                        @Html.ValidationMessageFor(model => model.OfficeName)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model =>model.Contactno )
+                        @Html.BsTextBoxWithPHFor(model => model.Contactno)
+                        @Html.ValidationMessageFor(model => model.Contactno)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.BsTextBoxWithPHFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address)
+                        @Html.BsTextAreaFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.Id)
+}

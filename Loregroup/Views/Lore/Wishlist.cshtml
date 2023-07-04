@@ -1,0 +1,102 @@
+﻿@model Loregroup.Core.ViewModels.WishlistViewModel
+@using Loregroup.Core.ViewModels
+
+@{
+    /**/
+
+    var frontmodel = (FrontendLayoutModel)ViewBag.FrontLayoutModel;
+}
+
+@{
+    ViewBag.Title = "Wish List";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-70" style="background:#fff;">
+    <h2 class="ltext-103 cl2 txt-center">
+        Wish List<hr>
+    </h2>
+</section>
+
+
+@if (Model.UserId > 0)
+{
+
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Delete</th>
+                    @*<th>ID</th>*@
+                    <th>Product Name</th>
+                    <th>Product Image</th>
+                    @if (frontmodel.CurrencyId == 1)
+                    {
+                        <th>Price($)</th>
+                    }
+                    else if (frontmodel.CurrencyId == 2)
+                    {
+                        <th>Price(€)</th>
+                    }
+                    else if (frontmodel.CurrencyId == 3)
+                    {
+                        <th>Price(£)</th>
+                    }
+                    else
+                    {
+                        <th>Price($)</th>
+                    }
+
+
+                    @*<th>Stock Status</th>*@
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.WishlistList)
+                {
+                    <tr>
+                        <td>
+                            <a data-value="@item.Id" href="/Setting/DeleteWishlist/@item.Id" class="btnDelete"><i class="fa fa-remove" style="font-size:20px;color:red"></i></a>
+                        </td>
+                        @*<td>
+                                <a data-value="@item.Id"
+                                   href="/Lore/Wishlist/@item.UserId" class="btn"><i class="fa fa-heart" style="font-size:20px;color:red"></i></a>
+                            </td>*@
+                        @*<th scope="row">@item.Id</th>*@
+                        <td>@item.ProductName</td>
+                        <td><img style="height:100px; width:100px" src="@item.ProductImage" /></td>
+                        <td>@item.Price</td>
+                        @*<td>@item.StockStatus</td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+}
+else
+{
+    <div>
+        <div style="margin:30px 0;">
+            <div class="success-circle">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+        </div>
+        <center> <h1> You have not Logged - In.</h1> </center>
+        <center>
+            <a class="txt2" href="@Url.Action("Login", "Lore")">
+                Click Here to login
+            </a>
+        </center>
+        <div class="text-center p-t-50">
+            <span class="txt1">
+                Don’t have an account ?
+            </span>
+            <a class="txt2" href="@Url.Action("Registration", "Setting")">
+                Sign Up
+            </a>
+        </div>
+    </div>
+}

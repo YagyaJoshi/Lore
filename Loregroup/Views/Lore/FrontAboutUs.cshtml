@@ -1,0 +1,63 @@
+﻿@model Loregroup.Core.ViewModels.BaseEntityViewModel
+@{
+    ViewBag.Title = "FrontAboutUs";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+
+<style>
+    /*ul, li, p {
+        line-height: 1.50;
+        margin: 0 0 25px;
+        font-size: 16px;
+        font-family: Poppins-Regular;
+        text-align: justify;
+    }
+
+    h3 {
+        font-size: 1.30rem;
+        font-weight: 600;
+        line-height: 1.9;
+        font-family: Poppins-Regular;
+    }
+
+    ul, li {
+        margin: 0px;
+        list-style-type: disc;
+    }*/
+</style>
+
+<section class="bg-img1 txt-center p-lr-15 p-tb-70" style="background:#fff;">
+    <h2 class="ltext-103 cl2 txt-center">
+       About Us<hr>
+    </h2>
+</section>
+
+<section class="bg0 p-t-10 p-b-120">
+    <div class="container">
+
+        @*<div class="col-md-12">
+            @Html.Raw(@Model.TextData)
+        </div>*@
+
+        <div class="row p-b-40">
+            <div class="col-md-7 col-lg-8">
+                <div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">                   
+                    <p class="stext-113 cl6 p-b-26">
+                        @Html.Raw(@Model.TextData)
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-11 col-md-5 col-lg-3 m-lr-auto">
+                <div class="how-bor1 ">
+                    <div class="hov-img0">
+                        <img src="/Frontend/collections/products/product-05.png" alt="IMG">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>

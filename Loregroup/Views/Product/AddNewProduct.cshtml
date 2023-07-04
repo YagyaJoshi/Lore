@@ -1,0 +1,704 @@
+﻿@model Loregroup.Core.ViewModels.ProductViewModel
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("GetAllProduct", "Product")';
+    }
+
+    //get file path from client system
+    function getNameFromPath(strFilepath) {
+        var objRE = new RegExp(/([^\/\\]+)$/);
+        var strName = objRE.exec(strFilepath);
+
+        if (strName == null) {
+            return null;
+        }
+        else {
+            return strName[0];
+        }
+    }
+
+    var loadImage1 = function (event) {
+
+        var file = getNameFromPath($("#Img1").val());
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'jpeg':
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        else {
+            flag = false;
+        }
+
+        if (file == null) {
+            document.getElementById("image1").style["height"] = "0px";
+            document.getElementById("image1").style["width"] = "0px";
+            document.getElementById("image1").style["margin-top"] = "0px";
+            var output = document.getElementById('image1');
+            output.src = null;
+            return false;
+        }
+        else if (flag == false) {
+
+            $("#Spanimg1").text("You can upload only jpg, jpeg, png, gif extension file");
+            document.getElementById("image1").style["height"] = "0px";
+            document.getElementById("image1").style["width"] = "0px";
+            document.getElementById("image1").style["margin-top"] = "0px";
+            var output = document.getElementById('image1');
+            output.src = null;
+            //  alert($("#SpanBrideFile").text());
+            // document.getElementById("btn_save").style["visibility"] = hidden;
+
+            return false;
+        }
+        else {
+            $("#Spanimg1").text("");
+            document.getElementById("image1").style["height"] = "130px";
+            document.getElementById("image1").style["width"] = "130px";
+            document.getElementById("image1").style["margin-top"] = "10px";
+
+            var output = document.getElementById('image1');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+
+    var loadImage2 = function (event) {
+
+        var file = getNameFromPath($("#Img2").val());
+
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'jpeg':
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        if (file == null) {
+            document.getElementById("image2").style["height"] = "0px";
+            document.getElementById("image2").style["width"] = "0px";
+            document.getElementById("image2").style["margin-top"] = "0px";
+            var output = document.getElementById('image2');
+            output.src = null;
+            return false;
+        }
+        else if (flag == false) {
+
+            $("#Spanimg2").text("You can upload only jpg, jpeg, png, gif extension file");
+            document.getElementById("image2").style["height"] = "0px";
+            document.getElementById("image2").style["width"] = "0px";
+            document.getElementById("image2").style["margin-top"] = "0px";
+            var output = document.getElementById('image2');
+            output.src = null;
+            //  alert($("#SpanBrideFile").text());
+            // document.getElementById("btn_save").style["visibility"] = hidden;
+
+            return false;
+        }
+        else {
+            $("#Spanimg2").text("");
+            document.getElementById("image2").style["height"] = "130px";
+            document.getElementById("image2").style["width"] = "130px";
+            document.getElementById("image2").style["margin-top"] = "10px";
+
+            var output = document.getElementById('image2');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+
+    var loadImage3 = function (event) {
+
+        var file = getNameFromPath($("#Img3").val());
+
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'jpeg':
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        if (file == null) {
+            document.getElementById("image3").style["height"] = "0px";
+            document.getElementById("image3").style["width"] = "0px";
+            document.getElementById("image3").style["margin-top"] = "0px";
+            var output = document.getElementById('image3');
+            output.src = null;
+            return false;
+        }
+        else if (flag == false) {
+
+            $("#Spanimg3").text("You can upload only jpg, jpeg, png, gif extension file");
+            document.getElementById("image3").style["height"] = "0px";
+            document.getElementById("image3").style["width"] = "0px";
+            document.getElementById("image3").style["margin-top"] = "0px";
+            var output = document.getElementById('image3');
+            output.src = null;
+            //  alert($("#SpanBrideFile").text());
+            // document.getElementById("btn_save").style["visibility"] = hidden;
+
+            return false;
+        }
+        else {
+            $("#Spanimg3").text("");
+            document.getElementById("image3").style["height"] = "130px";
+            document.getElementById("image3").style["width"] = "130px";
+            document.getElementById("image3").style["margin-top"] = "10px";
+
+            var output = document.getElementById('image3');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+
+    var loadImage4 = function (event) {
+
+        var file = getNameFromPath($("#Img4").val());
+
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'jpeg':
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        if (file == null) {
+            document.getElementById("image4").style["height"] = "0px";
+            document.getElementById("image4").style["width"] = "0px";
+            document.getElementById("image4").style["margin-top"] = "0px";
+            var output = document.getElementById('image4');
+            output.src = null;
+            return false;
+        }
+        else if (flag == false) {
+
+            $("#Spanimg4").text("You can upload only jpg, jpeg, png, gif extension file");
+            document.getElementById("image4").style["height"] = "0px";
+            document.getElementById("image4").style["width"] = "0px";
+            document.getElementById("image4").style["margin-top"] = "0px";
+            var output = document.getElementById('image4');
+            output.src = null;
+            //  alert($("#SpanBrideFile").text());
+            // document.getElementById("btn_save").style["visibility"] = hidden;
+
+            return false;
+        }
+        else {
+            $("#Spanimg4").text("");
+            document.getElementById("image4").style["height"] = "130px";
+            document.getElementById("image4").style["width"] = "130px";
+            document.getElementById("image4").style["margin-top"] = "10px";
+
+            var output = document.getElementById('image4');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+
+
+
+    var loadVideoImage = function (event) {
+
+        var file = getNameFromPath($("#VideoImg").val());
+
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'jpeg':
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        if (file == null) {
+            document.getElementById("videoimage").style["height"] = "0px";
+            document.getElementById("videoimage").style["width"] = "0px";
+            document.getElementById("videoimage").style["margin-top"] = "0px";
+            var output = document.getElementById('videoimage');
+            output.src = null;
+            return false;
+        }
+        else if (flag == false) {
+
+            $("#SpanVideo").text("You can upload only jpg, jpeg, png, gif extension file");
+            document.getElementById("videoimage").style["height"] = "0px";
+            document.getElementById("videoimage").style["width"] = "0px";
+            document.getElementById("videoimage").style["margin-top"] = "0px";
+            var output = document.getElementById('videoimage');
+            output.src = null;
+            //  alert($("#SpanBrideFile").text());
+            // document.getElementById("btn_save").style["visibility"] = hidden;
+
+            return false;
+        }
+        else {
+            $("#SpanVideo").text("");
+            document.getElementById("videoimage").style["height"] = "130px";
+            document.getElementById("videoimage").style["width"] = "130px";
+            document.getElementById("videoimage").style["margin-top"] = "10px";
+
+            var output = document.getElementById('videoimage');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+
+</script>
+
+@*SumoSelectStart*@
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var Brandids = $('#SeletedBrandIds').val();
+        var Brandid = Brandids.split(",");
+        $("#BrandList option").each(function (index, value) {
+            var drpvale = $(this).val();
+            var res = $.inArray(drpvale, Brandid);
+            if (res > -1) {
+                $(this).attr('selected', true);
+                $("input:checkbox[value='" + $(this).val() + "']").prop('checked', true);
+            }
+        });
+
+
+        var Colorids = $('#SeletedColorIds').val();
+        var Colorid = Colorids.split(",");
+        $("#ColourList option").each(function (index, value) {
+            var drpvale = $(this).val();
+            var res = $.inArray(drpvale, Colorid);
+            if (res > -1) {
+                $(this).attr('selected', true);
+                $("input:checkbox[value='" + $(this).val() + "']").prop('checked', true);
+            }
+        });
+
+        var Categoryids = $('#SeletedCategoryIds').val();
+        var Categoryid = Categoryids.split(",");
+        $("#CategoryList option").each(function (index, value) {
+            var drpvale = $(this).val();
+            var res = $.inArray(drpvale, Categoryid);
+            if (res > -1) {
+                $(this).attr('selected', true);
+                $("input:checkbox[value='" + $(this).val() + "']").prop('checked', true);
+            }
+        });
+
+        var Fabricids = $('#SelectedFabricIds').val();
+        var Fabricid = Fabricids.split(",");
+        $("#FabricList option").each(function (index, value) {
+            var drpvale = $(this).val();
+            var res = $.inArray(drpvale, Fabricid);
+            if (res > -1) {
+                $(this).attr('selected', true);
+                $("input:checkbox[value='" + $(this).val() + "']").prop('checked', true);
+            }
+        });
+
+
+        window.asd = $('.SelectBox').SumoSelect({
+            csvDispCount: 4,
+            search: true,
+        });
+
+
+        $('#btn_submit').click(function () {
+
+            var BrandSelected = $("#BrandList option:selected");
+            var Brandnames = "";
+            var Brandids = "";
+            BrandSelected.each(function () {
+                Brandnames += $(this).text() + ",";
+                Brandids += $(this).val() + ",";
+            });
+            $('#SeletedBrandIds').val(Brandids);
+            $('#SeletedBrandNames').val(Brandnames);
+
+
+            var ColorSelected = $("#ColourList option:selected");
+            var Colornames = "";
+            var Colorids = "";
+            ColorSelected.each(function () {
+                Colornames += $(this).text() + ",";
+                Colorids += $(this).val() + ",";
+            });
+            $('#SeletedColorIds').val(Colorids);
+            $('#SeletedColorNames').val(Colornames);
+
+
+            var CategorySelected = $("#CategoryList option:selected");
+            var Categorynames = "";
+            var Categoryids = "";
+            CategorySelected.each(function () {
+                Categorynames += $(this).text() + ",";
+                Categoryids += $(this).val() + ",";
+            });
+            $('#SeletedCategoryIds').val(Categoryids);
+            $('#SeletedCategoryNames').val(Categorynames);
+
+
+            var FabricSelected = $("#FabricList option:selected");
+            var Fabricnames = "";
+            var Fabricids = "";
+            FabricSelected.each(function () {
+                Fabricnames += $(this).text() + ",";
+                Fabricids += $(this).val() + ",";
+            });
+            $('#SelectedFabricIds').val(Fabricids);
+            $('#SelectedFabricNames').val(Fabricnames);
+
+        });
+
+    });
+</script>
+@*SumoSelectEnd*@
+
+
+@using (Html.BeginForm("AddNewProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+            <h3 style="color: red;"> @TempData["ResponseMsg"] </h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductName)
+                        @Html.BsTextBoxWithPHFor(model => model.ProductName)
+                        @Html.ValidationMessageFor(model => model.ProductName)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title)
+                        @Html.BsTextBoxWithPHFor(model => model.Title)
+                        @Html.ValidationMessageFor(model => model.Title)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @*@Html.LabelFor(m => m.CategoryId)
+                            @Html.BootstrapDropDownListFor(m => m.CategoryId, new SelectList(Model.CategoryList, "Id", "Category", Model.CategoryId))
+                            @Html.ValidationMessageFor(m => m.CategoryId)*@
+
+                        @Html.LabelFor(model => model.CategoryId)
+                        <br />
+                        @Html.DropDownList("CategoryList", new SelectList(Model.CategoryList, "Id", "Category"), new { @multiple = "multiple", @placeholder = "Please select Category", @class = "SelectBox" })
+                        @Html.HiddenFor(k => k.CategoryId)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.BrandId)
+                            @Html.BootstrapDropDownListFor(m => m.BrandId, new SelectList(Model.BrandList, "Id", "BrandName", Model.BrandId))
+                            @Html.ValidationMessageFor(model => model.BrandId)*@
+                        @Html.LabelFor(model => model.BrandId)
+                        <br />
+                        @Html.DropDownList("BrandList", new SelectList(Model.BrandList, "Id", "BrandName"), new { @multiple = "multiple", @placeholder = "Please select Brand", @class = "SelectBox" })
+                        @Html.HiddenFor(k => k.BrandId)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @*@Html.LabelFor(model => model.ColourId)
+                            @Html.BootstrapDropDownListFor(m => m.ColourId, new SelectList(Model.ColourList, "Id", "Colour", Model.ColourId))
+                            @Html.ValidationMessageFor(model => model.ColourId)*@
+                        @Html.LabelFor(model => model.ColourId)
+                        <br />
+                        @Html.DropDownList("ColourList", new SelectList(Model.ColourList, "Id", "Colour"), new { @multiple = "multiple", @placeholder = "Please select Color", @class = "SelectBox" })
+                        @Html.HiddenFor(k => k.ColourId)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CutOfDressId)
+                        @Html.BootstrapDropDownListFor(m => m.CutOfDressId, new SelectList(Model.CutOfDressList, "Id", "CutOfDress", Model.CutOfDressId))
+                        @Html.ValidationMessageFor(model => model.CutOfDressId)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CollectionYearId)
+                        @Html.BootstrapDropDownListFor(m => m.CollectionYearId, new SelectList(Model.CollectionYearList, "Id", "CollectionYear", Model.CollectionYearId))
+                        @Html.ValidationMessageFor(model => model.CollectionYearId)
+                    </div>
+                </div>
+                @*<div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Style)
+                            @Html.BsTextBoxWithPHFor(model => model.Style)
+                            @Html.ValidationMessageFor(model => model.Style)
+                        </div>
+                    </div>*@
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @*@Html.LabelFor(m => m.FabricId)
+                            @Html.BootstrapDropDownListFor(m => m.FabricId, new SelectList(Model.FabricList, "Id", "FabricName", Model.FabricId))
+                            @Html.ValidationMessageFor(m => m.FabricId)*@
+                        @Html.LabelFor(model => model.FabricId)
+                        <br />
+                        @Html.DropDownList("FabricList", new SelectList(Model.FabricList, "Id", "FabricName"), new { @multiple = "multiple", @placeholder = "Please select Fabric", @class = "SelectBox" })
+                        @Html.HiddenFor(k => k.FabricId)
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SampleColourId)
+                        @Html.BootstrapDropDownListFor(m => m.SampleColourId, new SelectList(Model.SampleColourList, "Id", "Colour", Model.SampleColourId))
+                        @Html.ValidationMessageFor(model => model.SampleColourId)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PriceUSD)
+                        @Html.BsTextBoxWithPHFor(model => model.PriceUSD)
+                        @Html.ValidationMessageFor(model => model.PriceUSD)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PriceEURO)
+                        @Html.BsTextBoxWithPHFor(model => model.PriceEURO)
+                        @Html.ValidationMessageFor(model => model.PriceEURO)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PriceGBP)
+                        @Html.BsTextBoxWithPHFor(m => m.PriceGBP)
+                        @Html.ValidationMessageFor(m => m.PriceGBP)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                @*<div class="col-md-4">
+                          <div class="form-group">
+                              @Html.LabelFor(m => m.Publish)
+                              @Html.CheckBoxFor(m => m.Publish)
+                              @Html.ValidationMessageFor(m => m.Publish)
+                          </div>
+                    </div>*@
+
+                <div class="col-md-8">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PublishId) <br />
+                        <span>Publish To Everyone </span> @Html.RadioButtonFor(m => m.PublishId, 1, Model.PublishId == 1 ? "checked" : string.Empty) &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Only For Customers </span> @Html.RadioButtonFor(m => m.PublishId, 2, Model.PublishId == 2 ? "checked" : string.Empty) &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>Don't Publish </span> @Html.RadioButtonFor(m => m.PublishId, 0, Model.PublishId == 0 ? "checked" : string.Empty) &nbsp;&nbsp;&nbsp;&nbsp;
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description)
+                        @Html.BsTextAreaFor(m => m.Description)
+                        @Html.ValidationMessageFor(m => m.Description)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <i>Image size should be less than 5 MB.</i>
+                </div>
+                <div class="col-md-3">
+                    @if (Model.Picture1 == "" || Model.Picture1 == null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Picture1)
+                            <input type="file" name="Img1" id="Img1" onchange="loadImage1(event)" accept="image/*" />
+                            <img id="image1" src="@Model.Picture1" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg1"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Picture1)
+                            <input type="file" name="Img1" id="Img1" onchange="loadImage1(event)" accept="image/*" />
+                            <img id="image1" src="@Model.Picture1" style="height: 100px; width: 100px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg1"></span>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-3">
+                    @if (Model.Picture2 == "" || Model.Picture2 == null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Picture2)
+                            <input type="file" name="Img2" id="Img2" onchange="loadImage2(event)" accept="image/*" />
+                            <img id="image2" src="@Model.Picture2" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg2"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Picture2)
+                            <input type="file" name="Img2" id="Img2" onchange="loadImage2(event)" accept="image/*" />
+                            <img id="image2" src="@Model.Picture2" style="height: 100px; width: 100px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg2"></span>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-3">
+                    @if (Model.Picture3 == "" || Model.Picture3 == null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Picture3)
+                            <input type="file" name="Img3" id="Img3" onchange="loadImage3(event)" accept="image/*" />
+                            <img id="image3" src="@Model.Picture3" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg3"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Picture3)
+                            <input type="file" name="Img3" id="Img3" onchange="loadImage3(event)" accept="image/*" />
+                            <img id="image3" src="@Model.Picture3" style="height: 100px; width: 100px; margin-top:10px;" type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg3"></span>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-3">
+                    @if (Model.Picture4 == "" || Model.Picture4 == null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Picture4)
+                            <input type="file" name="Img4" id="Img4" onchange="loadImage4(event)" accept="image/*" />
+                            <img id="image4" src="@Model.Picture4" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg4"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @*@Html.LabelFor(model => model.Picture3)
+                                <input type="file" name="Img3" id="Img3" onchange="loadImage3(event)" accept="image/*" />
+                                <img id="image3" src="@Model.Picture3" style="height: 100px; width: 100px; margin-top:10px;" type="file" name="file" />
+                                <span style="color:red; font:bold; margin-top:5px;" id="Spanimg3"></span>*@
+
+                            @Html.LabelFor(model => model.Picture4)
+                            <input type="file" name="Img4" id="Img4" onchange="loadImage4(event)" accept="image/*" />
+                            <img id="image4" src="@Model.Picture4" style="height: 100px; width: 100px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg4"></span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    @if (Model.VideoImage == "" || Model.VideoImage == null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VideoImage)
+                            <input type="file" name="VideoImg" id="VideoImg" onchange="loadVideoImage(event)" accept="image/*" />
+                            <img id="videoimage" src="@Model.VideoImage" style="height: 0px; width: 0px; margin-top:10px;" type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="SpanVideo"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VideoImage)
+                            <input type="file" name="VideoImg" id="VideoImg" onchange="loadVideoImage(event)" accept="image/*" />
+                            <img id="videoimage" src="@Model.VideoImage" style="height: 100px; width: 100px; margin-top:10px;" type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="SpanVideo"></span>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.VideoLink)
+                        @Html.BsTextBoxWithPHFor(model => model.VideoLink)
+                        @Html.ValidationMessageFor(model => model.VideoLink)
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PurchasePrice)
+                        @Html.BsTextBoxWithPHFor(model => model.PurchasePrice)
+                        @Html.ValidationMessageFor(model => model.VideoLink)
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick="Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                        @*<button id="bttn_Click" class="btn btn-primary pull-right" style="margin-right: 10px">click</button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Picture1)
+    @Html.HiddenFor(m => m.Picture2)
+    @Html.HiddenFor(m => m.Picture3)
+    @Html.HiddenFor(m => m.Picture4)
+    @Html.HiddenFor(m => m.VideoImage)
+    @Html.HiddenFor(m => m.SeletedBrandIds)
+    @Html.HiddenFor(m => m.SeletedBrandNames)
+    @Html.HiddenFor(m => m.SeletedColorIds)
+    @Html.HiddenFor(m => m.SeletedColorNames)
+    @Html.HiddenFor(m => m.SeletedCategoryIds)
+    @Html.HiddenFor(m => m.SeletedCategoryNames)
+    @Html.HiddenFor(m => m.SelectedFabricIds)
+    @Html.HiddenFor(m => m.SelectedFabricNames)
+    @Html.HiddenFor(m => m.SampleColourId)
+
+}

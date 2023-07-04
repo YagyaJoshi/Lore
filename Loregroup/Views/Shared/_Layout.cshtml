@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript">
+        var Desertfire = { 'key': 'value' };
+        Desertfire.RootUrl = '@ViewBag.CurrentUrl';
+    </script>
+    @Styles.Render("~/fullcalendarBundle")
+    @Styles.Render("~/morrisBundle")
+    @Styles.Render("~/jvectormapBundle")
+    @Styles.Render("~/daterangepickerBundle")
+    @Styles.Render("~/bootstrap-wysihtml5Bundle")
+    @Styles.Render("~/datatablesBundle")
+    @Styles.Render("~/cssBundle")
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+    <!-- jQuery 2.0.2-->
+
+
+</head>
+<body class="@(Request.IsAuthenticated?"skin-blue":Request.Url.AbsolutePath.Contains("/Error/")?"skin-blue":"bg-black")">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    @RenderBody()
+
+    @*TODO:CHANGE PATH AS PER REQUIRED*@
+    <input type="hidden" name="hdnUrl" id="hdnUrl" value="@ViewBag.CurrentUrl" />
+
+
+    @Scripts.Render("~/Scripts/LibrariesBundle")
+    @Scripts.Render("~/Scripts/Plugins/datatablesBundle")
+    @Scripts.Render("~/Scripts/Plugins/MorrisBundle")
+    @Scripts.Render("~/Scripts/Plugins/sparklineBundle")
+    @Scripts.Render("~/Scripts/Plugins/jvectormapBundle")
+    @Scripts.Render("~/Scripts/Plugins/fullcalendarBundle")
+    @Scripts.Render("~/Scripts/Plugins/jqueryKnobBundle")
+    @Scripts.Render("~/Scripts/Plugins/daterangepickerBundle")
+    @Scripts.Render("~/Scripts/Plugins/bootstrap-wysihtml5Bundle")
+    @Scripts.Render("~/Scripts/Plugins/icheckBundle")
+    @Scripts.Render("~/ScriptsBundle")
+
+    <!--Data Table-->
+    @*<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>*@
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    @*<link rel="stylesheet" href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">*@
+    <script src="https://cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+</body>
+
+</html>

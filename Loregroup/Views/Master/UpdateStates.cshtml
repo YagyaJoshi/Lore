@@ -1,0 +1,31 @@
+﻿@model Loregroup.Core.ViewModels.CountryViewModel
+@{
+    ViewBag.Title = "UpdateStates";
+}
+
+@using (Html.BeginForm("UpdateStates", "Master", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Id)
+                        @Html.BootstrapDropDownListFor(m => m.Id, new SelectList(Model.CountryList, "Id", "countryName", Model.Id))
+                        @*@Html.ValidationMessageFor(model => model.ColourId)*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("States")
+                        @Html.BsTextAreaFor(x => x.countryName)                      
+                        @*@Html.ValidationMessageFor(x => x.ProductModel.ProductName)*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+    </div>
+}
+

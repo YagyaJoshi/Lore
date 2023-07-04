@@ -1,0 +1,227 @@
+﻿@model Loregroup.Core.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "DispatchOrder";
+}
+
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+@using (Html.BeginForm("DispatchOrder", "Order", FormMethod.Post, new { @id = "form1" }))
+{
+    if (TempData["POreceive"] != null)
+    {
+        <script>
+        @*alert(@TempData["POreceive"]);*@
+      alert('Order Quantity Dispatched!');
+        @*<div class="red">
+         <h4 style="color:#cb493f"><strong></strong>@TempData["POreceive"]</h4>
+
+    </div>*@
+
+    window.location.href = '/Order/GetOrderList';
+        </script>
+    }
+    if (TempData["POreceive1"] != null)
+    {
+        <script>
+        @*alert(@TempData["POreceive"]);*@
+            alert('Some Error Occured! please try later!');
+        @*<div class="red">
+         <h4 style="color:#cb493f"><strong></strong>@TempData["POreceive"]</h4>
+
+    </div>*@
+        </script>
+    }
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <a href="/Order/GetOrderList" class="btn btn-primary" style="margin-bottom: 15px;">Back to List</a>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                @if (Model.Id > 0 && Model.DetailsList.Count > 0)
+                {
+                    if (Model.DetailsList[0].AvailableQty < Model.DetailsList[0].Qty)
+                    {
+                        <div class="pull-left" style="color:red"><b>Stock Is Not Available / Less Than Order Quantity</b></div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    if (Model.Id > 0 && Model.DetailsList.Count > 0)
+    {
+        <div class="box box-info col-md-12">
+            <div class="box-body">
+                <div class="row">
+
+                    <table id="DataTable" class="table">
+                        <thead>
+                            <tr>
+                                <th> Product </th>
+                                <th> Color </th>
+                                <th> Size US/UK/EU </th>
+                                @*<th> Size US/EU </th>*@
+                                <th> Ordered Quantity </th>
+                                <th> Available Quantity </th>
+                                <th> Dispatched Quantity </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @for (int i = 0; i < Model.DetailsList.Count; i++)
+                            {
+                                <tr id="@Model.DetailsList[i].SizeUK">
+                                    <td>@Model.DetailsList[i].ProductName</td>
+                                    <td>@Model.DetailsList[i].ColourName</td>
+                                    <td>
+                                        @Model.DetailsList[i].SizeUS/@Model.DetailsList[i].SizeUK/@Model.DetailsList[i].SizeEU
+                                    </td>
+                                    @*<td>
+                                            @Model.DetailsList[i].SizeUSUK
+                                        </td>*@
+                                    <td>
+                                        @Model.DetailsList[i].Qty
+                                    </td>
+                                    <td>
+                                        @Model.DetailsList[i].AvailableQty
+                                    </td>
+                                    @if (Model.DetailsList[i].Qty == Model.DetailsList[i].DispatchedQty)
+                                    {
+                                        <td>
+                                            @Html.BsTextBoxFor(x => Model.DetailsList[i].DispatchedQty, new { @readonly = "readonly" })
+                                            @*@Model.DetailsList[i].ReceiveQty*@
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td contenteditable='true'>
+                                            @Html.BsTextBoxFor(x => Model.DetailsList[i].DispatchedQty)
+                                            @*@Model.DetailsList[i].ReceiveQty*@
+                                        </td>
+                                    }
+
+                                </tr>
+                                @Html.HiddenFor(m => Model.DetailsList[i].Id)
+                                @Html.HiddenFor(m => Model.DetailsList[i].ProductId)
+                                @Html.HiddenFor(m => Model.DetailsList[i].ColourId)
+                                @Html.HiddenFor(m => Model.DetailsList[i].SizeUK)
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <hr />
+            @*<input type='checkbox' id='isSelected' value="Select All" />*@
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        @Html.CheckBoxFor(x => x.IsDispatchedAll) Dispatch-All
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.OrderStatusId)
+                        @Html.EnBsDropDownListFor(x => x.OrderStatusId, new Dictionary<string, object>())
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <br>
+                        @*<a class="btn btn-primary" onclick="return SubmitClick();"> Submit </a>*@
+                        <button type="submit" class="btn btn-primary pull-right" onclick="return SubmitClick();"> Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else if (Model.ProductModel.Id > 0 && Model.ProductListModel.SizeModel.Count <= 0)
+    {
+        <h3>No record Found</h3>
+    }
+    @Html.HiddenFor(x => x.Id);
+    @Html.HiddenFor(x => x.DistributionPoint);
+}
+<script>
+
+    function SubmitClick() {
+        var chk = false;
+        debugger;
+        if ($("#OrderStatusId").val() == 0) {
+            alert("Please Select Status");
+            return false;
+        }
+        var h = 0;
+        $.each($("#DataTable tbody tr"), function () {
+            debugger;
+
+            $(this).find('td:eq(5)').css("color", "#000000")
+            var txtid = "DetailsList_" + h + "__DispatchedQty";
+            //alert(txtid);
+            var txtval = $("#" + txtid).val();
+            //alert(txtval); //$.trim($(this).find('td:eq(5)').html())
+            if (parseInt(txtval) > parseInt($.trim($(this).find('td:eq(3)').html()))) {
+
+                chk = true;
+                $(this).find('td:eq(5)').css("color", "#FF3700")
+                //return false
+            }
+            h = parseInt(h) + 1;
+        });
+
+        if (chk == true) {
+            alert("Dispatch Quantity cannot be greater than ordered quantity.");
+            return false;
+        }
+        else {
+            form1.submit();
+            return true;
+            //return false;// For testing purpose
+        }
+
+    }
+
+    $('input[id="IsDispatchedAll"]').on('ifChecked', function (event) {
+        //alert(event.type + ' callback');
+        var i = 0;
+        $.each($("#DataTable tbody tr"), function () {
+            //$(this).find('td:eq(5)').css("color", "#000000")
+
+            //$(this).find('td:eq(5)').html(parseInt($.trim($(this).find('td:eq(3)').html())));
+
+            var idvalue = "#DetailsList_" + i + "__DispatchedQty";
+            //alert(idvalue);
+
+            if (parseInt($(idvalue).val()) == parseInt($.trim($(this).find('td:eq(3)').html()))) {
+                //alert(idvalue);
+            }
+            else {
+                $(idvalue).val(parseInt($.trim($(this).find('td:eq(3)').html())));
+            }
+
+            i++;
+            //$("#isSelected").iCheck('uncheck');
+        });
+
+    });
+
+
+    //$('input[id="isSelected"]').change(function () {
+    //    if (this.checked) {
+    //        alert("Thanks for checking me");
+    //    }
+    //});
+
+</script>

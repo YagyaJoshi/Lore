@@ -1,0 +1,312 @@
+﻿@model Loregroup.Core.ViewModels.MasterUserViewModel
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("ShowAllUser", "Master")';
+    }
+
+    $(document).ready(function () {
+
+
+        //clearing district and city dropdown when page is loaded
+
+        //$("#SelectedDistrictId").empty();
+        //$("#CityId").empty();
+
+
+        //selection change event of State
+        $("#SelectedStateId").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDistricts")',
+                dataType: 'json',
+                data: { SelectedStateId: $("#SelectedStateId").val() },
+                success: function (states) {
+                    $("#SelectedDistrictId").append($('<option/>', {
+                        value: 0,
+                        text: "--Select District--"
+                    }));
+                    $.each(states, function (i, state) {
+                        $("#SelectedDistrictId").append('<option value="'
+                                    + state.Value + '">'
+                                    + state.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Districts.' + ex);
+                }
+            });
+            return false;
+        });
+
+        //selection change event of District
+        $("#SelectedDistrictId").change(function () {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCities")',
+                dataType: 'json',
+                data: { SelectedDistrictId: $("#SelectedDistrictId").val() },
+                success: function (states) {
+                    $("#CityId").append($('<option/>', {
+                        value: 0,
+                        text: "--Select City--"
+                    }));
+                    $.each(states, function (i, state) {
+                        $("#CityId").append('<option value="'
+                                    + state.Value + '">'
+                                    + state.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Cities' + ex);
+                }
+            });
+            return false;
+        });
+
+    });
+
+
+</script>
+
+@if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        <h4>Validation Errors</h4>
+        @Html.ValidationSummary()
+    </div>
+}
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+
+@using (Html.BeginForm("EditUser", "Master", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName)
+                        @Html.BsTextBoxWithPHFor(model => model.FirstName)
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName)
+                        @Html.BsTextBoxWithPHFor(model => model.LastName)
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Gender)
+                        @Html.EnBsDropDownListFor(m => m.Gender, new Dictionary<string, object>())
+                        @Html.ValidationMessageFor(m => m.Gender)
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.Label("User Name")
+            @Html.BsTextBoxWithPHFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
+        </div>
+    </div>
+                 @*@if (Model.SuperAdminRoleId == 1 )
+                {
+                    <div class="col-md-4">
+                         <div class="form-group">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.BsPasswordWithPhFor(model => model.Password)
+                        </div>
+                    </div>
+
+
+                }
+                else if(Model.SuperAdminRoleId == 1 && Model.CurrentUser == 1 )
+                {
+                    <div class="col-md-4">
+                         <div class="form-group">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.BsTextBoxWithPHFor(model => model.Keyword, new { @readonly = "readonly" })
+
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password)
+                        @Html.BsPasswordWithPhFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                </div>
+                }*@
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password)
+                        @Html.BsTextBoxWithPHFor(model => model.Password)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("Email")
+                        @Html.BsTextBoxWithPHFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("State")
+                        @Html.BootstrapDropDownListFor(m => m.SelectedStateId, new SelectList(Model.StateList, "Id", "StateName", Model.SelectedStateId))
+                        @*@Html.ValidationMessageFor(model => model.SelectedStateId)*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("District")
+                        @Html.BootstrapDropDownListFor(m => m.SelectedDistrictId, new SelectList(Model.DistrictList, "Id", "DistrictName", Model.SelectedDistrictId))
+                        @*@Html.ValidationMessageFor(model => model.SelectedDistrictId)*@
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("City")
+                        @Html.BootstrapDropDownListFor(m => m.CityId, new SelectList(Model.CityList, "Id", "Cityname", Model.CityId))
+                        @*@Html.ValidationMessageFor(model => model.City)*@
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Mobile)
+                        @Html.BsTextBoxWithPHFor(model => model.Mobile, new { @type = "number" })
+                        @Html.ValidationMessageFor(model => model.Mobile)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Fax)
+                        @Html.BsTextBoxWithPHFor(model => model.Fax, new { @type = "number" })
+
+                    </div>
+                </div>
+            @if (Model.SuperAdminRoleId == 1 && Model.CurrentUser != 5)
+            {
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.RoleId)
+                        @Html.BootstrapDropDownListFor(m => m.RoleId, new SelectList(Model.RoleList, "Id", "Name", Model.RoleId))
+                        @*@Html.ValidationMessageFor(model => model.RoleId)*@
+                    </div>
+                </div>
+            }
+               
+            </div>
+
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+}
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#btn_submit').click(function () {
+
+
+            var state_id = $('#Gender option:selected').val();
+            if (state_id == 0) {
+                $('#Gender').focus();
+                alert("Please Select Gender");
+
+                return false;
+            }
+
+
+            var state_id = $('#SelectedStateId option:selected').val();
+            if (state_id == 0) {
+                $('#SelectedStateId').focus();
+                alert("Please Select State");
+
+                return false;
+            }
+
+            var state_id = $('#SelectedDistrictId option:selected').val();
+            if (state_id == 0) {
+                $('#SelectedDistrictId').focus();
+                alert("Please Select District");
+                return false;
+
+
+            }
+            var state_id = $('#CityId option:selected').val();
+            if (state_id == 0) {
+                $('#CityId').focus();
+                alert("Please Select City");
+                return false;
+            }
+            var state_id = $('#RoleId option:selected').val();
+            if (state_id == 0) {
+                $('#RoleId').focus();
+                alert("Please Assign Role");
+                return false;
+            }
+        });
+
+
+
+    });
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

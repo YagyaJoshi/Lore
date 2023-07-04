@@ -1,0 +1,156 @@
+﻿@using Loregroup.Core.ViewModels
+@using Loregroup.Data.Entities
+@model Loregroup.Core.ViewModels.QuestionMasterViewModel
+
+
+
+
+@*<style>
+            @@font-face {
+                font-family: DevLys_010;
+                src:url('/Content/fonts/mfdev010.ttf'); /* for CSS3 browsers */
+                font-weight: normal;
+                font-style: normal;
+            }
+        </style>*@
+
+
+
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="box box-primary" >
+
+
+
+
+        <div class="box-body" style=" font-family: DevLys_010">
+            @if (Model.QuestionMastervies.Count > 0)
+            {
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].AutherId)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].Id)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].ProcedureId)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].Question)
+    @Html.HiddenFor(modelItem => Model.QuestionMastervies[0].Obj1)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].Obj2)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].Obj3)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].Obj4)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].Answer)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].QuestionType)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].RetakenTime)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].FailRetakenTime)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].ForCorrect)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].InCorrect)
+    @Html.HiddenFor(modelItem => modelItem.QuestionMastervies[0].IsRecurring)
+                           
+                            @Html.DisplayFor(modelItem => modelItem.QuestionMastervies[0].Question)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.RadioButtonFor(m => Model.QuestionMastervies[0].selectanswer, Model.QuestionMastervies[0].Obj1)
+                            @Html.DisplayFor(modelItem => modelItem.QuestionMastervies[0].Obj1)
+                           
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.RadioButtonFor(m => m.QuestionMastervies[0].selectanswer, Model.QuestionMastervies[0].Obj2)
+                            @Html.DisplayFor(modelItem => modelItem.QuestionMastervies[0].Obj2)
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.RadioButtonFor(m => m.QuestionMastervies[0].selectanswer, Model.QuestionMastervies[0].Obj3)
+                            @Html.DisplayFor(modelItem => modelItem.QuestionMastervies[0].Obj3)
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.RadioButtonFor(m => m.QuestionMastervies[0].selectanswer, Model.QuestionMastervies[0].Obj4)
+                            @Html.DisplayFor(modelItem => modelItem.QuestionMastervies[0].Obj4)
+                            
+                        </div>
+                    </div>
+                </div>
+    
+                <hr />
+                    <!-- /.box-body -->
+            }
+            
+            
+
+           @* @if (Model.Questionget != null)*@
+                 @if (Model.Id != 0)
+            
+                 {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.HiddenFor(modelItem => Model.AutherId)
+                        @Html.HiddenFor(modelItem => Model.ProcedureId)
+                        @Html.HiddenFor(modelItem => Model.Question)
+                        @Html.HiddenFor(modelItem => Model.Obj1)
+                        @Html.HiddenFor(modelItem => Model.Obj2)
+                        @Html.HiddenFor(modelItem => Model.Obj3)
+                        @Html.HiddenFor(modelItem => Model.Obj4)
+                        @Html.HiddenFor(modelItem => Model.Answer)
+                        @Html.HiddenFor(modelItem => Model.QuestionType)
+                        @Html.HiddenFor(modelItem => Model.RetakenTime)
+                        @Html.HiddenFor(modelItem => Model.FailRetakenTime)
+                        @Html.HiddenFor(modelItem => Model.ForCorrect)
+                        @Html.HiddenFor(modelItem => Model.InCorrect)
+                        @Html.HiddenFor(modelItem => Model.IsRecurring)
+                        @Html.HiddenFor(modelItem => Model.Id)
+                        @Html.DisplayFor(modelItem => Model.Question)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.RadioButtonFor(m => m.selectanswer, Model.Obj1)
+                       @* @Html.RadioButtonFor(m => m.Questionget.Obj1, "a")*@
+                        @Html.DisplayFor(modelItem => Model.Obj1)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.RadioButtonFor(m => m.selectanswer, Model.Obj2)
+                        @Html.DisplayFor(modelItem => Model.Obj2)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.RadioButtonFor(m => m.selectanswer, Model.Obj3)
+                       @* @Html.RadioButtonFor(m => m.Questionget.Obj3, "a")*@
+                        @Html.DisplayFor(modelItem => Model.Obj3)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.RadioButtonFor(m => m.selectanswer, Model.Obj4)
+                       @* @Html.RadioButtonFor(m => m.Questionget.Obj4, "a")*@
+                        @Html.DisplayFor(modelItem => Model.Obj4)
+                    </div>
+                </div>
+            </div>
+            <hr />
+            }
+
+        </div>
+
+        <!-- /.box -->
+    </div>
+</div>

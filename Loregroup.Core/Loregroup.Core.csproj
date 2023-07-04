@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{737B0929-048F-4500-A412-629588D59B95}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Loregroup.Core</RootNamespace>
+    <AssemblyName>Loregroup.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ActionMailer.Net">
+      <HintPath>..\packages\ActionMailer.0.7.4\lib\Net40\ActionMailer.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ActionMailer.Net.Mvc">
+      <HintPath>..\packages\ActionMailer.0.7.4\lib\Net40\ActionMailer.Net.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle">
+      <HintPath>..\packages\MimeKit.1.0.6.1\lib\net45\BouncyCastle.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.AspNet.4.3.4.13329\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OAuth.Consumer.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.Core.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty, Version=4.3.0.0, Culture=neutral, PublicKeyToken=2780ccd10d57b246, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.3.4.13329\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Facebook">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit">
+      <HintPath>..\packages\MailKit.1.0.6.1\lib\net45\MailKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Membership.OpenAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Membership.OpenAuth.2.0.1\lib\net45\Microsoft.AspNet.Membership.OpenAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.1\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit">
+      <HintPath>..\packages\MimeKit.1.0.6.1\lib\net45\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Compact, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Newtonsoft.Json.Compact.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Providers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.2.0.0\lib\net40\System.Web.Providers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessEntities\CheckBoxModel.cs" />
+    <Compile Include="BusinessEntities\JsonBoolModel.cs" />
+    <Compile Include="BusinessEntities\JsonListModel.cs" />
+    <Compile Include="BusinessEntities\JsonStringModel.cs" />
+    <Compile Include="BusinessEntities\JsonUploadModel.cs" />
+    <Compile Include="BusinessEntities\RequestObjectModel.cs" />
+    <Compile Include="BusinessEntities\XmlListModel.cs" />
+    <Compile Include="Cache\InMemoryCache.cs" />
+    <Compile Include="CommonClass.cs" />
+    <Compile Include="Enumerations\Enumerations.cs" />
+    <Compile Include="Exceptions\BaseExceptions\BaseException.cs" />
+    <Compile Include="Exceptions\ContentExceptions.cs" />
+    <Compile Include="Exceptions\UserExceptions.cs" />
+    <Compile Include="Helpers\Attributes\Authorize.cs" />
+    <Compile Include="Helpers\Attributes\HtmlExtensionMethods.cs" />
+    <Compile Include="Helpers\Attributes\DropDownListForExtensions.cs" />
+    <Compile Include="Helpers\Attributes\LabelForExtensions.cs" />
+    <Compile Include="Helpers\Attributes\LengthAttribute.cs" />
+    <Compile Include="Helpers\Attributes\PasswordForExtensions.cs" />
+    <Compile Include="Helpers\Attributes\TextBoxForExtensions.cs" />
+    <Compile Include="Helpers\Attributes\UniqueAttribute.cs" />
+    <Compile Include="Helpers\HtmlExtensions.cs" />
+    <Compile Include="Helpers\ImageResult.cs" />
+    <Compile Include="Helpers\JsonNetResult.cs" />
+    <Compile Include="Helpers\MD5Encryption.cs" />
+    <Compile Include="Helpers\ModelClientEmailValidationRule.cs" />
+    <Compile Include="Helpers\MultipartParser.cs" />
+    <Compile Include="Helpers\PagedData.cs" />
+    <Compile Include="Helpers\PredicateBuilder.cs" />
+    <Compile Include="Helpers\WebHttpJsonElement.cs" />
+    <Compile Include="Interfaces\Cache\ICacheService.cs" />
+    <Compile Include="Interfaces\IMasterProvider.cs" />
+    <Compile Include="Interfaces\Providers\ICommonProvider.cs" />
+    <Compile Include="Interfaces\Providers\IConfigSettingProvider.cs" />
+    <Compile Include="Interfaces\Providers\IContentProvider.cs" />
+    <Compile Include="Interfaces\Providers\IDeliverySlipProvider.cs" />
+    <Compile Include="Interfaces\Providers\ILoreProvider.cs" />
+    <Compile Include="Interfaces\Providers\INavigationProvider.cs" />
+    <Compile Include="Interfaces\Providers\INotificationProvider.cs" />
+    <Compile Include="Interfaces\Providers\IOrderProvider.cs" />
+    <Compile Include="Interfaces\Providers\IProductProvider.cs" />
+    <Compile Include="Interfaces\Providers\ISettingProvider.cs" />
+    <Compile Include="Interfaces\Providers\IUploadFileProvider.cs" />
+    <Compile Include="Interfaces\Providers\IUserProvider.cs" />
+    <Compile Include="Interfaces\Providers\IWidgetProvider.cs" />
+    <Compile Include="Interfaces\Utilities\IErrorHandler.cs" />
+    <Compile Include="Interfaces\Utilities\IImageUtilities.cs" />
+    <Compile Include="Interfaces\Utilities\IMD5Encryption.cs" />
+    <Compile Include="Interfaces\Utilities\ISecurity.cs" />
+    <Compile Include="Interfaces\Utilities\ISession.cs" />
+    <Compile Include="Interfaces\Utilities\IUtilities.cs" />
+    <Compile Include="Logmodels\LogMe.cs" />
+    <Compile Include="Logmodels\LogMeCommonMng.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource\AccountSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountSettings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\CreateNewCompanyResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateNewCompanyResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\DashboardResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DashboardResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Deevoirs123.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Deevoirs123.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\EmailSettingResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmailSettingResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\LicenseSettingResource2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LicenseSettingResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\LogoSettingResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogoSettingResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\SoftwareSettingResource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SoftwareSettingResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\UserResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\UserRoleResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserRoleResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resource\UserSettingsResource.Designer.cs" />
+    <Compile Include="Resource\Widget.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Widget.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\ErrorHandler.cs" />
+    <Compile Include="Utilities\GeoData.cs" />
+    <Compile Include="Utilities\ImageUtilities.cs" />
+    <Compile Include="Utilities\Security.cs" />
+    <Compile Include="Utilities\Session.cs" />
+    <Compile Include="Utilities\TemplateProcessor.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
+    <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
+    <Compile Include="ViewModels\AccountInfoViewModel.cs" />
+    <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\ActionViewModel.cs" />
+    <Compile Include="ViewModels\AddressViewModel.cs" />
+    <Compile Include="ViewModels\AppUserViewModel.cs" />
+    <Compile Include="ViewModels\BaseEntityViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BlocksViewModel.cs" />
+    <Compile Include="ViewModels\BrandViewModel.cs" />
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutViewModel.cs" />
+    <Compile Include="ViewModels\CheckStatusViewModel.cs" />
+    <Compile Include="ViewModels\CityViewModel.cs" />
+    <Compile Include="ViewModels\AgentViewModel.cs" />
+    <Compile Include="ViewModels\CollectionYearViewModel.cs" />
+    <Compile Include="ViewModels\ColourViewModel.cs" />
+    <Compile Include="ViewModels\CommonViewModel.cs" />
+    <Compile Include="ViewModels\ConsumersViewModel.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
+    <Compile Include="ViewModels\CountryViewModel.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\CutOfDressViewModel.cs" />
+    <Compile Include="ViewModels\DistrictsViewModel.cs" />
+    <Compile Include="ViewModels\DSLogViewModel.cs" />
+    <Compile Include="ViewModels\EmailViewModel.cs" />
+    <Compile Include="ViewModels\emplo.cs" />
+    <Compile Include="ViewModels\EventViewModel.cs" />
+    <Compile Include="ViewModels\FabricViewModel.cs" />
+    <Compile Include="ViewModels\FaqViewModel.cs" />
+    <Compile Include="ViewModels\FileDetailViewModel.cs" />
+    <Compile Include="ViewModels\FileUploadViewModel.cs" />
+    <Compile Include="ViewModels\FrontendAccountdetailViewModel.cs" />
+    <Compile Include="ViewModels\FrontendCustomerViewModel.cs" />
+    <Compile Include="ViewModels\FrontendDashboardViewModel.cs" />
+    <Compile Include="ViewModels\FrontendHomeViewModel.cs" />
+    <Compile Include="ViewModels\FrontendLayoutModel.cs" />
+    <Compile Include="ViewModels\FrontendLoginViewModel.cs" />
+    <Compile Include="ViewModels\GalleryViewModel.cs" />
+    <Compile Include="ViewModels\LayoutModel.cs" />
+    <Compile Include="ViewModels\MasterUserViewModel.cs" />
+    <Compile Include="ViewModels\NavigationsViewModel.cs" />
+    <Compile Include="ViewModels\NotificationsViewModel.cs" />
+    <Compile Include="ViewModels\OrderDetailViewModel.cs" />
+    <Compile Include="ViewModels\OrderListDisplayViewModel.cs" />
+    <Compile Include="ViewModels\OrderLocatorViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\PermissionMatrixViewModel.cs" />
+    <Compile Include="ViewModels\ProductCollectionViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\PurchaseOrderDetailViewModel.cs" />
+    <Compile Include="ViewModels\PurchaseOrderViewModel.cs" />
+    <Compile Include="ViewModels\RefillRateViewModel.cs" />
+    <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
+    <Compile Include="ViewModels\SessionUser.cs" />
+    <Compile Include="ViewModels\ShippingViewModel.cs" />
+    <Compile Include="ViewModels\SizeViewModel.cs" />
+    <Compile Include="ViewModels\SliderViewModel.cs" />
+    <Compile Include="ViewModels\SMSViewModel.cs" />
+    <Compile Include="ViewModels\StateViewModel.cs" />
+    <Compile Include="ViewModels\State_MasterViewModel.cs" />
+    <Compile Include="ViewModels\StoreLocatorViewModel.cs" />
+    <Compile Include="ViewModels\StoreViewModel.cs" />
+    <Compile Include="ViewModels\StyleViewModel.cs" />
+    <Compile Include="ViewModels\TaxViewModel.cs" />
+    <Compile Include="ViewModels\TempCartViewModel.cs" />
+    <Compile Include="ViewModels\TransferPOViewModel.cs" />
+    <Compile Include="ViewModels\UserDesignationViewModel.cs" />
+    <Compile Include="ViewModels\UserLocation.cs" />
+    <Compile Include="ViewModels\UserLogViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\ViewCountViewModel.cs" />
+    <Compile Include="ViewModels\WareHouseViewModel.cs" />
+    <Compile Include="ViewModels\WidgetViewModel.cs" />
+    <Compile Include="ViewModels\WishlistViewModel.cs" />
+    <Compile Include="ViewModels\WordLimitViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Loregroup.Data\Loregroup.Data.csproj">
+      <Project>{c23e261a-2cc8-4111-b1b9-fe29f9f6fd43}</Project>
+      <Name>Loregroup.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource\AccountSettings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountSettings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\CreateNewCompanyResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreateNewCompanyResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\DashboardResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DashboardResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Deevoirs123.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Deevoirs123.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\EmailSettingResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmailSettingResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\LicenseSettingResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LicenseSettingResource2.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\LogoSettingResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogoSettingResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\SoftwareSettingResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SoftwareSettingResource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\UserResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\UserRoleResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserRoleResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource\UserSettingsResource.resx" />
+    <EmbeddedResource Include="Resource\Widget.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Widget.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\PWA.Core.dll" />
+    <Content Include="bin\Debug\PWA.Core.pdb" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

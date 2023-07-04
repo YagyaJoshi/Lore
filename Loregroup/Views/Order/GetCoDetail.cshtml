@@ -1,0 +1,441 @@
+﻿@model Loregroup.Core.ViewModels.Getpodetail
+@{
+    ViewBag.Title = "GetPoDetail";
+}
+
+
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+<style>
+    /*#myImg {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #myImg:hover {opacity: 0.7;}*/
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        margin-top: 50px;
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 800px;
+    }
+
+    /* Caption of Modal Image */
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    /* Add Animation */
+    .modal-content, #caption {
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @@-webkit-keyframes zoom {
+        from {
+            -webkit-transform: scale(0);
+        }
+
+        to {
+            -webkit-transform: scale(1);
+        }
+    }
+
+    @@keyframes zoom {
+        from {
+            transform: scale(0);
+        }
+
+        to {
+            transform: scale(1);
+        }
+    }
+
+    /* The Close Button */
+    .closebutton {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .closebutton:hover,
+        .closebutton:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    /* 100% Image Width on Smaller Screens */
+    @@media only screen and (max-width: 700px) {
+        .modal-content {
+            width: 100%;
+        }
+    }
+</style>
+
+
+@*AutoComplete For Product End*@
+
+<h3>CO Detail</h3>
+@using (Html.BeginForm("GetPoDetail", "Order", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Styleno)
+                        @Html.BsTextBoxFor(x => x.Styleno, new { @readonly = "readonly" })
+                        @*@Html.ValidationMessageFor(x => x.ProductModel.ProductName)*@
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.ColorName)
+                        @Html.BsTextBoxFor(x => x.ColorName, new { @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.Label("Warehouse")
+                        @Html.BsTextBoxFor(x => x.Wharehouse, new { @readonly = "readonly" })
+                    </div>
+                </div>
+                @*<div class="col-md-3">
+                        <div class="form-group">
+                            <img id="image1" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                        </div>
+                    </div>*@
+
+
+            </div>
+            @*<div class="col-md-12">
+                    <label style="visibility:hidden" id="kapil">@Model.ColourId</label>
+                    <button id="Search" type="submit" class="btn btn-primary pull-right" onclick="SearchClick()">Search</button>
+                </div>*@
+        </div>
+    </div>
+
+    <div class="box box-info col-md-12">
+        @*<div class="box-body">*@
+        @*<div class="row">*@
+        <div class="col-md-9">
+            @if (Model.IsDataAvailable == true)
+            {
+                <table id="DataTable" class="table">
+                    <thead>
+                        <tr>
+
+                            <th>Shop Name </th>
+                            <th>Order No </th>
+                            <th>Quantity </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var size in Model.Quantitylist)
+                        {
+                            <tr>
+                                <td>
+                                    <b style="font-size: 16px;">@size.Customername</b>
+
+                                </td>
+                                <td>
+                                    <b style="font-size: 16px;">@size.OrderNo</b>
+                                </td>
+                                <td>
+                                    <b style="font-size: 16px;color: blue;">@size.Quantity</b>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                //<h3>@Model.ProductModel.ProductName</h3>
+                //<h3>@Model.ProductListModel.SizeModel.Count</h3>
+                <h3>No Record Found</h3>
+            }
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="form-group">
+                <img id="image1" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+
+            <div class="form-group">
+                <img id="image2" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+            <div class="form-group">
+                <img id="image3" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+
+        </div>
+
+        @*</div>*@
+        @*</div>*@
+        @*<a class="btn btn-primary pull-right" onclick="return SubmitClick();"> Submit  </a>*@
+    </div>
+
+    @*<div class="col-md-3">
+            <div class="form-group">
+                <img id="image2" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <img id="image3" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+        </div>*@
+
+
+}
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="closebutton">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
+
+<script>
+    function SearchClick() {
+        if ($("#ProductModel_ProductName") == "" || $("#ColourId option:selected").val() == 0) {
+            alert("All fields are required.")
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function SubmitClick() {
+        var chk = false;
+
+        var size2qty = 0, size4qty = 0, size6qty = 0,
+                         size8qty = 0, size10qty = 0, size12qty = 0,
+                         size14qty = 0, size16qty = 0, size18qty = 0,
+                         size20qty = 0, size22qty = 0, size24qty = 0,
+                         size26qty = 0, size28qty = 0, size30qty = 0,
+                         size32qty = 0, size34qty = 0;
+
+        $.each($("#DataTable tbody tr"), function () {
+            $(this).find('td:eq(2)').css("color", "#000000")
+
+            if (parseInt($.trim($(this).find('td:eq(2)').html())) > parseInt($.trim($(this).find('td:eq(1)').html()))) {
+                chk = true;
+                $(this).find('td:eq(2)').css("color", "#FF3700")
+                //return false
+            }
+            else {
+                if (parseInt($.trim($(this).find('td:eq(0)').html())) == 2) {
+                    size2qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 4) {
+                    size4qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 6) {
+                    size6qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 8) {
+                    size8qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 10) {
+                    size10qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 12) {
+                    size12qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 14) {
+                    size14qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 16) {
+                    size16qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 18) {
+                    size18qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 20) {
+                    size20qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 22) {
+                    size22qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 24) {
+                    size24qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 26) {
+                    size26qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 28) {
+                    size28qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 30) {
+                    size30qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 32) {
+                    size32qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 34) {
+                    size34qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+            }
+
+        });
+
+        if (chk == true) {
+            alert("Received Quantity cannot be greater than ordered quantity.");
+            return
+        }
+        else {
+            var List = "[{ 'SizeUK': '2', 'ReceivedQty':" + size2qty + "}," + "{ 'SizeUK': '4', 'ReceivedQty':" + size4qty + "}," + "{ 'SizeUK': '6', 'ReceivedQty':" + size6qty +
+            "}," + "{ 'SizeUK': '8', 'ReceivedQty':" + size8qty + "}," + "{ 'SizeUK': '10', 'ReceivedQty':" + size10qty + "}," + "{ 'SizeUK': '12', 'ReceivedQty':" + size12qty +
+            "}," + "{ 'SizeUK': '14', 'ReceivedQty':" + size14qty + "}," + "{ 'SizeUK': '16', 'ReceivedQty':" + size16qty + "}," + "{ 'SizeUK': '18', 'ReceivedQty':" + size18qty +
+            "}," + "{ 'SizeUK': '20', 'ReceivedQty':" + size20qty + "}," + "{ 'SizeUK': '22', 'ReceivedQty':" + size22qty + "}," + "{ 'SizeUK': '24', 'ReceivedQty':" + size24qty +
+            "}," + "{ 'SizeUK': '26', 'ReceivedQty':" + size26qty + "}," + "{ 'SizeUK': '28', 'ReceivedQty':" + size28qty + "}," + "{ 'SizeUK': '30', 'ReceivedQty':" + size30qty +
+            "}," + "{ 'SizeUK': '32', 'ReceivedQty':" + size32qty + "}," + "{ 'SizeUK': '34', 'ReceivedQty':" + size34qty + "}]";
+
+            //alert(List);
+            var orderArr = [];
+
+            orderArr.length = 0;
+            //alert($("#ColourId option:selected").val())
+            orderArr.push({
+                Product: {
+                    Id: $("#ProductModel_Id").val(),
+                    ColourId: $("#ColourId option:selected").val(),
+                    //OrderPrice: $(this).find('td:eq(4)').html(),
+                },
+                SizeModelString: List,
+                //Amount: $(this).find('td:eq(23)').html()
+            });
+
+            var customerorderdata = JSON.stringify({
+                // CustomerModel: {
+                //CustomerFullName: $("#POmodel_CustomerModel_CustomerFullName").val(),
+                //Id: $("#POmodel_CustomerModel_Id").val(),
+                //EmailId: $("#POmodel_CustomerModel_EmailId").val(),
+                //MobileNo: $("#POmodel_CustomerModel_MobileNo").val(),
+                // },
+                //DeliveryDate: $("#DeliveryDate").val(),
+                //OrderDate:$("#OrderDate").val(),
+                //SizeQtyList: $("#SizeQtyList").val(),
+                //ShippingCharge : $("#ShippingCharge").val(),
+                //OrderNo: $("#OrderNo").val(),
+                //Tax: $("#Tax").val(),
+                ProductList: orderArr,
+                //OrderRefrence: $("#OrderNo").val(),
+                //WareHouseId: $("#POmodel_WareHouseId").val(),
+                Id: $("#Id").val()
+            });
+
+            $.ajax({
+                url: "/Order/UpdateReceivePO",
+                type: "POST",
+                dataType: "json",
+                //contentType: 'application/json; charset=utf-8',
+                //data: data,
+                data: {
+                    //  __RequestVerificationToken: token,
+                    model: customerorderdata
+                },
+                success: function (data) {
+                    alert("success !!");
+                    document.location = '@Url.Action("GetPurchaseOrderList", "Order")';
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                }
+            })
+
+        }
+
+    }
+
+    $("#ProductModel_Id").change(function () {
+        //alert("Hello");
+        $('#ColourId').empty();
+        GetColours(0);
+    });
+
+</script>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('image1');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // second image
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img2 = document.getElementById('image2');
+    img2.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Third image
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img3 = document.getElementById('image3');
+    img3.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("closebutton")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+</script>

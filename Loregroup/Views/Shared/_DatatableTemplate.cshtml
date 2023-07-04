@@ -1,0 +1,75 @@
+﻿<div class="hide">
+    <div id="datatable_checkbox_template">
+        <div class="table-actions btn-group">
+            <label class="checkbox pull-right" style="margin-bottom: -1px;">
+                <input type="checkbox" class="select-checkbox checkboxes" name="multiAction"  />
+            </label>
+        </div>
+    </div>
+    <div id="datatable_template">
+        <div class="table-actions-top" >
+            <div class="pull-left inline-block" id="!!TableName!!LeftActions">
+                
+            </div>
+            <div class="pull-right inline-block search-container">
+                <input class="data-search input-medium search-query pull form-control" id="!!TableName!!_search" data-selector="#!!TableName!!" type="text">
+                <i class="icon-search"></i>
+            </div>
+            <div class="pull-right inline-block" id="!!TableName!!RightActions">
+                
+            </div>
+        </div>
+        <div class="action-table-wrapper" id="!!TableName!!Div">
+            <table class="table table-striped table-bordered table-hover selectable" id="!!TableName!!">
+                <thead class="table-head-gradient">
+                    <tr class="table-row-height">
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <div id="datatable_button_template">
+        <div class="inline-block">
+            <a class="btn">
+                <i class="!!Icon!!"></i>
+            </a>
+        </div>
+    </div>
+    <div id="datatable_space_template">
+        <span class="inline-block space"></span>
+    </div>
+    <div id="datatable_text_template">
+        <div class="inline-block">
+            <input type="text" class="table-filter-input"/>
+        </div>
+    </div>
+    <div id="datatable_dropdown_template">
+        <div class="inline-block">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" title="!!Tooltip!!">
+                    <i class="!!Icon!!"></i>&nbsp;
+                    <span class="inline-block selection_text"></span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu table-filter-menu">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="datatable_dropdown_item_template">
+        <li name="!!Value!!">
+            <a href="#" data-value="!!Value!!" data-name="!!Name!!" style="padding-right: 18px;">
+                <input type="!!InputType!!"/>
+                !!Name!!
+                <div class="dropdown-menu-buttons">
+                </div>
+            </a>
+        </li> 
+    </div>
+    <div id="datatable_dropdown_item_menu_template">
+        <span class="has-tooltip tooltip-ready" title="!!Tooltip!!">
+            <i class="!!Icon!!"></i>
+        </span>
+    </div>
+</div>

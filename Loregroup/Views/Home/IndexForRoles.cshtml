@@ -1,0 +1,1135 @@
+﻿@model Loregroup.Core.ViewModels.WidgetViewModels
+
+@*RoleId
+    1:-Super Admin
+    2:-StoreOwner
+    3:-User
+    4:- Mall*@
+
+<div class="box-header">
+
+</div>
+@*<script type="text/javascript">
+    $(function () {
+        blinkeffect('#txtblnk');
+    })
+    function blinkeffect(selector) {
+        $(selector).fadeOut('slow', function () {
+            $(this).fadeIn('slow', function () {
+                blinkeffect(this);
+            });
+        });
+    }
+</script>
+<div id="txtblnk">hgygyugtutguytuytutuuyt</div>*@
+    @if (@Model.RoleId == 2)
+    {
+
+
+        <div class="row">
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("ShowStoreClassified", "Store")" class="small-box-footer">
+                    <div class="small-box  bg-aqua">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+
+                                Add Classified
+                            </p>
+                            @*<div class="icon">
+                                <i class="ion ion-key"></i>
+                            </div>*@
+                        </div>
+
+                        @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("Profile", "Store")" class="small-box-footer">
+                    <div class="small-box bg-maroon">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Profile
+                            </p>
+                            @*<div class="icon">
+                                <i class="ion ion-leaf"></i>
+                            </div>*@
+                        </div>
+
+                        @*Check Profile <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("ShowAllOffers", "Store")" class="small-box-footer">
+                    <div class="small-box  bg-yellow">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Add New Offers and Updates
+                            </p>
+                            @*<div class="icon">
+                                <i class="ion ion-key"></i>
+                            </div>*@
+                        </div>
+
+                        @*Add<i class="fa fa-arrow-circle-right"></i>*@
+
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("ShowAllProduct", "Store")" class="small-box-footer">
+                    <div class="small-box  bg-green">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Add New Product
+                            </p>
+                            @*<div class="icon">
+                                <i class="ion ion-key"></i>
+                            </div>*@
+                        </div>
+
+                       @* Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("StoreBanner", "Mall")" class="small-box-footer">
+                    <div class="small-box  bg-blue">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Add New Banner
+                            </p>
+                            @*<div class="icon">
+                                <i class="ion ion-key"></i>
+                            </div>*@
+                        </div>
+
+                        @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="#" class="small-box-footer">
+                    <div class="small-box  bg-aqua">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Statistics & Reports
+                            </p>
+                            @*<div class="icon">
+                                <i class="ion ion-key"></i>
+                            </div>*@
+                        </div>
+
+                       @* Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("ShowStoreNotification", "Store")" class="small-box-footer">
+                    <div class="small-box  bg-blue">
+                        <div class="inner">
+                            <h3>@Model.NotificationCount</h3>
+                            <p>
+                                Notifications
+                            </p>
+                            @*<div class="icon">
+                                <i class="ion ion-key"></i>
+                            </div>*@
+                        </div>
+
+                       @* Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("DisplayPackage", "Package")" class="small-box-footer">
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Buy Package
+                            </p>
+                            @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                        </div>
+
+
+
+
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("AllPackage", "Package")" class="small-box-footer">
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Packages
+                            </p>
+                            @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                        </div>
+
+
+
+
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <a href="@Url.Action("ShowAllAdvertisement", "User")" class="small-box-footer">
+                    <div class="small-box  bg-red">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Add Advertisement
+                            </p>
+                            @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                        </div>
+
+
+
+                    </div>
+                </a>
+            </div>
+
+            @*<div class="col-lg-4 col-xs-6">
+
+                    <div class="small-box  bg-blue">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                Become User/ Become Mall Owner
+                            </p>
+                            <div class="icon">
+                                <i class="ion ion-key"></i>
+                            </div>
+                        </div>
+                        <a href="@Url.Action("SwitchUser", "Master")" class="small-box-footer">
+                            Click Here <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>*@
+            @*<div class="col-lg-4 col-xs-6">
+
+                    <div class="small-box bg-light-blue">
+                        <div class="inner">
+                            <h3>.</h3>
+                            <p>
+                                All Product
+                            </p>
+                            <div class="icon">
+                                <i class="ion ion-person-stalker"></i>
+                            </div>
+                        </div>
+
+                        <a href="#" class="small-box-footer">
+                            Add <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>*@
+
+
+        </div>
+       
+    }
+    @if (@Model.RoleId == 23)
+    {
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("Profile", "User")" class="small-box-footer">
+                <div class="small-box  bg-aqua">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Profile
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+    <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("GetUserClassified", "User")" class="small-box-footer">
+                <div class="small-box  bg-green">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Classified
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("ShowAllAdvertisement", "User")" class="small-box-footer">
+                <div class="small-box  bg-red">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Advertisement
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("GetUserMobileApp", "User")" class="small-box-footer">
+                <div class="small-box  bg-yellow">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Mobile App Promotion
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+
+        @*<div class="col-lg-4 col-xs-6">
+
+                <div class="small-box  bg-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Become Mall Owner
+                        </p>
+                        <div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Profile", "Mall")" class="small-box-footer">
+                        Click Here <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>*@
+
+        @*<div class="col-lg-4 col-xs-6">
+
+                <div class="small-box  bg-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Become Mall Owner/ Become Store Owner
+                        </p>
+                        <div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("SwitchUser", "Master")" class="small-box-footer">
+                        Click Here <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>*@
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("ShowUserNotification", "User")" class="small-box-footer">
+                <div class="small-box  bg-blue">
+                    <div class="inner">
+                        <h3>@Model.NotificationCount</h3>
+                        <p>
+                            Notifications
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+        
+         <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+        <a href="@Url.Action("ChangePassword", "Customer")" class="small-box-footer">
+            <div class="small-box bg-light-blue">
+                <div class="inner">
+                    <h3>.</h3>
+                    <p>
+                        Change Password
+                    </p>
+                    @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                </div>
+
+
+              
+
+            </div>
+        </a>
+        </div>
+        
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("DisplayPackage", "Package")" class="small-box-footer">
+                <div class="small-box bg-light-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Buy Package
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                    </div>
+
+
+
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("AllPackage", "Package")" class="small-box-footer">
+                <div class="small-box bg-light-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Packages
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                    </div>
+
+
+
+
+                </div>
+            </a>
+        </div>
+    }
+
+    @if (@Model.RoleId == 13)
+    {
+
+         <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("Profile", "User")" class="small-box-footer">
+                <div class="small-box  bg-aqua">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Profile
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+    <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("GetUserClassified", "User")" class="small-box-footer">
+                <div class="small-box  bg-green">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Classified
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("ShowAllAdvertisement", "User")" class="small-box-footer">
+                <div class="small-box  bg-red">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Advertisement
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("GetUserMobileApp", "User")" class="small-box-footer">
+                <div class="small-box  bg-yellow">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Mobile App Promotion
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+
+        @*<div class="col-lg-4 col-xs-6">
+
+                <div class="small-box  bg-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Become Mall Owner
+                        </p>
+                        <div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Profile", "Mall")" class="small-box-footer">
+                        Click Here <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>*@
+
+        @*<div class="col-lg-4 col-xs-6">
+
+                <div class="small-box  bg-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Become Mall Owner/ Become Store Owner
+                        </p>
+                        <div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("SwitchUser", "Master")" class="small-box-footer">
+                        Click Here <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>*@
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="#" class="small-box-footer">
+                <div class="small-box  bg-blue">
+                    <div class="inner">
+                        <h3>@Model.NotificationCount</h3>
+                        <p>
+                            Notifications
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+        
+         <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+        <a href="@Url.Action("ChangePassword", "Customer")" class="small-box-footer">
+            <div class="small-box bg-light-blue">
+                <div class="inner">
+                    <h3>.</h3>
+                    <p>
+                        Change Password
+                    </p>
+                    @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                </div>
+
+
+              
+
+            </div>
+        </a>
+        </div>
+        
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("DisplayPackage", "Package")" class="small-box-footer">
+                <div class="small-box bg-light-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Buy Package
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                    </div>
+
+
+
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("AllPackage", "Package")" class="small-box-footer">
+                <div class="small-box bg-light-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Packages
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                    </div>
+
+
+
+
+                </div>
+            </a>
+        </div>
+    }
+
+    @if (@Model.RoleId == 3)
+    {
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("Profile", "User")" class="small-box-footer">
+                <div class="small-box  bg-aqua">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Profile
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+    <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("GetUserClassified", "User")" class="small-box-footer">
+                <div class="small-box  bg-green">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Classified
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+
+        <!-- ./col -->
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("ShowAllAdvertisement", "User")" class="small-box-footer">
+                <div class="small-box  bg-red">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Advertisement
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("GetUserMobileApp", "User")" class="small-box-footer">
+                <div class="small-box  bg-yellow">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Mobile App Promotion
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("ShowUserNotification", "User")" class="small-box-footer">
+                <div class="small-box  bg-blue">
+                    <div class="inner">
+                        <h3>@Model.NotificationCount</h3>
+                        <p>
+                            Notifications
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+        <a href="@Url.Action("ChangePassword", "Customer")" class="small-box-footer">
+            <div class="small-box bg-light-blue">
+                <div class="inner">
+                    <h3>.</h3>
+                    <p>
+                        Change Password
+                    </p>
+                    @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                </div>
+
+
+              
+
+            </div>
+        </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("DisplayPackage", "Package")" class="small-box-footer">
+                <div class="small-box bg-light-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Buy Package
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                    </div>
+
+
+
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("AllPackage", "Package")" class="small-box-footer">
+                <div class="small-box bg-light-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Packages
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                    </div>
+
+
+
+
+                </div>
+            </a>
+        </div>
+    }
+
+
+    @if (@Model.RoleId == 4)
+    {
+        @*<div class="col-lg-4 col-xs-6">
+           
+            <div class="small-box  bg-aqua">
+                <div class="inner">
+                    <h3>.</h3>
+                    <p>
+                        Add Details
+                    </p>
+                    <div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>
+                </div>
+
+
+                <a href="@Url.Action("AddDetails", "Mall")" class="small-box-footer">
+                    Add <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>*@
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("Profile", "Mall")" class="small-box-footer">
+                <div class="small-box bg-maroon">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Profile
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-leaf"></i>
+                        </div>*@
+                    </div>
+
+                    @*Check Profile <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("ShowMallClassified", "Mall")" class="small-box-footer">
+                <div class="small-box  bg-aqua">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add Classified
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("Banner", "Mall")" class="small-box-footer">
+                <div class="small-box  bg-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Add New Banner
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Add <i class="fa fa-arrow-circle-right"></i>*@
+
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("ShowAllEventForMall", "Master")" class="small-box-footer">
+                <div class="small-box  bg-yellow">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            All Event
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Add<i class="fa fa-arrow-circle-right"></i>*@
+
+                </div>
+            </a>
+
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("ShowAllStoreForMall", "Store")" class="small-box-footer">
+                <div class="small-box  bg-green">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            All Store
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Add<i class="fa fa-arrow-circle-right"></i>*@
+
+
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+            <a href="@Url.Action("AllProductForMall", "Mall")" class="small-box-footer">
+                <div class="small-box  bg-purple">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Show Stores Products
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                   @* Click Here <i class="fa fa-arrow-circle-right"></i>*@
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <a href="@Url.Action("Showallofferformall", "Mall")" class="small-box-footer">
+                <div class="small-box  bg-purple">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Show Stores Offers
+                        </p>
+                        @*<div class="icon">
+                            <i class="ion ion-key"></i>
+                        </div>*@
+                    </div>
+
+                    @*Click Here <i class="fa fa-arrow-circle-right"></i>*@
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("DisplayPackage", "Package")" class="small-box-footer">
+                <div class="small-box bg-light-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Buy Package
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                    </div>
+
+
+
+
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <a href="@Url.Action("AllPackage", "Package")" class="small-box-footer">
+                <div class="small-box bg-light-blue">
+                    <div class="inner">
+                        <h3>.</h3>
+                        <p>
+                            Packages
+                        </p>
+                        @*<div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>*@
+                    </div>
+
+
+
+
+                </div>
+            </a>
+        </div>
+
+    }
+    @if (@Model.RoleId == 5)
+    {
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box  bg-aqua">
+                <div class="inner">
+                    <h3>.</h3>
+                    <p>
+                        User
+                    </p>
+                    <div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>
+                </div>
+                <a href="@Url.Action("IndexForRoles", "Home" , new { @id = "3" })" class="small-box-footer">
+                    Click Here <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box  bg-purple">
+                <div class="inner">
+                    <h3>.</h3>
+                    <p>
+                        Mall
+                    </p>
+                    <div class="icon">
+                        <i class="ion ion-key"></i>
+                    </div>
+                </div>
+                <a href="@Url.Action("IndexForRoles", "Home", new { @id = "4" })" class="small-box-footer">
+                    Click Here <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-light-blue">
+                <div class="inner">
+                    <h3>.</h3>
+                    <p>
+                     Buy Package
+                    </p>
+                    <div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>
+                </div>
+
+                <a href="@Url.Action("DisplayPackage", "Package")" class="small-box-footer">
+                    Add <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-light-blue">
+                <div class="inner">
+                    <h3>.</h3>
+                    <p>
+                     Packages
+                    </p>
+                    <div class="icon">
+                        <i class="ion ion-person-stalker"></i>
+                    </div>
+                </div>
+
+                <a href="@Url.Action("AllPackage", "Package")" class="small-box-footer">
+                    Add <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+    }
+
+

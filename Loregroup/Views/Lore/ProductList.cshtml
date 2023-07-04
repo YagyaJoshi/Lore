@@ -1,0 +1,169 @@
+﻿@model Loregroup.Core.ViewModels.ProductCollectionViewModel
+@using Loregroup.Core.ViewModels
+
+@{
+    var frontmodel = (FrontendLayoutModel)ViewBag.FrontLayoutModel;
+}
+
+@*@model Loregroup.Core.Helpers.PagedData<Loregroup.Core.ViewModels.ProductViewModel>*@
+
+@foreach (var item in Model.ProductList.Data)
+{
+    <div class="grid-item">
+
+        <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+            <div class="block2">
+                <div class="block2-pic hov-img0">
+                    <a href="@Url.Action("ProductDetails", "Lore", new { ProductId = item.Id })">
+                        <img class="imagetofit" src="@item.Picture1" alt="IMG-PRODUCT">
+                    </a>
+                    <a href="javascript:void(0);" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1 anchorDetail" data-id="@item.Id">
+                        Quick View
+                    </a>
+
+                    @*<a href="" class="anchorDetail" data-id="@item.Id">Details</a>*@
+                </div>
+
+                <div class="block2-txt flex-w flex-t p-t-14">
+                    <div class="block2-txt-child1 flex-col-l" style="display:inline;padding-right:15%;">
+                        
+                        <span style="float:left;">
+                            <a href="@Url.Action("ProductDetails", "Lore", new { ProductId = item.Id })" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2">
+                                @item.ProductName
+                            </a>
+                        </span>
+                        @if (Model.Userid > 0)
+                        {
+                            if (@frontmodel.CurrencyId == 1)
+                            {
+                                <span class="stext-105 cl3" style="float:right; color:red;">
+                                    $@item.PriceUSD
+                                </span>
+                            }
+                            else if (@frontmodel.CurrencyId == 2)
+                            {
+                                <span class="stext-105 cl3" style="float:right;color:red;">
+                                    €@item.PriceEURO
+                                </span>
+                            }
+                            else if (@frontmodel.CurrencyId == 3)
+                            {
+                                <span class="stext-105 cl3" style="float:right;color:red;">
+                                    £@item.PriceGBP
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="stext-105 cl3" style="float:right;">
+                                    $@item.PriceUSD
+                                </span>
+                            }
+                        }
+                        @*<span class="stext-105 cl3">
+                                @item.PriceUSD
+                            </span>*@
+                    </div>
+
+                    <div class="block2-txt-child2 flex-r">
+
+                        <a href="http://www.facebook.com/sharer.php?u=http://lorefashions.com/Lore/ProductDetails?ProductId=@item.Id&t=@item.ProductName" class="btn-addwish-b2 dis-block pos-relative">
+                            <img class="icon-heart1 dis-block trans-04" src="~/Frontend/images/icons/icons8-facebook-circled-20.png" alt="ICON">
+                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Frontend/images/icons/icons8-facebook-circled-filled-20.png" alt="ICON">
+                        </a>
+
+                        <a href="https://www.pinterest.com/pin/create/button/?url=http://lorefashions.com/Lore/ProductDetails?ProductId=@item.Id&media=@item.Picture1&description=@item.ProductName" class="btn-addwish-b2 dis-block pos-relative">
+                            <img class="icon-heart1 dis-block trans-04" src="~/Frontend/images/icons/icons8-pinterest-20.png" alt="ICON">
+                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Frontend/images/icons/icons8-pinterest-filled-20.png" alt="ICON">
+                        </a>
+
+                        <a onclick="addtowishlist('@item.Id','@item.ProductName','@item.PriceUSD')" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                            <img class="icon-heart1 dis-block trans-04" src="~/Frontend/images/icons/icons8-heart-outline-20.png" alt="ICON">
+                            <img class="icon-heart2 dis-block trans-04 ab-t-l" src="~/Frontend/images/icons/icons8-heart-outline-filled-20.png" alt="ICON">
+                        </a>
+
+                        @if (frontmodel.CurrencyId == 1)
+                        {
+                            <span id="pricevalue" style="display:none">@item.PriceUSD</span>
+                        }
+                        else if (frontmodel.CurrencyId == 2)
+                        {
+                            <span id="pricevalue" style="display:none">@item.PriceEURO</span>
+                        }
+                        else if (frontmodel.CurrencyId == 3)
+                        {
+                            <span id="pricevalue" style="display:none">@item.PriceGBP</span>
+                        }
+                        else
+                        {
+                            <span id="pricevalue" style="display:none">@item.PriceUSD</span>
+                        }
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+
+@*<div id="product-tablepaging">
+        @Html.Partial("ProductPageTable")
+    </div>*@
+
+<script type="text/javascript">
+
+    function addtowishlist(PId, PName, PPriceUSD) {
+
+        var pprice = $("#pricevalue").text();
+
+        $.ajax({
+
+            url: '/Lore/AddIntoWishlist?PId=' + PId + '&PName=' + PName + '&PPriceUsd=' + pprice,
+            //type: 'GET',
+            crossDomain: true,
+            //data: JSON.stringify(employee),
+            //data: { emailid: abc, password: def },
+            //dataType: 'json',
+            contentType: "application/json",
+            //contentType: "application/xml; charset=utf-8",
+            //beforeSend: function () {
+            //    $("#loadingImage").show();
+            //},
+            //complete: function () {
+            //    $("#loadingImage").hide();
+            //},
+            success: function (data) {
+                //alert("Thank you for contacting us!");
+                if (data == 1) {
+                    //alert("Product Added To Wishlist.");
+                    //window.location.href = "http://www.dev1.connekt.in/Lore/Index";
+                    //document.location = '@Url.Action("Products", "Lore", new { CategoryId = @Model.CategoryId })';
+                    return true;
+                }
+                    //else if (data == 2) {
+                    //    return true;
+                    //}
+                else {
+                    alert("Please Log-In to add into Wishlist.");
+                    return false;
+                }
+                //window.location.href = "http://www.bookcommerce.com/";
+                return false;
+            },
+            error: function (data) {
+                console.log(data);
+                alert("Some error occured");
+                return false;
+            }
+
+        });
+        //return false;
+
+
+        //$("#cartid").append(lidata);
+    }
+
+</script>

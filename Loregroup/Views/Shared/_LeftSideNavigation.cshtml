@@ -1,0 +1,63 @@
+﻿@using Loregroup.Core.ViewModels
+@using Loregroup.Data.Entities
+@model Loregroup.Core.ViewModels.NavigationsViewModel
+@{
+    //var messages = Model.Notifications.Where(x => x.NotificationType == Loregroup.Core.Enumerations.NotificationType.Message).ToList();
+    //var notifications = Model.Notifications.Where(x => x.NotificationType == Loregroup.Core.Enumerations.NotificationType.Notification).ToList();
+    //var tasks = Model.Notifications.Where(x => x.NotificationType == Loregroup.Core.Enumerations.NotificationType.Task).ToList();
+    var user = ((Loregroup.Core.ViewModels.LayoutModel)ViewBag.LayoutModel).SessionUser;
+}
+<div class="user-panel">
+    <div class="pull-left image">
+        @*<img src="img/avatar3.png" class="img-circle" alt="User Image" />*@
+        @*<img src="~/Content/1/File/1.jpg" class="img-circle" alt="User Image" />*@
+        <img src="@user.Profimage" class="img-circle" alt="User Image" />
+    </div>
+    <div class="pull-left info">
+        <p>Hello, @user.FullName</p>
+        <a href="#"><i class="fa fa-circle text-success"></i>Online</a>
+    </div>
+</div>
+
+@*<form action="#" method="get" class="sidebar-form">
+    <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search..." />
+        <span class="input-group-btn">
+            <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+        </span>
+    </div>
+</form>*@
+
+<!-- sidebar menu: : style can be found in sidebar.less -->
+<ul class="sidebar-menu">
+    @foreach (var navigation in Model.Navigations)
+    {
+        <li @(navigation.HasSubMenu ? "class=treeview" : "")>
+           @*<li @(navigation.HasSubMenu ? )>*@
+            <a href="@navigation.ActionUrl" data-action-url="@navigation.ActionUrl" data-action-type="@navigation.ActionUrlRequestType">
+                <i class="fa @navigation.Icon"></i><span>@navigation.Text</span>
+                @if (navigation.HasSubMenu)
+                {
+                    <i class="fa fa-angle-left pull-right"></i>
+                }
+            </a>
+            @if (navigation.HasSubMenu)
+            {
+                <ul class="treeview-menu">
+                    @foreach (SubNavigationViewModel subNav in navigation.SubNavigations)
+                    {
+
+                        if (subNav.Text != null)
+                        {
+                            <li>
+                                <a href="@subNav.ActionUrl" data-action-url="@subNav.ActionUrl" data-action-type="@subNav.ActionUrlRequestType">
+                                    <i class="fa @subNav.Icon"></i>@subNav.Text
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            }
+        </li>
+    }
+</ul>

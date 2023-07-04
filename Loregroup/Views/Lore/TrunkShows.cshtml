@@ -1,0 +1,97 @@
+﻿@model Loregroup.Core.ViewModels.EventViewModel
+
+@{
+    ViewBag.Title = "TrunkShows";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-70" style="background:#fff;">
+    <h2 class="ltext-103 cl2 txt-center">
+        Trunk Shows<hr>
+    </h2>
+</section>
+
+<!-- Content page -->
+<section class="bg0 p-t-10 p-b-50">
+    <div class="container">
+
+        @foreach (var item in Model.EventList)
+        {
+            <div class="row" style="box-shadow: 0px 0px 9px 3px #cccccca6;">
+                <div class="col-sm-6 col-lg-6" style="text-align:center; margin:auto; padding: 20px;">
+                    <a target="_blank" href="http://@item.WebsiteUrl">
+                        @if (item.image != "" && item.image != null)
+                        {
+                            <img class="tr-img imagetofitTTShow" src="@item.image" />
+                        }
+                        else
+                        {
+                            <img class="tr-img imagetofitTTShow" src="/Frontend/images/blankimage.png" />
+                        }
+                    </a>
+                </div>
+                <div class="col-sm-6 col-lg-6 tr-box-black" style="text-align:center; margin:auto;">
+                    <div>
+                        <h1>@item.Title</h1>
+                        <p>@item.Address</p>
+                        <p>@item.State, @item.city</p>
+                        <p>@item.Zipcode</p>
+                        <p>@item.mobileno</p>
+                        <a target="_blank" href="https://www.google.co.in/maps/search/@item.Address + @item.city"><img src="/Frontend/images/icons/icons8-google-maps-48.png" /></a>
+
+                        <h4>@item.Title</h4>
+
+                        <div class="tr-date-left">@item.FromDate</div>
+                        <div class="tr-center">TO</div>
+                        <div class="tr-date-right">@item.EndDate</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        }
+
+
+        @*<div class="row" style="box-shadow: 0px 0px 9px 3px #cccccca6;">
+                <div class="col-sm-6 col-lg-6" style="text-align:center; margin:auto; padding: 20px;">
+                    <img class="tr-img" src="/Frontend/event-images/mbbride_logo1.png" />
+                </div>
+                <div class="col-sm-6 col-lg-6 tr-box-black" style="text-align:center; margin:auto;">
+                    <div>
+                        <h1>MB BRIDE & SPECIAL OCCASION</h1>
+
+                        <p>123 South Urania Ave</p>
+                        <p>Greensburg, PA 15601</p>
+                        <p>(724) 836-6626</p>
+                        <a target="_blank" href="https://www.google.co.in/maps/place/123+S+Urania+Ave,+Greensburg,+PA+15601,+USA/40.3022784,-79.5402025,17z/data=!3m1!4b1!4m8!1m2!2m1!1s123+South+Urania+Ave++Greensburg,+PA+15601+836-6626!3m4!1s0x8834d01554d625ab:0xe58bf6916197a3cf!8m2!3d40.3022743!4d-79.5380138"><img src="/Frontend/images/icons/icons8-google-maps-48.png" /></a>
+
+                        <h4>Rachel Allan Prom Dresses<br> Rachel Allan Curves</h4>
+
+                        <div class="tr-date-left">30 Jan 2019</div>
+                        <div class="tr-date-right">03 Feb 2019</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row" style="box-shadow: 0px 0px 9px 3px #cccccca6;">
+                <div class="col-sm-6 col-lg-6" style="text-align:center; margin:auto; padding: 20px;">
+                    <img class="tr-img" src="/Frontend/event-images/2-1-191.png" />
+                </div>
+                <div class="col-sm-6 col-lg-6 tr-box-black" style="text-align:center; margin:auto;">
+                    <div>
+                        <h1>HIRSCHFELD'S PROM SHOPPE</h1>
+                        <p>401 N. Dewey St.</p>
+                        <p>North Plate, NE 69101</p>
+                        <p>308-534-8700</p>
+                        <a target="_blank" href="https://www.google.co.in/maps/place/401+N+Dewey+St,+North+Platte,+NE+69101,+USA/41.1366052,-100.7639021,17z/data=!3m1!4b1!4m8!1m2!2m1!1s401+N.+Dewey+St.+North+Platte,+NE+69101+308-534-8700!3m4!1s0x877622fdf445efff:0xd424144906537333!8m2!3d41.1366012!4d-100.7617134"><img src="/Frontend/images/icons/icons8-google-maps-48.png" /></a>
+
+                        <h4>Rachel Allan Prom Dresses</h4>
+
+                        <div class="tr-date-left">01 Feb 2019</div>
+                        <div class="tr-date-right">01 Feb 2019</div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</section>
+

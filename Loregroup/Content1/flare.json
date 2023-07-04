@@ -1,0 +1,409 @@
+{
+ "name": "Company A",
+ "children": [
+  	{
+   	"name": "Site A",
+   	"children": [
+  		{
+  		"name": "Area 1",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}
+     							   
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		},
+
+{
+  		"name": "Area 2",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}
+     							    
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		},
+
+{
+  		"name": "Area 3",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}
+     							    
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		}
+		] 
+ 	},
+
+{
+   	"name": "Site B",
+   	"children": [
+  		{
+  		"name": "Area 1",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}
+     							   
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		},
+
+{
+  		"name": "Area 2",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}	    
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		},
+
+{
+  		"name": "Area 3",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}   
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		}
+		] 
+ 	},
+
+
+{
+   	"name": "Site C",
+   	"children": [
+  		{
+  		"name": "Area 1",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}
+     							    
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		},
+
+{
+  		"name": "Area 2",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}
+     							    
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		},
+
+{
+  		"name": "Area 3",    
+		 "children": [
+    			{
+     			"name": "Usage"
+    			},
+    			
+			{
+     			"name": "Machine"
+    			},
+    			
+			{
+     			"name": "Member",
+     			"children": [
+      				{
+       				"name": "Author",
+       				"children": [
+        					
+      						{"name": "Work Load", "size": 11275},
+      						{"name": "Department", "size": 7147},
+      						{"name": "Experience", "size": 9930},
+						{"name": "Specialization", "size": 7147},
+      						{"name": "Policy", "size": 9930},
+						{"name": "Feedback", "size": 7147}
+     							    
+       					    ]
+      				},
+      				{"name": "Reviewer", "size": 11275},
+      				{"name": "IT Administrator", "size": 7147},
+      				{"name": "End User", "size": 9930}
+     				]
+   			 },
+
+    			{
+     			"name": "Package"
+    			},
+
+    			{
+     			"name": "Procedure"
+    			}
+   		]
+		}
+		] 
+ 	}
+
+
+
+
+ ]
+}

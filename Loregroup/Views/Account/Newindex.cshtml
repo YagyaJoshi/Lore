@@ -1,0 +1,243 @@
+﻿@model Loregroup.Core.ViewModels.StoreMasterViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<head>
+    <meta charset="utf-8">
+    <title>::Loregroup::</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <!-- Link Swiper's CSS -->
+   <link href="~/Content/css1/Loregroup.css" rel="stylesheet" /><!-- Resource style -->
+  
+    <script src="~/Content/js1/modernizr.js"></script>
+
+
+    <style>
+/* [Object] Modal
+ * =============================== */
+.modal {
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+  background: rgba(0,0,0, .9);
+  transition: opacity .25s ease;
+}
+
+.modal__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.modal-state {
+  display: none;
+}
+
+.modal-state:checked + .modal {
+  opacity: 1;
+  visibility: visible;
+  z-index:9999;
+}
+
+.modal-state:checked + .modal .modal__inner {
+  top: 0;
+}
+
+.modal__inner {
+  transition: top .25s ease;
+  position: absolute;
+  top: -20%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  margin: auto;
+  overflow: auto;
+  background: #fff;
+  border-radius: 5px;
+  padding: 1em 2em;
+  height: 82%;
+}
+
+.modal__close {
+  position: absolute;
+  right: 0.5em;
+  top: 1.7em;
+  width: 1.1em;
+  height: 1.1em;
+  cursor: pointer;
+}
+
+.modal__close:after,
+.modal__close:before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 1.5em;
+  background: #ccc;
+  display: block;
+  transform: rotate(45deg);
+  left: 50%;
+  margin: -3px 0 0 -1px;
+  top: 0;
+}
+
+.modal__close:hover:after,
+.modal__close:hover:before {
+  background: #aaa;
+}
+
+.modal__close:before {
+  transform: rotate(-45deg);
+}
+.nnn{width:48%;}
+
+media screen and (max-width: 768px) {
+
+  .modal__inner {
+    width: 90%;
+    height: 90%;
+    box-sizing: border-box;
+  }
+  .login_left_popup{ float:left;
+width:98%;
+}
+.login_right_popup{ float:right;
+width:98%;
+}
+}
+
+
+/* Other
+ * =============================== */
+.btn {
+  cursor: pointer;
+  background: #27ae60;
+  display: inline-block;
+  padding: .5em 1em;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.btn:hover,
+.btn:focus {
+  background: #2ecc71;
+}
+
+.btn:active {
+  background: #27ae60;
+  box-shadow: 0 1px 2px rgba(0,0,0, .2) inset;
+}
+
+.btn--blue {
+  background: #2980b9;
+}
+
+.btn--blue:hover,
+.btn--blue:focus {
+  background: #3498db;
+}
+
+.btn--blue:active {
+  background: #2980b9;
+}
+
+    </style>
+
+
+
+</head>
+
+    <!--header start-->
+   
+    <!--header end-->
+    <!--content start-->
+  @using (Html.BeginForm("Store", "Account", FormMethod.Post, new { @enctype = "multipart/form-data", id = "profilePictureForm" }))
+{
+
+ <div class="login_box" style="width:90%;padding:4%;line-height: 2em;">
+    <h3 style="color:#e03440;border-bottom: 2px solid;padding: 6px;">Signup as a Store</h3>
+    <ul>
+        <li>
+            <label>Store Name</label>
+            @*<input type="text" placeholder=" Enter your desired Username" />*@
+            @Html.BsTextBoxWithPHFor(model => model.StoreName)
+        </li>
+        <li>
+            <label>Email ID</label>
+            @*<input type="text" placeholder=" Enter your Email ID" />*@
+            @Html.BsTextBoxWithPHFor(model => model.EmailId)
+        </li>
+        <li>
+            <label>Mobile Number</label>
+            @*<input type="text" placeholder=" Enter Mobile No." />*@
+            @Html.BsTextBoxWithPHFor(model => model.MobileNo)
+        </li>
+        <li>
+            <label>Password</label>
+            @*<input type="text" placeholder=" Password" />*@
+            @Html.BsTextBoxWithPHFor(model => model.Password)
+
+        </li>
+        <li>
+            <input type="checkbox"> Notify me with Awesome Deals
+        </li>
+        <li><input class="continue" type="submit" value="Continue">
+        <li><button type="submit" id="bttn_Click" class="continue" style="margin-right: 10px">Save</button></li>
+</ul>
+</div>
+    <!--content end-->
+    <!--first popup-->
+    <input class="modal-state" id="modal-1" type="checkbox" />
+  
+    <!--first popup end-->
+    <!--footer start-->
+    <footer>
+    
+    </footer>
+  }
+    <!--footer end-->
+    
+
+
+
+
+<script src="~/Content/js1/swiper.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        paginationClickable: true,
+        //spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: 2500,
+        autoplayDisableOnInteraction: false
+    });
+
+    var swiper = new Swiper('.swiper-container_one', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 4,
+        slidesPerColumn: 1,
+        paginationClickable: true,
+        spaceBetween: 10
+    });
+</script>
+<script src="~/Content/js1/jquery-2.1.1.js"></script>
+<script src="~/Content/js1/jquery.mixitup.min.js"></script>
+<script src="~/Content/js1/main.js"></script> 

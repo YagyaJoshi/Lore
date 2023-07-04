@@ -1,0 +1,222 @@
+﻿@model Loregroup.Core.ViewModels.GalleryViewModel
+
+@{
+    ViewBag.Title = "AddGallery";
+}
+
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+<script type="text/javascript">
+
+    function Cancel() {
+        document.location = '@Url.Action("GetAllGallery", "Setting")';
+    }
+
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong> Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+<script type="text/javascript">
+
+    function getNameFromPath(strFilepath) {
+        var objRE = new RegExp(/([^\/\\]+)$/);
+        var strName = objRE.exec(strFilepath);
+
+        if (strName == null) {
+            return null;
+        }
+        else {
+            return strName[0];
+        }
+    }
+
+    var loadImage1 = function (event) {
+        var file = getNameFromPath($("#Img1").val());
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'jpeg':
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        else {
+            flag = false;
+        }
+
+        if (file == null) {
+            document.getElementById("image1").style["height"] = "0px";
+            document.getElementById("image1").style["width"] = "0px";
+            document.getElementById("image1").style["margin-top"] = "0px";
+            var output = document.getElementById('image1');
+            output.src = null;
+            return false;
+        }
+        else if (flag == false) {
+
+            $("#Spanimg1").text("You can upload only jpg, jpeg, png, gif extension file");
+            document.getElementById("image1").style["height"] = "0px";
+            document.getElementById("image1").style["width"] = "0px";
+            document.getElementById("image1").style["margin-top"] = "0px";
+            var output = document.getElementById('image1');
+            output.src = null;
+
+            return false;
+        }
+        else {
+            $("#Spanimg1").text("");
+            document.getElementById("image1").style["height"] = "200px";
+            document.getElementById("image1").style["width"] = "200px";
+            document.getElementById("image1").style["margin-top"] = "10px";
+
+            var output = document.getElementById('image1');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+
+
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        if ("@Model.GalleryTypeId" == "Image") {
+            $("#VideoUrl").hide();
+            $("#pic").show();
+        }
+        else {
+            $("#pic").show();
+            $("#VideoUrl").show();
+
+        }
+
+        $(document).ready(function () {
+            $("#GalleryTypeId").change(function () {
+                if ($(this).val() == "1") {
+                    $("#VideoUrl").hide();
+                    $("#pic").show();
+                    $("#Title").show();
+
+                } else {
+
+                    $("#VideoUrl").show();
+                    $("#pic").show();
+                    $("#Title").show();
+                }
+            });
+        });
+    })
+
+    $(function () {
+        $('#btn_submit').click(function () {
+            var GallertTypeId = $('#GalleryTypeId option:selected').val();
+            if (GallertTypeId == 0) {
+                $('#GalleryTypeId').focus();
+                alert("Please Select GalleryType");
+
+                return false;
+            }
+
+        })
+    });
+
+
+
+
+    //$(function () {
+    //    $('#btn_submit').click(function () {
+    //        var video = $('#VideoUrl').val();
+    //        if (video == "") {
+    //            $('#VideoUrl').focus();
+    //            alert("Please Select VideoUrl");
+    //           return false;
+    //        }
+
+    //    })
+    //});
+</script>
+
+
+@using (Html.BeginForm("AddGallery", "Setting", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.GalleryTypeId)
+                        @Html.EnBsDropDownListFor(model => model.GalleryTypeId, new Dictionary<string, object>
+                        ())
+                        @Html.ValidationMessageFor(model => model.GalleryTypeId)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title)
+                        @Html.BsTextBoxWithPHFor(model => model.Title)
+                        @Html.ValidationMessageFor(model => model.Title)
+                    </div>
+                </div>
+                <div class="col-md-6" id="VideoUrl">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.VideoUrl)
+                        @Html.BsTextBoxWithPHFor(model => model.VideoUrl)
+                        @Html.ValidationMessageFor(model => model.VideoUrl)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4" id="pic">
+                    @if (Model.image == "" || Model.image == null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.image)
+                            <input type="file" name="Img1" id="Img1" onchange="loadImage1(event)" accept="image/*" />
+                            <img id="image1" src="@Model.image" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg1"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.image)
+                            <input type="file" name="Img1" id="Img1" onchange="loadImage1(event)" accept="image/*" />
+                            <img id="image1" src="@Model.image" style="height: 200px; width: 200px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg1"></span>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.image)
+}

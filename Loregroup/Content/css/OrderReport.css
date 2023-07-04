@@ -1,0 +1,167 @@
+﻿body {
+    font-family: Arial;
+    font-size: 10.5pt;
+}
+
+td {
+    vertical-align: top;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+    padding-right: 5px;
+    padding-top: 1px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.fullwidth {
+    width: 100%;
+}
+
+.padded-border {
+    border: solid 1px #000000;
+    padding: 10px 10px 10px 10px;
+}
+
+.border {
+    border: 1px solid black;
+}
+
+/* #region order-header */
+.order-header {
+    width: 900px;
+    padding: 5px 5px 5px 5px;
+    margin: 0 0 0 0;
+    border: solid 1px #000000;
+}
+
+.order-header-contact-details {
+    width: 500px;
+}
+
+    .order-header-contact-details .company-name {
+        font-family: Times New Roman;
+        font-size: 18pt;
+        font-weight: bold;
+        padding-bottom: 15px;
+    }
+
+    .order-header-contact-details .address-block {
+        font-size: 10pt;
+        width: 250px;
+    }
+
+.order-header-title {
+    font-size: 18pt;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+/* #endregion */
+
+/* #region order-details */
+.order {
+    padding: 10px 0 10px 0;
+    margin: 0;
+}
+
+/* #region client-details */
+.client-details {
+    width: 500px;
+}
+
+    .client-details .header {
+        font-size: 12pt;
+        font-weight: bold;
+        padding: 0 5px 0 5px;
+        line-height: 18px;
+    }
+
+    .client-details .detail {
+        font-size: 12pt;
+        border-bottom: solid 1px #000000;
+        line-height: 25px;
+        padding: 0 5px 0 5px;
+    }
+
+        .client-details .detail span {
+            color: #333999;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+    .client-details .detail-noborder {
+        font-size: 12pt;
+        line-height: 25px;
+        padding: 0 5px 0 5px;
+    }
+
+        .client-details .detail-noborder span {
+            color: #333999;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+/* #endregion */
+/* #region banking-details */
+.banking-details {
+}
+
+    .banking-details .header {
+        font-size: 12pt;
+        font-weight: bold;
+        padding: 0 5px 0 5px;
+        line-height: 18px;
+    }
+
+    .banking-details .detail {
+        font-size: 10pt;
+        line-height: 25px;
+        padding: 0 5px 0 5px;
+    }
+/* #endregion*/
+
+/* #region order-details */
+.order-details {
+    padding-top: 20px;
+}
+
+    .order-details .header {
+        font-size: 12pt;
+        font-weight: bold;
+        padding: 0 5px 0 5px;
+        line-height: 18px;
+    }
+
+    .order-details .detail {
+        font-size: 12pt;
+        border-bottom: solid 1px #000000;
+        line-height: 25px;
+        padding: 0 5px 0 5px;
+    }
+
+        .order-details .detail span {
+            color: #333999;
+            font-weight: bold;
+        }
+/* #endregion */
+
+
+/* #endregion */
+
+
+/* #region order-item-details */
+.order-item-details tr th {
+    background-color: #dddddd;
+}
+
+/* #endregion */
+
+
+/* #region order-footer */
+/* #endregion */

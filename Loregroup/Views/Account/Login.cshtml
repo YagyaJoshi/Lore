@@ -1,0 +1,129 @@
+﻿@model Loregroup.Core.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "LoginPage";
+    //Layout = "~/Views/Shared/_CheckingApp.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+<div class="header">Sign In</div>
+@*<div class="header">Resister Here</div>*@
+@*<a class="header">Resister Here</a>*@
+
+
+@using (Html.BeginForm())
+{
+      @Html.AntiForgeryToken()
+    <div class="body bg-gray">
+        <div class="form-group">
+           
+                @Html.BsTextBoxWithPHFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)
+                @*<input type="text" name="userid" class="form-control" placeholder="User ID" />*@
+</div>
+        <div class="form-group">
+            @*<input type="password" name="password" class="form-control" placeholder="Password" />*@
+            @Html.BsPasswordWithPhFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <div class="form-group">
+            @Html.CheckBoxFor(m => m.IsRemember)
+            Remember me
+        </div>
+    </div>
+
+
+
+    <div class="footer">
+        <button type="submit" class="btn bg-olive btn-block">Sign me in</button>
+        @*<h2>Use another service to log in.</h2>*@
+        @*@Html.Action("ExternalLoginsList", "Account")*@
+        @*<a>Register Here</a>*@
+        @*<a href="@Url.Action("Register", "Account")">Register Here :<i class="fa fa-arrow-circle-right"></i></a>*@
+        @*<p><a href="#">I forgot my password</a></p>*@
+        @*<p class="forgot-pass"><a href="javascript:void(0)" onclick="ForgotPassword('show')">Forgot Password?</a></p>*@
+        @*<a href="register.html" class="text-center">Register a new membership</a>*@
+    </div>
+      
+    
+}
+
+@using (Ajax.BeginForm("ForgotPassword", "Account", FormMethod.Post, new AjaxOptions() { OnComplete = "onSuccessComplete" }, new { name = "frmforgotpassword", id = "frmforgotpassword" }))
+{
+    <div class="body" id="divForgotPassword" style="display: none;">
+
+        <div class="alert" id="divResponseForgotPassword" style="display: none;">
+            <strong>Error !</strong> <span id="spnEmsg"></span>
+        </div>
+
+        <div class="section-title">
+            <h3>Forget Password</h3>
+        </div>
+
+        <p>Enter your e-mail address or username below to reset your password. </p>
+        <div class="form-group" id="divFogPwdEmail">
+            <div class="input-icon">
+                <input class="form-control" type="text" autocomplete="off" name="ForgotPasswordEmail" placeholder="Email or Username" id="txtFogPwdEmail" />
+            </div>
+            <span id="spnForgotPwdEmail" style="display: none;"></span>
+        </div>
+        <div class="forget-form-action clearfix">
+            <button class="btn btn-success pull-left bg-blue" type="button" id="back-btn" onclick="ForgotPassword('hide')"> Back </button>
+            <button class="btn btn-success pull-right bg-green" type="button" onclick="return validateForgotPassword(); $('#frmforgotpassword').submit()"> Submit </button>
+
+        </div>
+
+    </div>
+}
+
+<script type="text/javascript">
+
+    function ForgotPassword(actionName) {
+        if (actionName == "show") {
+            $('#frmlogin').hide();
+            $('.header').hide();
+            $('#divResponseForgotPassword,#spnForgotPwdEmail').hide();
+            $('#txtFogPwdEmail').val('');
+            $('#frmforgotpassword,#divForgotPassword').show();
+        }
+        else if (actionName == "hide") {
+            $('#frmlogin input:not([type="checkbox"],[type="hidden"])').each(function () {
+                $(this).val('');
+            });
+            $('#frmlogin').show();
+            $('.header').show();
+            $('#frmforgotpassword,#divForgotPassword').hide();
+        }
+    }
+    function validateForgotPassword() {
+        //if (IsNullorEmpty($('#txtFogPwdEmail').val())) {
+        //    $('#spnForgotPwdEmail').html('Please enter your username or email').show();
+        //    return false;
+        //}
+        $('#frmforgotpassword').submit();
+    }
+    function onSuccessComplete(jsonResponse) {
+        var myObj = JSON.parse(jsonResponse.responseText);
+        // console.log(myObj);
+        if (myObj.Success && !myObj.EmailSent) {
+            $('#divResponseForgotPassword').removeClass("alert-success").addClass("alert-danger").show();
+            $('#spnEmsg').html(myObj.ResponseText);
+        }
+        else if (myObj.Success && myObj.EmailSent) {
+            $('#divResponseForgotPassword').removeClass("alert-danger").addClass("alert-success").show();
+            $('#spnEmsg').html(myObj.ResponseText);
+            alert('email sent');
+        }
+        else {
+            alert('Something wrong !! Please check');
+        }
+    }
+
+</script>
+

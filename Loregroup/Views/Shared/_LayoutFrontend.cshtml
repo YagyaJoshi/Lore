@@ -1,0 +1,507 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loregroup</title>
+
+    <link rel="icon" type="image/png" href="/Frontend/images/icons/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/fonts/linearicons-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/MagnificPopup/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/Frontend/css/style.css" />
+    <link href="/Frontend/css/form-wizard-blue.css" rel="stylesheet" />
+   
+    @*<style>
+            video::-webkit-media-controls {
+                display: none;
+            }
+
+            /* Could Use thise as well for Individual Controls */
+            video::-webkit-media-controls-play-button {
+            }
+
+            video::-webkit-media-controls-volume-slider {
+            }
+
+            video::-webkit-media-controls-mute-button {
+            }
+
+            video::-webkit-media-controls-timeline {
+            }
+
+            video::-webkit-media-controls-current-time-display {
+            }
+        </style>*@
+
+</head>
+<body class="animsition" oncontextmenu="return false;">
+
+    <div id="myModal" class="chart-modal">
+        <!-- Modal content -->
+        <span class="chart-close">&times;</span>
+        <div class="chart-modal-content">
+
+            <img height="600" src="/Frontend/collections/USA_SizeChart.jpg" />
+        </div>
+    </div>
+
+    <div id="myModalUKSZ" class="chart-modal">
+        <!-- Modal content -->
+        <span class="chart-closeUKSZ">&times;</span>
+        <div class="chart-modal-content">
+
+            <img height="600" src="/Frontend/collections/UK_SizeChart.jpg" />
+        </div>
+    </div>
+
+    <div id="myModalUK_SP" class="chart-modal">
+        <!-- Modal content -->
+        <span class="chart-closeUK_SP">&times;</span>
+        <div class="chart-modal-content">
+
+            <img height="650" src="/Frontend/collections/UK_SP.jpg" />
+        </div>
+    </div>
+    @RenderBody()
+
+    <div id="myLoadingElement" style="display:none;position:absolute;top:50%;left:50%;">
+        <img src="~/Content/ajax-loader.gif" alt="Loading..." width="60px" />
+        @*<img src="loading.gif" alt="Loading..." sizechart.png/>*@
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg3 p-t-50 p-b-10">
+        <div class="container">
+            <!-- <div class="row"> -->
+            <!-- <div class="col-sm-6 col-lg-4 p-b-50" style="text-align:center; margin:auto;"> -->
+            <!-- <a style="cursor:pointer; color:#fff;" class="mtext-109 cl0 p-b-30" id="sizechart"> -->
+            <!-- <span><img src="images/icons/icons8-combo-chart-24.png" /> </span>Size Chart -->
+            <!-- </a> -->
+            <!-- </div> -->
+            <!-- <div class="col-sm-6 col-lg-4 p-b-50" style="text-align:center; margin:auto;"> -->
+            <!-- <a class="mtext-109 cl0 p-b-30" href="#"> -->
+            <!-- <span><img src="images/icons/icons8-suitcase-32.png" /> </span>Trunk Show -->
+            <!-- </a>					 -->
+            <!-- </div> -->
+            <!-- <div class="col-sm-6 col-lg-4 p-b-50" style="text-align:center; margin:auto;"> -->
+            <!-- <a class="mtext-109 cl0 p-b-30" href="#"> -->
+            <!-- <span><img src="images/icons/icons8-women-32.png" /> </span>Trade Show -->
+            <!-- </a>					 -->
+            <!-- </div> -->
+            <!-- </div>			 -->
+            <!-- <hr style="border-top:1px solid gray;"> -->
+            <!-- <br>		 -->
+
+
+            <div class="row p-b-50">
+                <div class="col-sm-6 col-lg-3 p-b-50" style="text-align:left; margin:auto;">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        CUSTOMER CARE
+                    </h4>
+
+                    <ul>
+                        <li class="p-b-10">
+                            <a href="@Url.Action("FrontAboutUs", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                About
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("ContactUs", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Contact Us
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("StoreLocator", "Setting")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Store Locator
+                            </a>s
+                        </li>
+
+                        @*<li class="p-b-10">
+                                <a href="#" class="stext-107 cl0 hov-cl1 trans-04">
+                                    International
+                                </a>
+                            </li>*@
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("Faq", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                FAQ
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 p-b-50" style="text-align:left; margin:auto;">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        MY ACCOUNT
+                    </h4>
+
+                    <ul>
+                        <li class="p-b-10">
+                            <a href="@Url.Action("Login", "Account")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Login
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("Dashboard", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                My Account
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("OrderHistory", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Order History
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("Wishlist", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Wish List
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="col-sm-6 col-lg-3 p-b-50" style="text-align:left; margin:auto;">
+                    <h4 class="stext-301 cl0 p-b-30">
+                        INFORMATION
+                    </h4>
+
+                    <ul>
+                        <li class="p-b-10">
+                            <a href="@Url.Action("FrontTermsandConditions", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Terms & Conditions
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("FrontendContent", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Privacy Policy
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("FrontReturnPolicy", "Lore")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Return Policy
+                            </a>
+                        </li>
+
+                        <li class="p-b-10">
+                            <a href="@Url.Action("Registration", "Setting")" class="stext-107 cl0 hov-cl1 trans-04">
+                                Become a Stockists @*RA Request (Stores Only)*@
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 p-b-50" style="text-align:left; margin:0;">
+                    <a style="cursor:pointer; color:#fff;" class="mtext-109 cl0 p-b-30" id="sizechart">
+                        <span><img src="/Frontend/images/icons/icons8-combo-chart-24.png" /> </span>Size Chart
+                    </a>
+                    <br><br><br>
+                    <a class="mtext-109 cl0 p-b-30" href="@Url.Action("TrunkShows", "Lore")">
+                        <span><img src="/Frontend/images/icons/icons8-suitcase-32.png" /> </span>Trunk Show
+                    </a>
+                    <br><br><br>
+                    <a class="mtext-109 cl0 p-b-30" href="@Url.Action("TradeShows","Lore")">
+                        <span><img src="/Frontend/images/icons/icons8-women-32.png" /> </span>Trade Show
+                    </a>
+                </div>
+
+                <hr style="width: 100%;  background: #fff; margin: 20px 20px;">
+
+                <div class="col-sm-12 col-lg-12 p-b-50">
+                    <p class="stext-107 cl6 txt-center">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright&copy;
+                        @*<script>document.write(new Date().getFullYear());</script>*@
+                        <strong>  Loré. </strong> All rights reserved
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top -->
+    <div class="btn-back-to-top" id="myBtn">
+        <span class="symbol-btn-back-to-top">
+            <i class="zmdi zmdi-chevron-up"></i>
+        </span>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/jquery/jquery-3.2.1.min.js"></script>
+
+    @*<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>*@
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/bootstrap/js/popper.js"></script>
+    <script src="/Frontend/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/select2/select2.min.js"></script>
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+    </script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/Frontend/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/slick/slick.min.js"></script>
+    <script src="/Frontend/js/slick-custom.js"></script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/parallax100/parallax100.js"></script>
+    <script>
+        $('.parallax100').parallax100();
+    </script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+    <script>
+        $('.gallery-lb').each(function () { // the containers for all your galleries
+            $(this).magnificPopup({
+                delegate: 'a', // the selector for gallery item
+                type: 'image',
+                gallery: {
+                    enabled: true
+                },
+                mainClass: 'mfp-fade'
+            });
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/isotope/isotope.pkgd.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/sweetalert/sweetalert.min.js"></script>
+    <script>
+        $('.js-addwish-b2').on('click', function (e) {
+            e.preventDefault();
+        });
+
+        $('.js-addwish-b2').each(function () {
+            var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+            $(this).on('click', function () {
+
+                document.getElementById("headerheartwhite").style.display = "none";
+                document.getElementById("headerheartred").style.display = "block";
+
+                swal(nameProduct, "is added to wishlist !", "success");
+
+                $(this).addClass('js-addedwish-b2');
+                $(this).off('click');
+            });
+        });
+
+        $('.js-addwish-detail').each(function () {
+            var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+            $(this).on('click', function () {
+                swal(nameProduct, "is added to wishlist !", "success");
+
+                $(this).addClass('js-addedwish-detail');
+                $(this).off('click');
+            });
+        });
+
+        /*---------------------------------------------*/
+
+        $('.js-addcart-detail').each(function () {
+            var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+            $(this).on('click', function () {
+                swal(nameProduct, "is added to cart !", "success");
+            });
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script>
+        $('.js-pscroll').each(function () {
+            $(this).css('position', 'relative');
+            $(this).css('overflow', 'hidden');
+            var ps = new PerfectScrollbar(this, {
+                wheelSpeed: 1,
+                scrollingThreshold: 1000,
+                wheelPropagation: false,
+            });
+
+            $(window).on('resize', function () {
+                ps.update();
+            })
+        });
+    </script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/js/main.js"></script>
+
+    <!--===============================================================================================-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnLyynMxlsJHqXcRFXxn1D_7-vj4jnQmw"></script>
+
+    @*<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd4mguFpSH0t_H5-sCyMuTBJWquGxEptc&callback=initMap" type="text/javascript"></script>*@
+
+    <script src="/Frontend/js/map-custom.js"></script>
+    <!--===============================================================================================-->
+    <script src="/Frontend/js/base.min.js"></script>
+    <script src="/Frontend/js/form-wizard.js"></script>
+
+
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("sizechart");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("chart-close")[0];
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        //myModalUKSZ
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+        // Get the modal
+        var modalUKSZ = document.getElementById('myModalUKSZ');
+
+        // Get the button that opens the modal
+        var btn1 = document.getElementById("sizechart1");
+
+        // Get the <span> element that closes the modal
+        var span1 = document.getElementsByClassName("chart-closeUKSZ")[0];
+
+        // When the user clicks the button, open the modal
+        btn1.onclick = function () {
+            modalUKSZ.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span1.onclick = function () {
+            modalUKSZ.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modalUKSZ) {
+                modalUKSZ.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+        // Get the modal
+        var modalUK_SP = document.getElementById('myModalUK_SP');
+
+        // Get the button that opens the modal
+        var btn2 = document.getElementById("sizechart2");
+
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementsByClassName("chart-closeUK_SP")[0];
+
+        // When the user clicks the button, open the modal
+        btn2.onclick = function () {
+            modalUK_SP.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function () {
+            modalUK_SP.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modalUK_SP) {
+                modalUK_SP.style.display = "none";
+            }
+        }
+    </script>
+
+    <script language="JavaScript">
+        /**
+          * Disable right-click of mouse, F12 key, and save key combinations on page
+          * By Arthur Gareginyan (arthurgareginyan@gmail.com)
+          * For full source code, visit https://mycyberuniverse.com
+          */
+        window.onload = function () {
+            document.addEventListener("contextmenu", function (e) {
+                e.preventDefault();
+            }, false);
+            document.addEventListener("keydown", function (e) {
+                //document.onkeydown = function(e) {
+                // "I" key
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                    disabledEvent(e);
+                }
+                // "J" key
+                if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+                    disabledEvent(e);
+                }
+                // "S" key + macOS
+                if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+                    disabledEvent(e);
+                }
+                // "U" key
+                if (e.ctrlKey && e.keyCode == 85) {
+                    disabledEvent(e);
+                }
+                // "F12" key
+                if (event.keyCode == 123) {
+                    disabledEvent(e);
+                }
+            }, false);
+            function disabledEvent(e) {
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                } else if (window.event) {
+                    window.event.cancelBubble = true;
+                }
+                e.preventDefault();
+                return false;
+            }
+        };
+    </script>
+
+</body>
+</html>

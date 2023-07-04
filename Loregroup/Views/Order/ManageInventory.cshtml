@@ -1,0 +1,733 @@
+﻿@model Loregroup.Core.ViewModels.PurchaseOrderViewModel
+
+@{
+    ViewBag.Title = "ManageInventory";
+}
+
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+<style>
+    /*#myImg {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #myImg:hover {opacity: 0.7;}*/
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        margin-top: 50px;
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 800px;
+    }
+
+    /* Caption of Modal Image */
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    /* Add Animation */
+    .modal-content, #caption {
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @@-webkit-keyframes zoom {
+        from {
+            -webkit-transform: scale(0);
+        }
+
+        to {
+            -webkit-transform: scale(1);
+        }
+    }
+
+    @@keyframes zoom {
+        from {
+            transform: scale(0);
+        }
+
+        to {
+            transform: scale(1);
+        }
+    }
+
+    /* The Close Button */
+    .closebutton {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .closebutton:hover,
+        .closebutton:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    /* 100% Image Width on Smaller Screens */
+    @@media only screen and (max-width: 700px) {
+        .modal-content {
+            width: 100%;
+        }
+    }
+</style>
+
+@*AutoComplete For Product Start*@
+<script type="text/javascript">
+
+    function GetColours(Colourid) {
+        if (Colourid == null) {
+            Colourid = 0;
+        }
+        debugger;
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetColoursForProduct", "Order")',
+            dataType: 'json',
+            data: { ProductId: $("#ProductModel_Id").val() },
+            success: function (states) {
+                $('#ColourId').append($('<option/>', {
+                    value: 0,
+                    text: "--Select Color--"
+                }));
+                $.each(states, function (i, color) {
+                    $('#ColourId').append('<option value ="' + color.Value + '">' + color.Text + '</option>');
+                });
+
+                $('#ColourId').val(Colourid);
+            },
+            error: function (ex) {
+                alert('Failed to retrieve Colors.' + ex);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        debugger;
+        if ($("#ImgUrl1").val() != "") {
+            //alert(data.Picture1);
+            var output = document.getElementById('image1');
+            output.style["height"] = "100px";
+            output.style["width"] = "100px";
+            output.style["margin-top"] = "10px";
+            output.src = $("#ImgUrl1").val();
+            //$("#ImgUrl").val(data.Picture1);
+        }
+
+        if ($("#ImgUrl2").val() != "") {
+            //alert(data.Picture1);
+            var output = document.getElementById('image2');
+            output.style["height"] = "100px";
+            output.style["width"] = "100px";
+            output.style["margin-top"] = "10px";
+            output.src = $("#ImgUrl2").val();
+            //$("#ImgUrl").val(data.Picture1);
+        }
+
+        if ($("#ImgUrl3").val() != "") {
+            //alert(data.Picture1);
+            var output = document.getElementById('image3');
+            output.style["height"] = "100px";
+            output.style["width"] = "100px";
+            output.style["margin-top"] = "10px";
+            output.src = $("#ImgUrl3").val();
+            //$("#ImgUrl").val(data.Picture1);
+        }
+
+        if ($("#ProductModel_Id").val() > 0) {
+            //alert($("#kapil").text());
+            GetColours($("#kapil").text());
+        }
+
+        $("#ProductModel_ProductName").autocomplete({
+
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Order/SearchByProductName",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        Prefix: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.ProductName, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (e, ui) {
+                var vn = ui.item.value;
+                //alert(ui.item.value);
+                //alert(ui.item.value);
+                $("#ProductModel_Id").val(vn);
+                var currency = $('#CustomerModel_CurrencyName').val();
+                $.ajax({
+                    url: "/Order/GetProductById",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        number: vn,
+                        currency: currency
+                    },
+                    dataFilter: function (data) {
+                        return data;
+                    },
+                    success: function (data) {
+                        var output = document.getElementById('image1');
+                        output.src = "";
+                        output.style["height"] = "0px";
+                        output.style["width"] = "0px";
+                        output.style["margin-top"] = "0px";
+
+                        var output2 = document.getElementById('image2');
+                        output2.src = "";
+                        output2.style["height"] = "0px";
+                        output2.style["width"] = "0px";
+                        output2.style["margin-top"] = "0px";
+
+                        var output3 = document.getElementById('image3');
+                        output3.src = "";
+                        output3.style["height"] = "0px";
+                        output3.style["width"] = "0px";
+                        output3.style["margin-top"] = "0px";
+
+                        $('#ProductModel_ProductName').val(data.ProductName);
+                        $('#ProductModel_CustomerPrice').val(data.CustomerPrice);
+                        $('#ProductModel_Picture1').val(data.Picture1);
+                        $('#ProductModel_Picture2').val(data.Picture2);
+                        $('#ProductModel_Picture3').val(data.Picture3);
+                                              
+                        if (data.Picture1 != null) {                            
+                            var output = document.getElementById('image1');                            
+                            output.style["height"] = "100px";
+                            output.style["width"] = "100px";
+                            output.style["margin-top"] = "10px";
+                            output.src = data.Picture1;
+                            $("#ImgUrl1").val(data.Picture1);
+                        }
+
+                        if (data.Picture2 != null) {
+                            //alert(data.Picture1);
+                            var output = document.getElementById('image2');
+                            // output.src = "";
+                            output.style["height"] = "100px";
+                            output.style["width"] = "100px";
+                            output.style["margin-top"] = "10px";
+                            output.src = data.Picture2;
+                            $("#ImgUrl2").val(data.Picture2);
+                        }
+
+                        if (data.Picture3 != null) {
+                            //alert(data.Picture1);
+                            var output = document.getElementById('image3');
+                            // output.src = "";
+                            output.style["height"] = "100px";
+                            output.style["width"] = "100px";
+                            output.style["margin-top"] = "10px";
+                            output.src = data.Picture3;
+                            $("#ImgUrl3").val(data.Picture3);
+                        }
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                    }
+                })
+
+                $('#ColourId').empty();
+                GetColours();
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+
+</script>
+@*AutoComplete For Product End*@
+
+
+@using (Html.BeginForm("ManageInventory", "Order", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.ProductModel.ProductName)
+                        @Html.BsTextBoxFor(x => x.ProductModel.ProductName)
+                        @*@Html.ValidationMessageFor(x => x.ProductModel.ProductName)*@
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ColourId)
+                        @Html.BootstrapDropDownListFor(m => m.ColourId, new SelectList(Model.ColourList, "Id", "Colour", Model.ColourId))
+                        @*@Html.ValidationMessageFor(model => model.ColourId)*@
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WareHouseId)
+                        @Html.BootstrapDropDownListFor(m => m.WareHouseId, new SelectList(Model.WareHouseList, "Id", "WareHouseName", Model.WareHouseId))
+                        @*@Html.ValidationMessageFor(model => model.ColourId)*@
+                    </div>
+                </div>
+                @*<div class="col-md-3">
+                        <div class="form-group">
+                            <img id="image1" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                        </div>
+                    </div>*@
+
+                <div class="col-md-3">
+                    <label style="visibility:hidden" id="kapil">@Model.ColourId</label>
+                    <button id="Search" type="submit" class="btn btn-primary pull-right" style="margin-top: 22px;" onclick="SearchClick()">Search</button>
+                </div>
+            </div>
+            @*<div class="col-md-12">
+                    <label style="visibility:hidden" id="kapil">@Model.ColourId</label>
+                    <button id="Search" type="submit" class="btn btn-primary pull-right" onclick="SearchClick()">Search</button>
+                </div>*@
+        </div>
+    </div>
+
+    <div class="box box-info col-md-12">
+        @*<div class="box-body">*@
+        @*<div class="row">*@
+        <div class="col-md-9">
+            @if (Model.IsDataAvailable == true)
+            {
+                <table id="DataTable" class="table">
+                    <thead>
+                        <tr>
+                            @*<th> SizeUK </th>
+        <th> In Stock </th>
+        <th> Ordered Quantity </th>
+        <th> Received Quantity (PO)</th>
+        <th> Available </th>*@
+
+                            <th> Size (USA/UK/EU)</th>
+                            <th> IN STOCK </th>
+                            <th> CO </th>
+                            <th> PO </th>
+                            <th> AVAILABLE +/- </th>
+                            <th> CN AVAILABLE +/- </th>
+                            <th> +/- All Avaliable</th>
+                            @*<th> EU AVAILABLE +/- </th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                        @foreach (var size in Model.ProductListModel.SizeModel)
+                        {
+                        <tr id="@size.SizeUK">
+                            <td>
+                                @{
+                                    int sizeus, sizeeu;
+                                }
+
+                                @if (@size.SizeUK.Trim().AsInt() == 2)
+                                {
+                                    <b>00/2/30</b>
+                                }
+                                else
+                                {
+                                    sizeus = size.SizeUK.Trim().AsInt() - 4;
+                                    sizeeu = size.SizeUK.Trim().AsInt() + 28;
+                                    <b>@sizeus / @size.SizeUK / @sizeeu</b>
+                                }
+                                @*<b>Size-@size.SizeUK.Trim().AsInt()</b>*@
+                            </td>
+                            <td>
+                              
+                                    <b style="font-size: 16px;">@size.InStockQty</b>
+                               
+                            </td>
+                            <td>
+                                @if (size.Qty > 0)
+                                {
+                                    <a href='/Order/GetCoDetail?records=@size.COQtyStr' target="_blank" title='Check CO FUll Detail'><b style="font-size: 16px;color: blue;">@size.Qty</b></a>
+                                }
+                                else
+                                {
+                                    <b style="font-size: 16px;color: blue;">@size.Qty</b>
+                                }
+
+                            </td>
+                            <td>
+                                @if (size.POQty > 0)
+                                {
+                                    <a href='/Order/GetPoDetail?records=@size.POQtyStr' target="_blank" title='Check PO FUll Detail'><b style="font-size: 16px;color: green;">@size.POQty</b></a>
+                                }
+                                else
+                                {
+                                    @*@size.ReceivedQty*@
+                                    <b style="font-size: 16px;color: green;">@size.POQty</b>
+                                }
+                            </td>
+                            <td>
+                                @if ((size.InStockQty - size.Qty + size.POQty) > 0)
+                                {
+                                    <b style="font-size: 16px;color: black;"> @(size.InStockQty - size.Qty + size.POQty)</b>
+                                }
+                                else
+                                {
+                                    <b style="font-size: 16px;color: red;">@(size.InStockQty - size.Qty + size.POQty)</b>
+                                    
+                                }
+                            </td>
+                            @*  CN Available Quantity *@
+                        <td>
+                            @if ((size.CNInStockQty - size.CNQty + size.CNPOQty) > 0)
+                            {
+                                <b style="font-size: 16px;color: black;">@(size.CNInStockQty - size.CNQty + size.CNPOQty)</b>
+                            }
+                            else
+                            {
+                                <b style="font-size: 16px; color: #FF00FF;">@(size.CNInStockQty - size.CNQty + size.CNPOQty)</b>
+                                @*<label style="color:hotpink">0</label>*@
+                            }
+                        </td>
+
+                        <td>
+                            
+                                <b style="font-size: 16px;color: black;">@((size.USInStockQty - size.USQty + size.USPOQty) + (size.UKInStockQty - size.UKQty + size.UKPOQty) + (size.EUInStockQty - size.EUQty + size.EUPOQty) + (size.CNInStockQty - size.CNQty + size.CNPOQty) )</b>
+                          
+                        </td>
+
+
+
+                            @*  Uk Available Quantity *@
+
+                            @*<td>
+                                <b style="font-size: 16px;color: black;">@( size.UKInStockQty - size.UKQty + size.UKPOQty) </b>
+                            </td>*@
+                            @*  EU Available Quantity *@
+                            @*<td>
+                                @if ((size.EUInStockQty - size.EUQty + size.EUPOQty) > 0)
+                                {
+                                    <b style="font-size: 16px;color: black;">@(size.EUInStockQty - size.EUQty + size.EUPOQty)</b>
+                                }
+                                else
+                                {
+                                    <b style="font-size: 16px;color: red;">@(size.EUInStockQty - size.EUQty + size.EUPOQty)</b>
+                                }
+                            </td>*@
+                            @*
+        <td>
+            @if ((size.ReceivedQty - size.Qty) > 0)
+            {
+            <div style="background-color:green;color: white;width: 15%;border-radius: 4px;padding-left: 5%;">
+                <b>@(size.ReceivedQty - size.Qty)</b>
+            </div>
+            }
+            else
+            {
+            <div style="background-color:red;color: white;width: 15%;border-radius: 4px;padding-left: 5%;">
+                <b>@(size.ReceivedQty - size.Qty)</b>
+            </div>
+            }
+
+        </td>*@
+
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else if (Model.ProductModel.ProductName != null && Model.IsDataAvailable == false)
+            {
+                //<h3>@Model.ProductModel.ProductName</h3>
+                //<h3>@Model.ProductListModel.SizeModel.Count</h3>
+                <h3>No Record Found</h3>
+            }
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="form-group">
+                <img id="image1" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+
+            <div class="form-group">
+                <img id="image2" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+            <div class="form-group">
+                <img id="image3" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+
+        </div>
+
+        @*</div>*@
+        @*</div>*@
+        @*<a class="btn btn-primary pull-right" onclick="return SubmitClick();"> Submit  </a>*@
+    </div>
+
+    @*<div class="col-md-3">
+            <div class="form-group">
+                <img id="image2" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <img id="image3" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+            </div>
+        </div>*@
+
+    @Html.HiddenFor(x => x.Id);
+    @Html.HiddenFor(x => x.ProductModel.Id);
+    @Html.HiddenFor(x => x.ProductModel.Picture1);
+    @Html.HiddenFor(x => x.ImgUrl1);
+    @Html.HiddenFor(x => x.ProductModel.Picture2);
+    @Html.HiddenFor(x => x.ImgUrl2);
+    @Html.HiddenFor(x => x.ProductModel.Picture3);
+    @Html.HiddenFor(x => x.ImgUrl3);
+}
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <span class="closebutton">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
+
+<script>
+    function SearchClick() {
+        if ($("#ProductModel_ProductName") == "" || $("#ColourId option:selected").val() == 0) {
+            alert("All fields are required.")
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function SubmitClick() {
+        var chk = false;
+
+        var size2qty = 0, size4qty = 0, size6qty = 0,
+                         size8qty = 0, size10qty = 0, size12qty = 0,
+                         size14qty = 0, size16qty = 0, size18qty = 0,
+                         size20qty = 0, size22qty = 0, size24qty = 0,
+                         size26qty = 0, size28qty = 0, size30qty = 0,
+                         size32qty = 0, size34qty = 0;
+
+        $.each($("#DataTable tbody tr"), function () {
+            $(this).find('td:eq(2)').css("color", "#000000")
+
+            if (parseInt($.trim($(this).find('td:eq(2)').html())) > parseInt($.trim($(this).find('td:eq(1)').html()))) {
+                chk = true;
+                $(this).find('td:eq(2)').css("color", "#FF3700")
+                //return false
+            }
+            else {
+                if (parseInt($.trim($(this).find('td:eq(0)').html())) == 2) {
+                    size2qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 4) {
+                    size4qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 6) {
+                    size6qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 8) {
+                    size8qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 10) {
+                    size10qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 12) {
+                    size12qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 14) {
+                    size14qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 16) {
+                    size16qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 18) {
+                    size18qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 20) {
+                    size20qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 22) {
+                    size22qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 24) {
+                    size24qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 26) {
+                    size26qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 28) {
+                    size28qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 30) {
+                    size30qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 32) {
+                    size32qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+                else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 34) {
+                    size34qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+                }
+            }
+
+        });
+
+        if (chk == true) {
+            alert("Received Quantity cannot be greater than ordered quantity.");
+            return
+        }
+        else {
+            var List = "[{ 'SizeUK': '2', 'ReceivedQty':" + size2qty + "}," + "{ 'SizeUK': '4', 'ReceivedQty':" + size4qty + "}," + "{ 'SizeUK': '6', 'ReceivedQty':" + size6qty +
+            "}," + "{ 'SizeUK': '8', 'ReceivedQty':" + size8qty + "}," + "{ 'SizeUK': '10', 'ReceivedQty':" + size10qty + "}," + "{ 'SizeUK': '12', 'ReceivedQty':" + size12qty +
+            "}," + "{ 'SizeUK': '14', 'ReceivedQty':" + size14qty + "}," + "{ 'SizeUK': '16', 'ReceivedQty':" + size16qty + "}," + "{ 'SizeUK': '18', 'ReceivedQty':" + size18qty +
+            "}," + "{ 'SizeUK': '20', 'ReceivedQty':" + size20qty + "}," + "{ 'SizeUK': '22', 'ReceivedQty':" + size22qty + "}," + "{ 'SizeUK': '24', 'ReceivedQty':" + size24qty +
+            "}," + "{ 'SizeUK': '26', 'ReceivedQty':" + size26qty + "}," + "{ 'SizeUK': '28', 'ReceivedQty':" + size28qty + "}," + "{ 'SizeUK': '30', 'ReceivedQty':" + size30qty +
+            "}," + "{ 'SizeUK': '32', 'ReceivedQty':" + size32qty + "}," + "{ 'SizeUK': '34', 'ReceivedQty':" + size34qty + "}]";
+
+            //alert(List);
+            var orderArr = [];
+
+            orderArr.length = 0;
+            //alert($("#ColourId option:selected").val())
+            orderArr.push({
+                Product: {
+                    Id: $("#ProductModel_Id").val(),
+                    ColourId: $("#ColourId option:selected").val(),
+                    //OrderPrice: $(this).find('td:eq(4)').html(),
+                },
+                SizeModelString: List,
+                //Amount: $(this).find('td:eq(23)').html()
+            });
+
+            var customerorderdata = JSON.stringify({
+                // CustomerModel: {
+                //CustomerFullName: $("#POmodel_CustomerModel_CustomerFullName").val(),
+                //Id: $("#POmodel_CustomerModel_Id").val(),
+                //EmailId: $("#POmodel_CustomerModel_EmailId").val(),
+                //MobileNo: $("#POmodel_CustomerModel_MobileNo").val(),
+                // },
+                //DeliveryDate: $("#DeliveryDate").val(),
+                //OrderDate:$("#OrderDate").val(),
+                //SizeQtyList: $("#SizeQtyList").val(),
+                //ShippingCharge : $("#ShippingCharge").val(),
+                //OrderNo: $("#OrderNo").val(),
+                //Tax: $("#Tax").val(),
+                ProductList: orderArr,
+                //OrderRefrence: $("#OrderNo").val(),
+                //WareHouseId: $("#POmodel_WareHouseId").val(),
+                Id: $("#Id").val()
+            });
+
+            $.ajax({
+                url: "/Order/UpdateReceivePO",
+                type: "POST",
+                dataType: "json",
+                //contentType: 'application/json; charset=utf-8',
+                //data: data,
+                data: {
+                    //  __RequestVerificationToken: token,
+                    model: customerorderdata
+                },
+                success: function (data) {
+                    alert("success !!");
+                    document.location = '@Url.Action("GetPurchaseOrderList", "Order")';
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                }
+            })
+
+        }
+
+    }
+
+    $("#ProductModel_Id").change(function () {
+        //alert("Hello");
+        $('#ColourId').empty();
+        GetColours(0);
+    });
+
+</script>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById('image1');
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // second image
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img2 = document.getElementById('image2');
+    img2.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Third image
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img3 = document.getElementById('image3');
+    img3.onclick = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("closebutton")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+</script>

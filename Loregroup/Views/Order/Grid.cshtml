@@ -1,0 +1,364 @@
+﻿@model Loregroup.Core.ViewModels.OrderViewModel
+
+
+
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/themes/base/jquery-ui.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>*@
+
+<link href="~/Content/css/jqgridcss/jqx.base.css" rel="stylesheet" />
+<script src="~/Scripts/Jqgrid/jquery-1.11.1.min.js"></script>
+<script src="~/Scripts/Jqgrid/jqxcore.js"></script>
+<script src="~/Scripts/Jqgrid/jqxbuttons.js"></script>
+<script src="~/Scripts/Jqgrid/jqxdata.js"></script>
+<script src="~/Scripts/Jqgrid/jqxscrollbar.js"></script>
+<script src="~/Scripts/Jqgrid/jqxmenu.js"></script>
+<script src="~/Scripts/Jqgrid/jqxcheckbox.js"></script>
+<script src="~/Scripts/Jqgrid/jqxlistbox.js"></script>
+<script src="~/Scripts/Jqgrid/jqxdropdownlist.js"></script>
+<script src="~/Scripts/Jqgrid/jqxgrid.js"></script>
+<script src="~/Scripts/Jqgrid/jqxgrid.selection.js"></script>
+<script src="~/Scripts/Jqgrid/jqxnumberinput.js"></script>
+<script src="~/Scripts/Jqgrid/jqxwindow.js"></script>
+<script src="~/Scripts/Jqgrid/jqxinput.js"></script>
+<script src="~/Scripts/Jqgrid/jqxgrid.pager.js"></script>
+<script src="~/Scripts/Jqgrid/jqxgrid.aggregates.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    
+        var data = {};
+
+        var source =
+        {
+            localdata: data,
+            datatype: "array",
+            datafields:
+            [
+
+                 { name: 'selectednumber', type: 'string' },
+                 { name: 'msg', type: 'string' },
+                 { name: 'SenderId', type: 'string' },
+                  { name: 'serveorearn', type: 'string' },
+                   { name: 'isActive', type: 'string' },
+
+            ],
+            updaterow: function (rowid, rowdata, commit) {
+                // synchronize with the server - send update command
+                // call commit with parameter true if the synchronization with the server is successful
+                // and with parameter false if the synchronization failder.
+                commit(true);
+            },
+            addrow: function (rowid, rowdata, position, commit) {
+                // synchronize with the server - send insert command
+                // call commit with parameter true if the synchronization with the server is successful
+                //and with parameter false if the synchronization failed.
+                // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
+                // var c = rowdata.Amount
+                // alert('kkk');
+                // var allotednum = $('#AllottedNos').val().split(',');
+                var totalno = $('#TotalDidNumber').val();
+                // alert(totalno);
+                var rowcount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
+                if (rowcount >= 0) {
+
+                    $("#UserId").attr('disabled', true);
+
+                    //alert('hello');
+
+                };
+                // alert(rowcount);
+                if (rowcount < totalno) {
+                    //alert($("#SenderId").val());
+                    commit(true);
+                    // $("#SenderId").val("");
+                    //$("#Message").val("");
+                }
+                else {
+                    alert("You can select only " + $('#TotalDidNumber').val() + " numbers.");
+                }
+
+
+            },
+            deleterow: function (rowid, commit) {
+                // synchronize with the server - send delete command
+                // call commit with parameter true if the synchronization with the server is successful
+                //and with parameter false if the synchronization failed.
+                // alert(rowid);
+
+                //commit(true);
+                //GetgrandTotal();
+                //var c = rowdata.Amount
+                //alert(c);
+
+                var length = $('#AllottedNos').val().split(',').length;
+                //alert(length);
+                //alert("rorid "+rowid)
+                if (rowid >= (length - 1)) {
+                    commit(true);
+                }
+                else {
+                    alert("You cannot delete this number")
+                }
+            },
+        };
+
+
+        var dataAdapter = new $.jqx.dataAdapter(source);
+        var editrow = -1;
+
+        // initialize jqxGrid
+        $("#jqxgrid").jqxGrid(
+        {
+            width: 950,
+            source: dataAdapter,
+            pageable: true,
+            showstatusbar: true,
+            statusbarheight: 50,
+            showaggregates: true,
+            showtoolbar: true,
+            autoheight: true,
+            ready: function () {
+
+            },
+            columns: [
+                {
+                    text: '#', sortable: false, filterable: false, editable: false,
+                    groupable: false, draggable: false, resizable: false,
+                    datafield: '', columntype: 'number', width: 50,
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+                    }
+                },
+              { text: 'Selected Number', datafield: 'selectednumber', width: 150 },
+              { text: 'Header Message', datafield: 'hdrmsg', width: 150 },
+              { text: 'Display Message', datafield: 'msg', width: 350 },
+              { text: 'Footer Message', datafield: 'ftrmsg', width: 150 },
+              { text: 'Sender Id', datafield: 'SenderId', width: 100 },
+              { text: 'Serve Or Earn', datafield: 'serveorearn', width: 150 },
+              { text: 'Active', datafield: 'isActive', width: 60 },
+              {
+                  text: 'Edit', datafield: 'Edit', columntype: 'button', cellsrenderer: function () {
+                      return "Edit";
+                  }, buttonclick: function (row) {
+                      // open the popup window when the user clicks a button.
+                      editrow = row;
+                      var offset = $("#jqxgrid").offset();
+                      $("#popupWindow").jqxWindow({ position: { x: parseInt(offset.left) + 60, y: parseInt(offset.top) + 60 } });
+
+                      // get the clicked row's data and initialize the input fields.
+                      var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', editrow);
+
+                      $("#num").val(dataRecord.selectednumber);
+
+                      $("#displymsg").val(dataRecord.msg);
+
+                      $("#senderid").val(dataRecord.SenderId);
+
+                      $("#isActive").val(dataRecord.isActive);
+
+                      $("#som").val(dataRecord.serveorearn);
+
+                      $("#headermsg").val(dataRecord.hdrmsg);
+
+                      $("#footermsg").val(dataRecord.ftrmsg);
+
+                      $("#popupWindow").jqxWindow('open');
+                  }
+              }
+            ],
+
+
+            rendertoolbar: function (toolbar) {
+                var me = this;
+                var container = $("<div style='margin: 5px;'></div>");
+                toolbar.append(container);
+
+                container.append('<input style="margin-left: 85%;" id="deleterowbutton" type="button" value="Delete Selected Row" />');
+
+                $("#deleterowbutton").jqxButton();
+
+                $("#btnadd").on('click', function () {
+
+
+                    var datarow = generaterow();
+                    var usrid = $('#UserId').val();
+                    var Num = $("#ActiveNumber").val();
+                    var selectednum = $("#ActiveNumber option:selected").text();
+                    var dsplymsg = $("#Message").val();
+                    var serveorearn = $("#ServeOrEarn").val();
+
+
+                    //alert($("#SenderId").val());
+
+
+                    if (usrid == 0) {
+                        alert("Please Select the User");
+
+                    }
+                    else if (Num == "0") {
+                        alert("Please Select the Number");
+                    }
+                    else if (dsplymsg == null) {
+                        alert("Display message cannot be null");
+                    }
+                    else if (serveorearn == 0) {
+
+                        alert("Please Select Serve More or Earn More");
+                    }
+                    else {
+                        var rows = $('#jqxgrid').jqxGrid('getrows');
+                        var check = 0;
+                        for (var i = 0; i < rows.length; i++) {
+                            var row = rows[i];
+                            if (row.selectednumber == selectednum) {
+                                check = 1;
+                            }
+                        }
+                        if (check == 1) {
+                            alert("Number already selected")
+                        }
+                        else {
+                            var commit = $("#jqxgrid").jqxGrid('addrow', null, datarow);
+                            $("#ActiveNumber").val("0");
+                            $("#ServeOrEarn").val("0");
+                        }
+
+                    }
+
+                });
+                // delete row.
+                $("#deleterowbutton").on('click', function () {
+
+                    var selectedrowindex = $("#jqxgrid").jqxGrid('getselectedrowindex');
+
+                    var abc = $("#jqxgrid").jqxGrid('getrowdata', selectedrowindex);
+
+                    var rowscount = $("#jqxgrid").jqxGrid('getdatainformation').rowscount;
+
+                    if (rowscount == 1) {
+
+                        $("#UserId").attr('disabled', false);
+
+                    };
+
+                    if (selectedrowindex >= 0 && selectedrowindex < rowscount) {
+                        var id = $("#jqxgrid").jqxGrid('getrowid', selectedrowindex);
+                        var commit = $("#jqxgrid").jqxGrid('deleterow', id);
+                    }
+                });
+            }
+        });
+
+        // initialize the popup window and buttons.
+        $("#popupWindow").jqxWindow({
+            width: 350, resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.01
+        });
+
+        $("#popupWindow").on('open', function () {
+            //$("#number").jqxInput('selectAll');
+            $("#num").jqxInput('selectAll');
+        });
+
+        // update the edited row when the user clicks the 'Save' button.
+        $("#Save").click(function () {
+
+
+            if (editrow >= 0) {
+
+                var displymsg = $("#displymsg").val();
+                var senderid = $("#senderid").val();
+
+
+                if (displymsg == "") {
+                    alert("Please Enter Display Message");
+                }
+                else if ($("#headermsg").val() == "") {
+                    alert("Please Enter Header Message");
+                }
+                else if ($("#footermsg").val() == "") {
+                    alert("Please Enter Footer messgae");
+                }
+                else {
+
+                    var row = {
+                        selectednumber: $("#num").val(),
+                        SenderId: $("#senderid").val(),
+                        msg: $("#displymsg").val(),
+                        isActive: $("#isActive").val(),
+                        hdrmsg: $("#headermsg").val(),
+                        ftrmsg: $("#footermsg").val(),
+                        serveorearn: $("#som").val(),
+                    };
+
+
+
+                    var rowID = $('#jqxgrid').jqxGrid('getrowid', editrow);
+                    $('#jqxgrid').jqxGrid('updaterow', rowID, row);
+                    $("#popupWindow").jqxWindow('hide');
+                }
+            }
+        });
+
+    });
+</script>
+
+<div class="box-body">
+    <div class="row">
+        <div id='jqxWidget'>
+            <div id="jqxgrid" style="margin-left:5%"></div>
+            <div style="margin-top: 30px;">
+                <div id="cellbegineditevent"></div>
+                <div style="margin-top: 10px;" id="cellendeditevent"></div>
+            </div>
+            <div id="popupWindow">
+                <div>Edit</div>
+                <div style="overflow: hidden;">
+                    <table>
+                        <tr>
+                            <td align="right" style="display:none;">Number:</td>
+                            <td align="left" style="display:none;"><input id="num" /></td>
+                        </tr>
+                        <tr>
+                            <td align="right" style="display:none;">Sender Id:</td>
+                            <td align="left" style="display:none;"><input id="senderid" /></td>
+                        </tr>
+                        <tr>
+                            <td align="right" style="display:none;">Header Message:</td>
+                            <td align="left" style="display:none;"><input id="headermsg" /></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Message Body:</td>
+                            <td align="left"><input id="displymsg" /></td>
+                        </tr>
+                        <tr>
+                            <td align="right" style="display:none;">Footer Message:</td>
+                            <td align="left" style="display:none;"><input id="footermsg" /></td>
+                        </tr>
+                        <tr>
+                            <td align="right" style=" display:none;">serveorearn:</td>
+                            <td align="left" style="display:none"><input id="som" /></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Active/Deactive</td>
+                            <td align="left">
+                                <select id="isActive" style="width:200px">
+                                    <option value="Active">Select Status</option>
+                                    <option value="Active">Active</option>
+                                    <option value="Deactive">Deactive</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right"></td>
+                            <td style="padding-top: 10px;" align="right"><input style="margin-right: 5px;" type="button" id="Save" value="Save" /><input id="Cancel" type="button" value="Cancel" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

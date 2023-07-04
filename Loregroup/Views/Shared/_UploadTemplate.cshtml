@@ -1,0 +1,261 @@
+﻿
+<div class="hide" id="upload_templates">
+    <table>
+        <tbody id="upload_row">
+            <tr>
+                <td class="file-status uploading"></td>
+                <td class="file-status finished hide">
+                    <i class="icon-ok"></i>
+                </td>
+                <td class=" file-status name-check hide">
+                    <i class="icon-warning-sign"></i>
+                </td>
+                <td class=" file-status invalid-type hide">
+                    <i class="icon-ban-circle"></i>
+                </td>
+                <td class="file-type">!!FileType!!</td>
+                <td class="file-name">!!FileName!!</td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="wrong_file_type">
+        <div class="turnover fadetoggle">
+            <div class="turnover-inner">
+                <div class="turnover-title">
+                    <a class="close">x</a>
+                    <h3>
+                        <span class="subtitle">
+                            <i class="icon-ban-circle"></i> Upload Error
+                        </span>
+                        Invalid Content Type
+                    </h3>
+                </div>
+                <div class="turnover-content">
+                    <h3>This file is not compatible with Codigo.</h3>
+                    <h2>Compatible Content Types</h2>
+                    <table class="table">
+                        <thead>
+                            <tr class="text-codigo">
+                                <th>Content Type</th>
+                                <th>Recommended</th>
+                                <th>Other Formats</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Still Images</td>
+                                <td>JPG</td>
+                                <td>PNG, GIF, BMP</td>
+                            </tr>
+                            <tr>
+                                <td>Animated Graphics</td>
+                                <td>SWF</td>
+                                <td>GIF</td>
+                            </tr>
+                            <tr>
+                                <td>Video</td>
+                                <td>FLV, MP4</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" class="btn btn-danger remove save">Remove</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrong_file_type_only_zip">
+        <div class="turnover fadetoggle">
+            <div class="turnover-inner">
+                <div class="turnover-title">
+                    <a class="close">x</a>
+                    <h3>
+                        <span class="subtitle">
+                            <i class="icon-ban-circle"></i> Upload Error
+                        </span>
+                        Invalid Content Type
+                    </h3>
+                </div>
+                <div class="turnover-content">
+                    <h3>This file is not compatible with Codigo.</h3>
+                    <h2>Compatible Content Types</h2>
+                    <table class="table">
+                        <thead>
+                            <tr class="text-codigo">
+                                <th>Content Type</th>
+                                <th>Recommended</th>
+                                <th>Other Formats</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Zip</td>
+                                <td>zip</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" class="btn btn-danger remove save">Remove</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wrong_file_type_Only_Audio">
+        <div class="turnover fadetoggle">
+            <div class="turnover-inner">
+                <div class="turnover-title">
+                    <a class="close">x</a>
+                    <h3>
+                        <span class="subtitle">
+                            <i class="icon-ban-circle"></i> Upload Error
+                        </span>
+                        Invalid Content Type
+                    </h3>
+                </div>
+                <div class="turnover-content">
+                    <h3>This file is not compatible with Codigo.</h3>
+                    <h2>Compatible Content Types</h2>
+                    <table class="table">
+                        <thead>
+                            <tr class="text-codigo">
+                                <th>Content Type</th>
+                                <th>Recommended</th>
+                                <th>Other Formats</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Audio</td>
+                                <td>MP3</td>
+                                <td>OGG, WAV</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a href="#" class="btn btn-danger remove save">Remove</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="file_uploading">
+        <div class="turnover fadetoggle">
+            <div class="turnover-inner">
+                <div class="turnover-title">
+                    <a class="close">x</a>
+                    <h3>
+                        <span class="subtitle">
+                            <i class="icon-upload"></i> Uploading File
+                        </span>
+                        File Upload In Progress
+                    </h3>
+                </div>
+                <div class="turnover-content">
+                    <h3>File is currently uploading. Please be patient.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="file_replacing">
+        <div class="turnover fadetoggle">
+            <div class="turnover-inner">
+                <div class="turnover-title">
+                    <a class="close">x</a>
+                    <h3>
+                        <span class="subtitle">
+                            <i class="icon-upload"></i> Replacing Content
+                        </span>
+                        Replacing content With New File
+                    </h3>
+                </div>
+                <div class="turnover-content">
+                    <h3>Content is currently being replace with newly uploaded file.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="file_renaming">
+        <div class="turnover fadetoggle">
+            <div class="turnover-inner">
+                <div class="turnover-title">
+                    <a class="close">x</a>
+                    <h3>
+                        <span class="subtitle">
+                            <i class="icon-upload"></i> Rename Content
+                        </span>
+                        Renaming With Unique Name
+                    </h3>
+                </div>
+                <div class="turnover-content">
+                    <h3>New content is being uploaded with submitted name.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="file_delete">
+        <div class="turnover fadetoggle">
+            <div class="turnover-inner">
+                <div class="turnover-title">
+                    <a class="close">x</a>
+                    <h3>
+                        <span class="subtitle">
+                            <i class="icon-delete"></i> Delete Content
+                        </span>
+                        Delete Content?
+                    </h3>
+                </div>
+                <div class="turnover-content">
+                    <h3>
+                        Are you sure you want to delete the selected uploaded content?
+                    </h3>
+                    <a href="#" class="btn btn-danger remove save">Confirm Delete</a>
+                    <a href="#" class="btn cancel">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="blank_screen">
+        <div class="turnover-inner box box-solid box-primary">
+            <div class="turnover-title box-header" style="border-top-left-radius:0;-webkit-border-top-left-radius:0px; ">
+                <h3 class="box-title">
+                    <span class="subtitle">
+                        &nbsp;
+                    </span>
+                    &nbsp;
+                </h3>
+
+                <div class="box-tools pull-right">
+                    @*<button class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>*@
+                    <button class="btn btn-primary btn-sm close" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="turnover-content box-body">
+                
+                <h3>To upload files, click the "Add Files" button.</h3>
+            </div>
+        </div>
+    </div>
+    <div class=" hide turnover-permanent upload_turnover out" id="upload_turnover">
+        <div class="modal-container box box-solid bg-light-blue">
+            <div class="upload_functions">
+                <div class="modal-body">
+                    <label class="btn btn-default fileinput-button" for="upload_button">
+                        <i class="fa fa-cloud-upload"></i>  Add Files
+                    </label>
+                    <div class="hide">
+                        <input type="file" class="uploader input-x-small upload_button" multiple="" name="upload_button" />
+                    </div>
+                </div>
+                <div style="margin-left:15px;" class="upload_list_container">
+                    <table class="uploaded_list">
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <a class="btn btn-default upload_finish" style="position:absolute;bottom:20px;left:20px;" id="">
+                    <i class="icon-play"></i> Done
+                </a>
+            </div>
+            <div class="uploaded_turnover ">
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</div>

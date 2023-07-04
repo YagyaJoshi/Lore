@@ -1,0 +1,83 @@
+﻿
+@model Loregroup.Core.ViewModels.UserViewModel
+<div class="turnover fadetoggle">
+    <div class="turnover-inner ">
+        <div class="turnover-title">
+            <a class="close">x</a>
+            <h3 id="turnoverHeading">
+              @*  Offer*@
+            </h3>
+        </div>
+        <div class="turnover-content" id="turnoverContent">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h4 class="page-header">User Details</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="@Model.Profile" id="output" style="height: 150px; width: 700px; " />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Label("Name") :
+                                @Html.DisplayTextFor(m => m.FirstName)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Email Id") :
+                                @Html.DisplayTextFor(m => m.Email)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.PhoneNumber) :
+                                @Html.DisplayTextFor(m => m.PhoneNumber)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Address) :
+                                @Html.DisplayTextFor(m => m.Address)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("City") :
+                                @Html.DisplayTextFor(m => m.City)
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ProductName) :
+                                @Html.DisplayTextFor(m => m.ProductName)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.About) :
+                                @Html.DisplayTextFor(m => m.About)
+                            </div>
+                        </div>
+                    </div>*@
+
+                </div>
+                <!-- /.box-body -->
+                @Html.HiddenFor(m => m.Id)
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</div>

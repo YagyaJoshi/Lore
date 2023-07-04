@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "ChangeRefillRate";
+}
+
+@model Loregroup.Core.ViewModels.RefillRateViewModel
+
+@*<script src="https://almsaeedstudio.com/themes/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+<link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/plugins/datepicker/datepicker3.css" />*@
+
+
+@*<link href="~/Content/css/datatables/dataTables.bootstrap.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />*@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+<script type="text/javascript">
+
+    function Cancel() {
+        document.location = '@Url.Action("Index", "Home")';
+    }
+
+    $(function () {
+        $('.datepicker').datetimepicker({
+            format: 'DD/MM/YYYY ',
+        });
+
+    });
+    
+   
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+
+
+
+<div class="col-md-12">
+    @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+            <h4>Validation Errors</h4>
+            @Html.ValidationSummary()
+        </div>
+    }
+    @using (Html.BeginForm("ChangeRefillRate", "Master", FormMethod.Post))
+    {
+        <div class="box-header">
+        </div>
+        <div class="box box-info col-md-12">
+
+            <div class="box-body">
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.NewRefillRate)
+                            @Html.BsTextBoxWithPHFor(model => model.NewRefillRate)
+                            @Html.ValidationMessageFor(model => model.NewRefillRate)
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.OldRefillRate)
+                            @Html.BsTextBoxWithPHFor(model => model.OldRefillRate, new { @readonly = "readonly"})
+                            @Html.ValidationMessageFor(model => model.OldRefillRate)
+                        </div>
+                    </div>
+                
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DateFrom)
+                           @*@Html.TextBoxFor(model => model.DateFrom, new { @class = "form-control datepicker", placeholder = "DateFrom" })*@
+                            @Html.TextBoxFor(model => model.DateFrom, new { @class = "form-control datepicker", placeholder = "Date From" })
+                        </div>
+                    </div>   
+                                     
+                </div>
+                <div class="row" style="text-align :center;color:red">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.DisplayFor(model => model.Msg)                          
+                        </div>
+                    </div>   
+                </div>
+                </div>
+        </div>
+
+
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                    <button type="submit" id="btn_save" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                </div>
+            </div>
+        </div>
+        @Html.HiddenFor(x => x.PackageId)
+    }
+   
+</div>
+
+<script>
+    $('#btn_save').click(function () {
+       
+        var v = $('#NewRefillRate').val();
+        if (v == 0) {          
+            alert("Please Enter Rate greater than 0");
+            $('#NewRefillRate').focus();
+            return false;
+        }
+    });
+
+</script>
+
+
+

@@ -1,0 +1,416 @@
+﻿<head>
+
+
+    <style>
+            /* [Object] Modal
+             * =============================== */
+            .modal {
+                opacity: 0;
+                visibility: hidden;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                text-align: left;
+                background: rgba(0,0,0, .9);
+                transition: opacity .25s ease;
+            }
+
+            .modal__bg {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                cursor: pointer;
+            }
+
+            .modal-state {
+                display: none;
+            }
+
+                .modal-state:checked + .modal {
+                    opacity: 1;
+                    visibility: visible;
+                    z-index: 9999;
+                }
+
+                    .modal-state:checked + .modal .modal__inner {
+                        top: 0;
+                    }
+
+            .modal__inner {
+                transition: top .25s ease;
+                position: absolute;
+                top: -20%;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 50%;
+                margin: auto;
+                overflow: auto;
+                background: #fff;
+                border-radius: 5px;
+                padding: 1em 2em;
+                height: 93%;
+            }
+
+            .modal__close {
+                position: absolute;
+                right: 0.7em;
+                top: 0.7em;
+                width: 1.1em;
+                height: 1.1em;
+                cursor: pointer;
+            }
+
+                .modal__close:after,
+                .modal__close:before {
+                    content: '';
+                    position: absolute;
+                    width: 2px;
+                    height: 1.5em;
+                    background: #ccc;
+                    display: block;
+                    transform: rotate(45deg);
+                    left: 50%;
+                    margin: -3px 0 0 -1px;
+                    top: 0;
+                }
+
+                .modal__close:hover:after,
+                .modal__close:hover:before {
+                    background: #aaa;
+                }
+
+                .modal__close:before {
+                    transform: rotate(-45deg);
+                }
+
+            .nnn {
+                width: 48%;
+            }
+
+            s .modal__inner {
+                width: 90%;
+                height: 90%;
+                box-sizing: border-box;
+            }
+
+
+            #msform .action-button {
+                margin-top: 0 !important;
+                width: 92% !important;
+                margin: 0 4% 0 4% !important;
+            }
+
+            .my_btn {
+                width: 100% !important;
+            }
+
+
+            .login_left_popup {
+                float: left;
+                width: 96% !important;
+                left: 0 !important;
+                bottom: 0 !important;
+                padding: 10px 2% !important;
+            }
+
+            .login_right_popup {
+                float: right;
+                width: 96% !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                padding: 10px 2% !important;
+            }
+
+
+
+            /* Other
+         * =============================== */
+            .btn {
+                cursor: pointer;
+                background: #27ae60;
+                display: inline-block;
+                padding: .5em 1em;
+                color: #fff;
+                border-radius: 3px;
+            }
+
+                .btn:hover,
+                .btn:focus {
+                    background: #2ecc71;
+                }
+
+                .btn:active {
+                    background: #27ae60;
+                    box-shadow: 0 1px 2px rgba(0,0,0, .2) inset;
+                }
+
+            .btn--blue {
+                background: #2980b9;
+            }
+
+                .btn--blue:hover,
+                .btn--blue:focus {
+                    background: #3498db;
+                }
+
+                .btn--blue:active {
+                    background: #2980b9;
+                }
+
+            /*form styles*/
+            #msform {
+                /*//width: 400px;
+        //margin: 50px auto;*/
+                text-align: center;
+                position: absolute;
+            }
+
+                #msform fieldset {
+                    background: white;
+                    border: 0 none;
+                    /*//border-radius: 3px;
+        //box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+        //p*/ adding: 20px 30px;
+                    box-sizing: border-box;
+                    width: 100%;
+                    /*//margin: 0 10%;*/
+                    /*stacking fieldsets above each other*/
+                    position: absolute;
+                }
+                    /*Hide all except first fieldset*/
+                    #msform fieldset:not(:first-of-type) {
+                        display: none;
+                    }
+                /*inputs*/
+                #msform input[type=text], #msform input[type=password], #msform textarea {
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 3px;
+                    /*//margin-bottom: 10px;*/
+                    width: 100%;
+                    box-sizing: border-box;
+                    color: #2C3E50;
+                    font-size: 13px;
+                    height: 35px;
+                }
+                /*buttons*/
+                #msform .action-button {
+                    width: 100px;
+                    background: #e03440;
+                    font-weight: bold;
+                    color: white;
+                    border: 0 none;
+                    border-radius: 1px;
+                    cursor: pointer;
+                    padding: 10px 5px;
+                    //margin: 10px 5px;
+                }
+
+                    #msform .action-button:hover, #msform .action-button:focus {
+                        //box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+                    }
+            /*headings*/
+            .fs-title {
+                font-size: 15px;
+                text-transform: uppercase;
+                color: #2C3E50;
+                margin-bottom: 10px;
+            }
+
+            .fs-subtitle {
+                font-weight: normal;
+                font-size: 13px;
+                color: #666;
+                margin-bottom: 20px;
+            }
+            /*progressbar*/
+            #progressbar {
+                margin-bottom: 30px;
+                overflow: hidden;
+                /*CSS counters to number the steps*/
+                counter-reset: step;
+            }
+
+                #progressbar li {
+                    list-style-type: none;
+                    color: white;
+                    text-transform: uppercase;
+                    font-size: 9px;
+                    width: 33.33%;
+                    float: left;
+                    position: absolute;
+                }
+
+            progressbar li:before {
+                content: counter(step);
+                counter-increment: step;
+                width: 20px;
+                line-height: 20px;
+                display: block;
+                font-size: 10px;
+                color: #333;
+                background: white;
+                border-radius: 3px;
+                margin: 0 auto 5px auto;
+            }
+            /*progressbar connectors*/
+            #progressbar li:after {
+                content: '';
+                width: 100%;
+                height: 2px;
+                background: white;
+                position: absolute;
+                left: -50%;
+                top: 9px;
+                z-index: -1; /*put it behind the numbers*/
+            }
+
+            #progressbar li:first-child:after {
+                /*connector not needed before the first step*/
+                content: none;
+            }
+            /*marking active/completed steps green*/
+            /*The number of the step and the connector before it = green*/
+            #progressbar li.active:before, #progressbar li.active:after {
+                background: #27AE60;
+                color: white;
+            }
+    </style>
+</head>
+
+
+
+
+
+<fieldset>
+    <a href="index.html"><img style="max-width:50px;" src="images/logo.gif"></a>
+    <div class="login_box" style="line-height: 2em; text-align:left;">
+        <h3 style="color:#e03440;border-bottom: 2px solid;padding: 6px; margin-bottom:10px;">Signup as a Store</h3>
+        <ul>
+            <li>
+                <label>Store Name</label>
+                <input type="text" placeholder=" Enter your desired Username" />
+            </li>
+            <li>
+                <label>Email ID</label>
+                <input type="text" placeholder=" Enter your Email ID" />
+            </li>
+            <li>
+                <label>Mobile Number</label>
+                <input type="text" placeholder=" Enter Mobile No." />
+            </li>
+            <li>
+                <label>Password</label>
+                <input type="text" placeholder=" Password" />
+            </li>
+            <li>
+                <input type="checkbox"> Notify me with Awesome Deals
+            </li>
+
+        </ul>
+
+
+    </div>
+    @*<input style="float: left;width: 46%;background: #cc0000;margin:0 4% 0 4%;"
+           type="button" name="previous" class="previous action-button" value="Previous" />*@
+
+    <input type="button" style="float: left;width: 46%;background: #cc0000;margin:0 4% 0 4%;" class="previous action-button" id="btnAddBulk" onclick="EditDetails()" value="Previous" />
+
+
+    <input style="    float: right;
+    width: 45.7%;
+    background: #cc0000;
+    margin:0 4% 0 4%;margin-top:-35px" type="button" name="next" class="next action-button" value="Continue" />
+
+
+    <!--  <div style="float:left; width:109.2%;background: #cc0000; position:absolute; margin-left:-5%;
+          bottom: -24.4%;">
+
+    <div class="login_left login_left_popup" style="    background: #cc0000;
+    color: #fff;
+    padding: 5px;
+    position: relative;
+    //bottom: -93px;
+    font-size: 19px;
+    width:48%; border-right:1px solid #fff;">
+
+        <input style="margin-right:10px;" type="radio" name="store" value="register">Register to get Deals
+      </div>
+      <div class="login_right login_right_popup nnn" style="    background: #cc0000;
+    color: #fff;
+    padding: 5px;
+    position: relative;
+    font-size: 19px;
+    padding-left: -28px !important;
+        width:48%;">
+        <input style="margin-right:10px;" type="radio" name="store" value="register">Register for your Mail
+      </div>
+      </div>-->
+    <!--<input type="button" name="next" class="next action-button" value="Next" />-->
+</fieldset>
+
+<div id="departmentdialog2" style="display:none;"></div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+@*<script src="~/Content/js1/jquery-1.7.1.js"></script>
+    <script src="~/Content/js1/jquery-1.8.16.js"></script>*@
+<link href="~/Content/css1/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/css1/jquery.ui.dialog.css" rel="stylesheet" />
+
+
+<script>
+    function InitializeDialog($element) {
+        //alert('hii');
+        $element.dialog({
+
+            autoOpen: false,
+            width: 900,
+            height: 600,
+            resizable: true,
+            //draggable: true,
+            title: "",
+            model: true,
+            show: 'slide',
+            closeText: 'Close',
+            dialogClass: 'alert',
+            closeOnEscape: true,
+            position: ['Fixed'],
+
+            open: function (event, ui) {
+                //Load the Partial View Here using Controller and Action
+                //$element.load('/Site/AddUserPartialView', { nodeId: selectedId });
+                //return false;
+            },
+            close: function () {
+                $(this).dialog('close');
+            }
+
+        });
+    }
+</script>
+
+<script>
+    function EditDetails(selectedId) {
+        //alert('hello');
+        $.ajax({
+            type: 'GET',
+            url: "/Account/EditNodePartialView?nodeId=" + selectedId,
+            //data: nodeId,//encodeURI("nodeId=" + nodeId),
+            success: function (view) {
+                InitializeDialog($("#departmentdialog2"));
+                $("#departmentdialog2").dialog("open");
+                //$('#PopUpDetailsResult').dialog();
+                $("#departmentdialog2").html(view);
+                //return false;
+            }
+        });
+    }
+
+
+</script>

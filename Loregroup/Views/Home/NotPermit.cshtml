@@ -1,0 +1,22 @@
+﻿<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+
+
+@{
+    var message = TempData["userMessage"] ?? string.Empty;
+ }
+
+<!-- left column -->
+<script type="text/javascript">
+    var message = '@message';
+    if (message)
+        alert(message);
+    message = "";
+</script>
+
+
+<div>
+<h1 style="color:red">
+You Don't Have Permission For This...
+</h1>
+</div>        <!-- small box -->
+

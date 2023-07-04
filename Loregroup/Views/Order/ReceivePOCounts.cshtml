@@ -1,0 +1,249 @@
+﻿@model Loregroup.Core.ViewModels.PurchaseOrderViewModel
+
+@{
+    ViewBag.Title = "ReceivePO";
+}
+
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+@using (Html.BeginForm("ReceivePOCounts", "Order", FormMethod.Post, new { @id = "form1" }))
+{
+    if (TempData["POreceive"] != null)
+    {
+        <div class="red">
+            <h4 style="color:#cb493f"><strong></strong>@TempData["POreceive"]</h4>
+        </div>
+    }
+
+    <a href="/Order/GetPurchaseOrderList" class="btn btn-primary" style=" margin-bottom: 15px; ">Back to List</a>
+
+    if (Model.Id > 0 && Model.DetailsList.Count > 0)
+    {
+        <div class="box box-info col-md-12">
+            <div class="box-body">
+                <div class="row">
+
+                    <table id="DataTable" class="table">
+                        <thead>
+                            <tr>
+                                <th> Product </th>
+                                <th> Color </th>
+                                <th> Size US/UK/EU </th>
+                                <th> Ordered Quantity </th>
+                                <th> Received Quantity </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @for (int i = 0; i < Model.DetailsList.Count; i++)
+                            {
+                                <tr id="@Model.DetailsList[i].SizeUK">
+
+                                    <td>@Model.DetailsList[i].ProductName</td>
+                                    <td>@Model.DetailsList[i].ColourName</td>
+
+                                    <td>
+                                        @Model.DetailsList[i].SizeUS/@Model.DetailsList[i].SizeUK/@Model.DetailsList[i].SizeEU
+                                    </td>
+                                    <td>
+                                        @Model.DetailsList[i].Qty
+                                    </td>
+                                    <td contenteditable='true'>
+                                        @Html.BsTextBoxFor(x => Model.DetailsList[i].ReceiveQty)
+                                        @*@Model.DetailsList[i].ReceiveQty*@
+                                    </td>
+                                </tr>
+                                @Html.HiddenFor(m => Model.DetailsList[i].Id)
+                                @Html.HiddenFor(m => Model.DetailsList[i].ProductId)
+                                @Html.HiddenFor(m => Model.DetailsList[i].ColourId)
+                                @Html.HiddenFor(m => Model.DetailsList[i].SizeUK)
+
+                            }
+
+                            @*@foreach (var size in Model.ProductListModel.SizeModel)
+                                {
+                                    <tr id="@size.SizeUK">
+                                        <td>
+                                            @size.SizeUK
+                                        </td>
+                                        <td>
+                                            @size.Qty
+                                        </td>
+                                        <td contenteditable='true'>
+                                            @size.ReceivedQty
+                                        </td>
+                                    </tr>
+                                }*@
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <hr />
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">                       
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        @Html.CheckBoxFor(x => x.IsReceivedAll) Receive-All
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.PurchaseOrderStatusId)
+                        @Html.EnBsDropDownListFor(x => x.PurchaseOrderStatusId, new Dictionary<string, object>())
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <br>
+                        @*<a class="btn btn-primary" onclick="return SubmitClick();"> Submit </a>*@
+                        <button type="submit" class="btn btn-primary pull-right" onclick="return SubmitClick();"> Submit</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+    else if (Model.ProductModel.Id > 0 && Model.ProductListModel.SizeModel.Count <= 0)
+    {
+        <h3>No record Found</h3>
+    }
+    @Html.HiddenFor(x => x.Id);
+    @Html.HiddenFor(x => x.DistributionPoint);
+
+}
+
+<script>
+    function SearchClick() {
+        //alert("hello");
+        if ($("#ProductModel_ProductName") == "" || $("#ColourId option:selected").val() == 0) {
+            alert("All fields are required.")
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    function SubmitClick() {
+
+        var chk = false;
+
+        if ($("#PurchaseOrderStatusId").val() == 0) {
+            alert("Please Select Status");
+            return false;
+        }
+
+        var size2qty = 0, size4qty = 0, size6qty = 0,
+                         size8qty = 0, size10qty = 0, size12qty = 0,
+                         size14qty = 0, size16qty = 0, size18qty = 0,
+                         size20qty = 0, size22qty = 0, size24qty = 0,
+                         size26qty = 0, size28qty = 0, size30qty = 0,
+                         size32qty = 0, size34qty = 0;
+
+        $.each($("#DataTable tbody tr"), function () {
+            $(this).find('td:eq(4)').css("color", "#000000")
+
+            if (parseInt($.trim($(this).find('td:eq(4)').html())) > parseInt($.trim($(this).find('td:eq(3)').html()))) {
+                chk = true;
+                $(this).find('td:eq(4)').css("color", "#FF3700")
+                //return false
+            }
+            else {
+                //if (parseInt($.trim($(this).find('td:eq(0)').html())) == 2) {
+                //    size2qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 4) {
+                //    size4qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 6) {
+                //    size6qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 8) {
+                //    size8qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 10) {
+                //    size10qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 12) {
+                //    size12qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 14) {
+                //    size14qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 16) {
+                //    size16qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 18) {
+                //    size18qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 20) {
+                //    size20qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 22) {
+                //    size22qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 24) {
+                //    size24qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 26) {
+                //    size26qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 28) {
+                //    size28qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 30) {
+                //    size30qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 32) {
+                //    size32qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+                //else if (parseInt($.trim($(this).find('td:eq(0)').html())) == 34) {
+                //    size34qty = parseInt($.trim($(this).find('td:eq(2)').html()));
+
+                //}
+            }
+
+        });
+
+        if (chk == true) {
+            alert("Received Quantity cannot be greater than ordered quantity.");
+            return false;
+        }
+        else {
+            form1.submit();
+            return true;
+        }
+
+    }
+
+    $("#ProductModel_Id").change(function () {
+        //alert("Hello");
+        $('#ColourId').empty();
+        GetColours(0);
+    });
+
+</script>

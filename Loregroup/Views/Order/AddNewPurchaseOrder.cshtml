@@ -1,0 +1,1161 @@
+﻿@model Loregroup.Core.ViewModels.PurchaseOrderViewModel
+
+@{
+    ViewBag.Title = "AddNewPurchaseOrder";
+}
+
+@*<script src="https://almsaeedstudio.com/themes/AdminLTE/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/plugins/datepicker/datepicker3.css" />*@
+
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+<script type="text/javascript">
+
+    $(function () { //will trigger when the document is ready
+        $('.datepicker').datepicker({
+            format: "mm/dd/yyyy",
+            //dateFormat: 'yy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: "-1:+50",
+            todayHighlight: true,
+            //defaultDate:'now'
+        }); //Initialise any date pickers
+    });
+
+</script>
+@*AutoComplete For Customer Start*@
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+        $("#CustomerModel_CustomerFullName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Order/SearchByCustomerNameForPO",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        Prefix: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.UserName, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (e, ui) {
+               
+                var vn = ui.item.value;
+                $.ajax({
+                    url: "/Order/GetCustomerById",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        number: vn
+                    },
+
+                    dataFilter: function (data) {
+                        return data;
+                    },
+                    success: function (data) {
+                        $('#CustomerModel_Id').val(data.Id);
+                        $('#CustomerModel_State').val(data.State);
+                        $('#CustomerModel_CustomerFullName').val(data.CustomerFullName);
+                        $('#CustomerModel_EmailId').val(data.EmailId);
+                        $('#CustomerModel_MobileNo').val(data.MobileNo);
+                        $('#CustomerModel_ZipCode').val(data.ZipCode);
+                        $('#CustomerModel_ShippingState').val(data.ShippingState);
+                        $('#CustomerModel_CurrencyName').val(data.CurrencyName);
+                        $('#CustomerModel_AddressLine1').val(data.AddressLine1);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+
+</script>
+@*AutoComplete For Customer End*@
+
+@*AutoComplete For Product Start*@
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+        $("#ProductModel_ProductName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Order/SearchByProductName",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        Prefix: request.term
+                    },
+                    success: function (data) {
+
+                        response($.map(data, function (item) {
+                            return { label: item.ProductName, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (e, ui) {
+                var vn = ui.item.value;
+                $("#ProductModel_Id").val(vn);
+                var currency = $('#CustomerModel_CurrencyName').val();
+                $.ajax({
+                    url: "/Order/GetProductById",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        number: vn,
+                        currency: currency
+                    },
+
+                    dataFilter: function (data) {
+                        return data;
+                    },
+                    success: function (data) {
+                        //alert(data.CustomerPrice);
+                        $('#ProductModel_ProductName').val(data.ProductName);
+                        $('#ProductModel_CustomerPrice').val(data.CustomerPrice);
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                    }
+
+
+                })
+                $('#ColourId').empty();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetColoursForProduct", "Order")',
+                    dataType: 'json',
+                    data: { ProductId: $("#ProductModel_Id").val() },
+                    success: function (states) {
+                        $('#ColourId').append($('<option/>', {
+                            value: 0,
+                            text: "--Select Color--"
+                        }));
+                        $.each(states, function (i, color) {
+                            $('#ColourId').append('<option value ="' + color.Value + '">' + color.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve Colors.' + ex);
+                    }
+                });
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+
+</script>
+@*AutoComplete For Product End*@
+
+
+@using (Html.BeginForm("AddNewOrder", "Order", FormMethod.Post))
+{
+    if (Model.Id > 0)
+    {
+        <div class="box box-info col-md-12">
+            <div class="box-body">
+                <h3>Purchase Order Status</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.PurchaseOrderStatusId)
+                            @Html.EnBsDropDownListFor(x => x.PurchaseOrderStatusId, new Dictionary<string, object>())
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top:2%;">
+                        <a id="changeStatus" class="btn btn-primary pull-left" onclick="return ChangeStatus()" style="margin-right: 10px;">Change Status</a>
+                    </div>
+
+                    @*@if (Model.PurchaseOrderStatusId == Loregroup.Core.Enumerations.PurchaseOrderStatus.New || Model.PurchaseOrderStatusId == Loregroup.Core.Enumerations.PurchaseOrderStatus.Sent)*@
+                    @if (ViewBag.ShowSendMailButton)
+                    {
+                        <div class="offset4 col-md-4" style="margin-top:2%;">
+                            <a id="sendPoMail" class="btn btn-primary pull-right" onclick="return SendPurchaseOrderMail()" style="margin-right: 10px;">Send Mail</a>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="box box-info col-md-12">
+
+        <div class="box-body">
+            <h3>Customer Details</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WareHouseId)
+                        @Html.BootstrapDropDownListFor(m => m.WareHouseId, new SelectList(Model.WareHouseList, "Id", "WareHouseName", Model.WareHouseId))
+                        @* @Html.EnBsDropDownListFor(m => m.Currency, new Dictionary<string, object>())*@
+                        @Html.ValidationMessageFor(model => model.WareHouseId)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    @if (Model.Id > 0)
+                    {
+                        <div class="form-group">
+                            @Html.Label("Supplier")
+                            @Html.BsTextBoxWithPHFor(model => model.CustomerModel.CustomerFullName, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.CustomerModel.CustomerFullName)
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @Html.Label("Supplier")
+                            @Html.BsTextBoxWithPHFor(model => model.CustomerModel.CustomerFullName@*, new { @readonly = "readonly" }*@)
+                            @Html.ValidationMessageFor(model => model.CustomerModel.CustomerFullName)
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("Address")
+                        @Html.BsTextBoxWithPHFor(model => model.CustomerModel.AddressLine1, new { @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.CustomerModel.AddressLine1)
+                    </div>
+                </div>
+                @*<div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Label("Currency")
+                            @Html.BsTextBoxWithPHFor(m => m.CustomerModel.CurrencyName, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.CustomerModel.CurrencyName)
+                        </div>
+                    </div>*@
+                @*<div class="col-md-3">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CustomerModel.MobileNo)
+                            @Html.BsTextBoxWithPHFor(m => m.CustomerModel.MobileNo, new { @readonly = "readonly" })
+                            @Html.ValidationMessageFor(m => m.CustomerModel.MobileNo)
+                        </div>
+                    </div>*@
+            </div>
+
+            <hr>
+            <h3>Product Details</h3>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductModel.ProductName)
+                        @Html.BsTextBoxWithPHFor(model => model.ProductModel.ProductName)
+                        @Html.ValidationMessageFor(model => model.ProductModel.ProductName)
+                    </div>
+                </div>
+                @*<div class="col-md-4">
+                        <div class="form-group">
+                            @Html.Label("Price")
+                            @Html.BsTextBoxWithPHFor(model => model.ProductModel.CustomerPrice)
+                            @Html.ValidationMessageFor(model => model.ProductModel.CustomerPrice)
+                        </div>
+                    </div>*@
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ColourId)
+                        @Html.BootstrapDropDownListFor(m => m.ColourId, new SelectList(Model.ColourList, "Id", "Colour", Model.ColourId))
+                        @Html.ValidationMessageFor(model => model.ColourId)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.OrderRefrence)
+                        @Html.BsTextBoxWithPHFor(model => model.OrderRefrence)
+                        @Html.ValidationMessageFor(model => model.OrderRefrence)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("Order Date")
+                        @Html.TextBoxFor(model => model.OrderDate, new { @class = "form-control datepicker", placeholder = "Order Date" })
+                        @Html.ValidationMessageFor(model => model.OrderDate)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("Order Note")
+                        @Html.BsTextAreaFor(model => model.OrderNote)
+                        @Html.ValidationMessageFor(model => model.OrderNote)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DeliveryDate)
+                        @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control datepicker", placeholder = "Due Date" })
+
+                        @Html.ValidationMessageFor(model => model.DeliveryDate)
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.SendMail)
+                        @Html.CheckBoxFor(x => x.SendMail)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin:10px;">
+                <div class="col-md-12">
+
+                    <table id="SizeQtyTable">
+                        <tr>
+                            <td style="width:68px;">
+                                <label style="width:32px;"> Size(US): </label>
+                                <label style="width:32px;"> Size(UK): </label>
+                                <label style="width:32px;"> Size(EU): </label>
+                                <label style="width:32px;"> Quantity: </label>
+                            </td>
+
+                            @for (int i = 2; i <= 34; i = i + 2)
+                            {
+                                <td style="width:5px;">
+                                    @if (i == 2)
+                                    {
+                                        <label style="width:40px;"> 00 </label>
+                                    }
+                                    else if (i == 4)
+                                    {
+                                        <label style="width:40px;"> 0 </label>
+                                    }
+                                    else
+                                    {
+                                        <label style="width:40px;"> @(i - 4) </label>
+                                    }
+
+                                    <label style="width:40px;"> @i </label>
+                                    <label style="width:40px;"> @(i + 28) </label>
+
+                                    <input type="number" value="0" style="width:32px" min="0" id="@i" placeholder="0" />
+                                </td>
+                            }
+                            @*@foreach (var data in Model.SizeModelList)
+                                {
+                                    <td style="width:5px;">
+                                        <label style="width:32px;"> @data.SizeName </label>
+                                        <input style="width:32px" id="@data.SizeName" />
+                                    </td>
+                                }*@
+                        </tr>
+
+                    </table>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3 col-lg-offset-9">
+                        <a id="addToList" class="btn btn-default" style="background-color: #3c8dbc; color: #000;">Add To List</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-body">
+
+                <table id="detailsTable" style="width:90%;border-color: grey;" border="1" class="table">
+                    <thead style="display: table-header-group; vertical-align: middle; border-color: inherit;">
+                        <tr style="display: table-row; vertical-align: middle; border-color: inherit;">
+                            <th style="vertical-align: middle;" rowspan="3" style="width:10%">Product</th>
+                            @*<th style="width:10%">Product SKU</th>*@
+                            @*<th style="width:10%">Fabric</th>*@
+                            @*<th style="width:0%; display:none;"></th>*@
+                            <th style="vertical-align: middle;" rowspan="3" style="width:10%">Color</th>
+                            @*<th style="width:18%">Unit Price</th>*@
+                            @*<th style="width:10%">Size</th>*@
+                            @*<th style="width:10%">Quantity</th>*@
+
+                            <th style="width:5%">US</th>
+                            @for (int i = -2; i <= 30; i = i + 2)
+                            {
+                                if (i == -2)
+                                {
+                                    <th style="width:3%">00</th>
+                                }
+                                else
+                                {
+                                    <th style="width:3%">@i</th>
+                                }
+                            }
+                            @* <th style="width:10%">Amount</th>*@
+                            <th style="vertical-align: middle;" rowspan="3" style="width:0%; display:none;"></th>
+                            <th style="vertical-align: middle;" rowspan="3" style="width:5%"></th>
+                        </tr>
+
+                        <tr>
+                            <th>UK</th>
+                            @for (int i = 2; i <= 34; i = i + 2)
+                            {
+                                <th style="width:3%">@i</th>
+                            }
+                        </tr>
+
+                        <tr>
+                            <th>EU</th>
+                            @for (int i = 30; i <= 62; i = i + 2)
+                            {
+                                <th style="width:3%">@i</th>
+                            }
+                        </tr>
+
+                    </thead>
+                    <tbody></tbody>
+                    @*<tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                    <td>
+                        <a class="btn btn-info pull-right" id="addMore">Add Detail</a>
+                    </td>
+                </tr>
+            </tfoot>*@
+                </table>
+                <div class="col-md-6">
+                    <div class="form-group">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        @Html.Label("Total Item")
+                        @Html.BsTextBoxWithPHFor(model => model.TotalItem, new { @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            @if (ViewBag.ShowSendMailButton)
+            {
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                            <button type="button" id="saveOrder" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @Html.HiddenFor(x => x.SingleProductQtyList);
+    @Html.HiddenFor(x => x.SizeQtyList);
+    @Html.HiddenFor(x => x.ProductModel.Id);
+    @Html.HiddenFor(x => x.CustomerModel.Id);
+    @Html.HiddenFor(x => x.Id);
+    @Html.HiddenFor(x => x.CustomerModel.MobileNo);
+    @Html.HiddenFor(x => x.CustomerModel.EmailId);
+    @Html.HiddenFor(x => x.CustomerModel.CurrencyName);
+}
+
+<script>
+
+    //To create Table and fill it with details on load
+    $(window).load(function () {
+
+        $.ajax({
+            url: "/Order/GetPurchaseOrderById",
+            type: "POST",
+            dataType: "json",
+            //contentType: 'application/json; charset=utf-8',
+            //data: data,
+            data: {
+                //  __RequestVerificationToken: token,
+                Id: @Model.Id,
+            },
+            success: function (data) {
+                //alert("success !!");
+                //location.window.href = "/Admin/Order/List";
+
+                $.each(data.ProductList, function (i, color) {
+
+                    $("#detailsTable tbody").append(color.SizeModelString);
+                    //alert(color.ProductList.SizeModel[0]);
+                });
+                calculateTotalItem();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+            }
+        })
+
+        @*@foreach(var data in Model.ProductList)
+        {
+            try
+            {
+                //var model = @Html.Raw(Json.Encode(Model));
+
+               var  detailsTableBody = $("#detailsTable tbody");
+
+
+        var productItem = "<tr><td>" + productName + "</td><td style='display:none;'>" + productId + "</td><td>" + Color + "</td><td style='display:none;'>" +
+                            ColorId + "</td><td>" + price + "</td><td></td><td>" + size2qty + "</td><td>" + size4qty + "</td><td>" + size6qty + "</td><td>" + size8qty +
+                            "</td><td>" + size10qty + "</td><td>" + size12qty + "</td><td>" + size14qty + "</td><td>" + size16qty + "</td><td>" + size18qty +
+                            "</td><td>" + size20qty + "</td><td>" + size22qty + "</td><td>" + size24qty + "</td><td>" + size26qty + "</td><td>" + size28qty +
+                            "</td><td>" + size30qty + "</td><td>" + size32qty + "</td><td>" + size34qty + "</td><td>" + totalamount + "</td><td style='display:none;'>" + List + "</td><td><a data-itemId='0' href='#' class='deleteItem'>Remove</a></td></tr>";
+
+        detailsTableBody.append(productItem);
+            }
+            catch
+            {
+
+            }
+        }*@
+
+        //$.each($("#ProductList"), function ()
+        //{
+        //    alert("hello");
+        //});
+
+        //alert("hello");
+
+        //$.each($("#ProductList"), function (color) {
+        //    alert("hello");
+        //    });
+
+        //$("#ProductList").each(function () {
+        //   // alert(this.Text);
+        //    alert("hello");
+        //});
+    });
+
+
+
+    $("#addToList").click(function (e) {
+        e.preventDefault();
+
+
+        //To prevent adding same data to table
+        var chk = false;
+
+        $.each($("#detailsTable tbody tr"), function () {
+            if($(this).find('td:eq(1)').html() == $("#ProductModel_Id").val() && $(this).find('td:eq(3)').html() == $("#ColourId option:selected").val())
+            {
+                alert("Cannot add same product with same color.")
+                chk =  true;
+            }
+        });
+
+        if(chk == true)
+        {
+            return;
+        }
+
+
+
+
+
+        var totallist = $("#SizeQtyList").val()
+        var a = 2 + "x" + $("#2").val() + "," + 4 + "x" + $("#4").val() + "," + 6 + "x" + $("#6").val() + ","
+            + 8 + "x" + $("#8").val() + "," + 10 + "x" + $("#10").val() + "," + 12 + "x" + $("#12").val() + ","
+            + 14 + "x" + $("#14").val() + "," + 16 + "x" + $("#16").val() + "," + 18 + "x" + $("#18").val() + ","
+            + 20 + "x" + $("#20").val() + "," + 22 + "x" + $("#22").val() + "," + 24 + "x" + $("#24").val() + ","
+            + 26 + "x" + $("#26").val() + "," + 28 + "x" + $("#28").val() + "," + 30 + "x" + $("#30").val() + ","
+            + 32 + "x" + $("#32").val() + "," + 34 + "x" + $("#34").val();
+
+        var L = "[{ 'SizeUK': '2', 'Qty':" + $("#2").val() + "}," + "{ 'SizeUK': '4', 'Qty':" + $("#4").val() + "}," + "{ 'SizeUK': '6', 'Qty':" + $("#6").val() +
+            "}," + "{ 'SizeUK': '8', 'Qty':" + $("#8").val() + "}," + "{ 'SizeUK': '10', 'Qty':" + $("#10").val() + "}," + "{ 'SizeUK': '12', 'Qty':" + $("#12").val() +
+            "}," + "{ 'SizeUK': '14', 'Qty':" + $("#14").val() + "}," + "{ 'SizeUK': '16', 'Qty':" + $("#16").val() + "}," + "{ 'SizeUK': '18', 'Qty':" + $("#18").val() +
+            "}," + "{ 'SizeUK': '20', 'Qty':" + $("#20").val() + "}," + "{ 'SizeUK': '22', 'Qty':" + $("#22").val() + "}," + "{ 'SizeUK': '24', 'Qty':" + $("#24").val() +
+            "}," + "{ 'SizeUK': '26', 'Qty':" + $("#26").val() + "}," + "{ 'SizeUK': '28', 'Qty':" + $("#28").val() + "}," + "{ 'SizeUK': '30', 'Qty':" + $("#30").val() +
+            "}," + "{ 'SizeUK': '32', 'Qty':" + $("#32").val() + "}," + "{ 'SizeUK': '34', 'Qty':" + $("#34").val()+ "}]";
+
+        //alert(L);
+        totallist = totallist + "#" + a;
+        $("#SizeQtyList").val(totallist);
+
+        var totalqty = parseFloat($("#2").val()) + parseFloat($("#4").val())
+            + parseFloat($("#6").val()) + parseFloat($("#8").val()) + parseFloat($("#10").val())
+            + parseFloat($("#12").val()) + parseFloat($("#14").val()) + parseFloat($("#16").val())
+            + parseFloat($("#18").val()) + parseFloat($("#20").val()) + parseFloat($("#22").val())
+            + parseFloat($("#24").val()) + parseFloat($("#26").val()) + parseFloat($("#28").val())
+            + parseFloat($("#30").val()) + parseFloat($("#32").val()) + parseFloat($("#34").val());
+
+        var b =
+           " <td style='width:65px;'><label style='width:65px;'> Size(UK): </label><label style='width:32px;'> Quantity: </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  2 </label><label style='width:32px;'> " + $("#2").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  4 </label><label style='width:32px;'> " + $("#4").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  6 </label><label style='width:32px;'> " + $("#6").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  8 </label><label style='width:32px;'> " + $("#8").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  10 </label><label style='width:32px;'> " + $("#10").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  12 </label><label style='width:32px;'> " + $("#12").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  14 </label><label style='width:32px;'> " + $("#14").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  16 </label><label style='width:32px;'> " + $("#16").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  18 </label><label style='width:32px;'> " + $("#18").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  20 </label><label style='width:32px;'> " + $("#20").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  22 </label><label style='width:32px;'> " + $("#22").val() + " </label></td>" +
+           "<td style='width:65px;'><label style='width:32px;'>  24 </label><label style='width:32px;'> " + $("#24").val() + " </label></td> " +
+           "<td style='width:65px;'><label style='width:32px;'>  26 </label><label style='width:32px;'> " + $("#26").val() + " </label></td> " +
+           "<td style='width:65px;'><label style='width:32px;'>  28 </label><label style='width:32px;'> " + $("#28").val() + " </label></td> " +
+           "<td style='width:65px;'><label style='width:32px;'>  30 </label><label style='width:32px;'> " + $("#30").val() + " </label></td> " +
+           "<td style='width:65px;'><label style='width:32px;'>  32 </label><label style='width:32px;'> " + $("#32").val() + " </label></td> " +
+           "<td style='width:65px;'><label style='width:32px;'>  34 </label><label style='width:32px;'> " + $("#34").val() + " </label></td> "
+        ;
+        var abc = "[";
+        //alert(b);
+        $("#SingleProductQtyList").val(b);
+
+        var dataArray = [];
+
+        //alert($('#ColourId option:selected').val());
+        //alert($("#ProductModel_CustomerPrice").val());
+        //alert($("#SingleProductQtyList").val());
+
+        if ($.trim($("#ColourId").val()) == 0 || $.trim($("#SingleProductQtyList").val()) == "") {
+            alert("Please fill complete details")
+            return;
+        }
+
+        // alert($("#SizeQtyList").val());
+        var productName = $("#ProductModel_ProductName").val(),
+        productId = $("#ProductModel_Id").val(),
+        Color = $("#ColourId option:selected").text(),
+        ColorId = $("#ColourId option:selected").val(),
+        //price = $("#ProductModel_CustomerPrice").val(),
+        size2qty = $("#2").val(),
+        size4qty = $("#4").val(),
+        size6qty = $("#6").val(),
+        size8qty = $("#8").val(),
+        size10qty = $("#10").val(),
+        size12qty = $("#12").val(),
+        size14qty = $("#14").val(),
+        size16qty = $("#16").val(),
+        size18qty = $("#18").val(),
+        size20qty = $("#20").val(),
+        size22qty = $("#22").val(),
+        size24qty = $("#24").val(),
+        size26qty = $("#26").val(),
+        size28qty = $("#28").val(),
+        size30qty = $("#30").val(),
+        size32qty = $("#32").val(),
+        size34qty = $("#34").val(),
+        List = L,
+
+        //totalamount = (parseFloat(price) * parseInt(totalqty)),
+        detailsTableBody = $("#detailsTable tbody");
+        if (size2qty < 0 || size4qty < 0 || size6qty < 0 || size8qty < 0 || size10qty < 0 || size12qty < 0 || size14qty < 0 || size16qty < 0 || size18qty < 0 || size20qty < 0 || size22qty < 0 || size24qty < 0 || size26qty < 0 || size28qty < 0 || size30qty < 0 || size32qty < 0 || size34qty < 0) {
+            alert("Size Can't less then Zero");
+            return false;
+        }
+        else if (size2qty == 0 && size4qty == 0 && size6qty == 0 && size8qty == 0 && size10qty == 0 && size12qty == 0 && size14qty == 0 && size16qty == 0 && size18qty == 0 && size20qty == 0 && size22qty == 0 && size24qty == 0 && size26qty == 0 && size28qty == 0 && size30qty == 0 && size32qty == 0 && size34qty == 0)
+        {
+            alert("Size Can't Zero");
+            return false;
+        }
+        var productItem = '<tr><td>' + productName + '</td><td style="display:none;">' + productId + '</td><td>' + Color + '</td><td style="display:none;">' +
+                            ColorId + '</td><td></td><td>' + size2qty + '</td><td>' + size4qty + '</td><td>' + size6qty + '</td><td>' + size8qty +
+                            '</td><td>' + size10qty + '</td><td>' + size12qty + '</td><td>' + size14qty + '</td><td>' + size16qty + '</td><td>' + size18qty +
+                            '</td><td>' + size20qty + '</td><td>' + size22qty + '</td><td>' + size24qty + '</td><td>' + size26qty + '</td><td>' + size28qty +
+                            '</td><td>' + size30qty + '</td><td>' + size32qty + '</td><td>' + size34qty + '</td><td style="display:none;">' + List +
+            '</td><td><a data-itemId="0" href="#" class="deleteItem">Remove</a></td><td><a data-itemId="0" href="#" class="editItem">Edit</a></td></tr>';
+        
+        detailsTableBody.append(productItem);
+        calculateTotalItem();
+        debugger;
+        //var totqty = $("#TotalItem").val();
+        
+        //var curntqty = parseInt(totqty);
+        //var totitm = totalqty + curntqty;
+        //$("#TotalItem").val(totitm);
+        //alert(totitm);
+        clearItem();
+    });
+    //function calculateTotalItem_Old() {
+    //    debugger;
+    //   // var totitm = 0;
+    //    var totalqty = parseFloat($("#2").val()) + parseFloat($("#4").val())
+    //        + parseFloat($("#6").val()) + parseFloat($("#8").val()) + parseFloat($("#10").val())
+    //        + parseFloat($("#12").val()) + parseFloat($("#14").val()) + parseFloat($("#16").val())
+    //        + parseFloat($("#18").val()) + parseFloat($("#20").val()) + parseFloat($("#22").val())
+    //        + parseFloat($("#24").val()) + parseFloat($("#26").val()) + parseFloat($("#28").val())
+    //        + parseFloat($("#30").val()) + parseFloat($("#32").val()) + parseFloat($("#34").val());
+
+
+    //    var totqty = $("#TotalItem").val();
+
+    //    var curntqty = parseInt(totqty);
+    //    var totitm = totalqty + curntqty;
+    //    $("#TotalItem").val(totitm);
+    //    // alert(totitm);
+    //}
+    function calculateTotalItem() {
+        debugger;
+        var totitm = 0;
+
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(5)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(6)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(7)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(8)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(9)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(10)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(11)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(12)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(13)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(14)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(15)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(16)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(17)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(18)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(19)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(20)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+        $.each($("#detailsTable tbody tr"), function () {
+
+
+            var Amount = $(this).find('td:eq(21)').html()
+            totitm = totitm + parseInt(Amount);
+
+        });
+       
+        //var totqty = $("#TotalItem").val();
+
+        //var curntqty = parseInt(totqty);
+        //var totitm1 = curntqty - totitm;
+        $("#TotalItem").val(totitm);
+        // alert(totitm);
+    }
+
+    function clearItem() {
+        // $("#FabricId").val(0);
+        $("#ColourId").val(0);
+        $("#ProductModel_ProductName").val('');
+        //$("#ProductModel_CustomerPrice").val('');
+        // $("#Size").val('');
+        //$("#quantity").val('');
+        $("#SingleProductQtyList").val('');
+        $("#2").val(0);
+        $("#4").val(0);
+        $("#6").val(0);
+        $("#8").val(0);
+        $("#10").val(0);
+        $("#12").val(0);
+        $("#14").val(0);
+        $("#16").val(0);
+        $("#18").val(0);
+        $("#20").val(0);
+        $("#22").val(0);
+        $("#24").val(0);
+        $("#26").val(0);
+        $("#28").val(0);
+        $("#30").val(0);
+        $("#32").val(0);
+        $("#34").val(0);
+    }
+
+
+    $("#saveOrder").click(function (e) {
+        e.preventDefault();
+        //var form4 = $('#__AjaxAntiForgeryForm4');
+        //var token = $('input[name="__RequestVerificationToken"]', form4).val();
+        var RowCount = $('#detailsTable tbody tr').length;
+        if($('#WareHouseId').val() == 0)
+        {
+            alert("Select Ware House");
+            return;
+        }
+        else if($("#CustomerModel_CustomerFullName").val()== "")
+        {
+            alert("Select shop.");
+            return;
+        }
+        else if($("#OrderRefrence").val() == "")
+        {
+            alert("Order Refrence cannot be empty");
+            return;
+        }
+        else if(RowCount <= 0)
+        {
+            alert("Select minimum 1 product.")
+            return;
+        }
+
+        var c=document.getElementById('SendMail');
+        var sendmail = false;
+        if (c.checked)
+        {
+            sendmail = true;
+        }
+        else
+        {
+            sendmail = false;
+        }
+
+        var orderArr = [];
+
+        orderArr.length = 0;
+
+        $.each($("#detailsTable tbody tr"), function () {
+            orderArr.push({
+                Product: {
+                    ProductName: $(this).find('td:eq(0)').html(),
+                    Id: $(this).find('td:eq(1)').html(),
+                    ColourId: $(this).find('td:eq(3)').html(),
+                    //OrderPrice: $(this).find('td:eq(4)').html(),
+                },
+                SizeModelString: $(this).find('td:eq(22)').html(),
+                //Amount: $(this).find('td:eq(23)').html()
+            });
+
+        });
+
+        var customerorderdata = JSON.stringify({
+            Id:$("#Id").val(),
+            CustomerModel: {
+                CustomerFullName: $("#CustomerModel_CustomerFullName").val(),
+                Id: $("#CustomerModel_Id").val(),
+                CurrencyName: $("#CustomerModel_CurrencyName").val(),
+                EmailId: $("#CustomerModel_EmailId").val(),
+                MobileNo: $("#CustomerModel_MobileNo").val(),
+                ShippingState: $("#CustomerModel_ShippingState").val(),
+                ZipCode: $("#CustomerModel_ZipCode").val()
+
+            },
+            DeliveryDate: $("#DeliveryDate").val(),
+            OrderDate:$("#OrderDate").val(),
+            SizeQtyList: $("#SizeQtyList").val(),
+            SendMail:sendmail,
+            //ShippingCharge : $("#ShippingCharge").val(),
+            //OrderNo: $("#OrderNo").val(),
+            //Tax: $("#Tax").val(),
+            ProductList: orderArr,
+            OrderRefrence:$("#OrderRefrence").val(),
+            WareHouseId : $("#WareHouseId").val(),
+            OrderNote : $("#OrderNote").val(),
+            PurchaseOrderStatusId:$("#PurchaseOrderStatusId option:selected").val()
+            //ProductDetails: orderArr
+        });
+
+        //$('#ProductDetails').val(data);
+        //alert(customerorderdata);
+
+        $.ajax({
+            url: "/Order/SavePurchaseOrder",
+            type: "POST",
+            dataType: "json",
+            //contentType: 'application/json; charset=utf-8',
+            //data: data,
+            data: {
+                //  __RequestVerificationToken: token,
+                model: customerorderdata
+            },
+            success: function (data) {
+                if (data.error) {
+                    alert(data.message);
+                    document.location = '@Url.Action("GetPurchaseOrderList", "Order")';
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+            }
+        })
+
+    });
+
+    $(document).on('click', 'a.deleteItem', function (e) {
+        e.preventDefault();
+        var $self = $(this);
+        if ($(this).attr('data-itemId') == "0") {
+            $(this).parents('tr').css("background-color", "#FF3700").fadeOut(800, function () {
+                $(this).remove();
+                calculateTotalItem();
+            });
+        } else {
+            $.when(deleteOrderItem($(this).attr('data-itemId'))).then(function (res) {
+                $self.parents('tr').css("background-color", "#FF3700").fadeOut(800, function () {
+                    $(this).remove();
+                    calculateTotalItem();
+                });
+            }).fail(function (err) {
+
+            });
+        }
+    });
+
+    function wait(ms){
+        var start = new Date().getTime();
+        var end = start;
+        while(end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
+
+    $(document).on("click", '.editItem', function (e) {
+        //var data = table.row($(this).parents('tr')).data();
+        // console.log(data);
+        e.preventDefault();
+        // var chk = $(this).find('td:eq(1)').html();
+
+
+        $('#ColourId').empty();
+        var chk = $(this).parents('tr').find('td:eq(14)').html();
+        $("#ProductModel_ProductName").val($(this).parents('tr').find('td:eq(0)').html());
+        $("#ProductModel_Id").val($(this).parents('tr').find('td:eq(1)').html());
+        var ColourId = $(this).parents('tr').find('td:eq(3)').html();
+        // $("#ProductModel_CustomerPrice").val($(this).parents('tr').find('td:eq(4)').html());
+        $("#2").val( $(this).parents('tr').find('td:eq(5)').html());
+        $("#4").val( $(this).parents('tr').find('td:eq(6)').html());
+        $("#6").val( $(this).parents('tr').find('td:eq(7)').html());
+        $("#8").val( $(this).parents('tr').find('td:eq(8)').html());
+        $("#10").val( $(this).parents('tr').find('td:eq(9)').html());
+        $("#12").val( $(this).parents('tr').find('td:eq(10)').html());
+        $("#14").val( $(this).parents('tr').find('td:eq(11)').html());
+        $("#16").val( $(this).parents('tr').find('td:eq(12)').html());
+        $("#18").val( $(this).parents('tr').find('td:eq(13)').html());
+        $("#20").val( $(this).parents('tr').find('td:eq(14)').html());
+        $("#22").val( $(this).parents('tr').find('td:eq(15)').html());
+        $("#24").val( $(this).parents('tr').find('td:eq(16)').html());
+        $("#26").val( $(this).parents('tr').find('td:eq(17)').html());
+        $("#28").val( $(this).parents('tr').find('td:eq(18)').html());
+        $("#30").val( $(this).parents('tr').find('td:eq(19)').html());
+        $("#32").val( $(this).parents('tr').find('td:eq(20)').html());
+        $("#34").val( $(this).parents('tr').find('td:eq(21)').html());
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetColoursForProduct", "Order")',
+            dataType: 'json',
+            data: { ProductId: $("#ProductModel_Id").val() },
+            success: function (states) {
+                $('#ColourId').append($('<option/>', {
+                    value: 0,
+                    text: "--Select Color--"
+                }));
+                $.each(states, function (i, color) {
+                    $('#ColourId').append('<option value ="' + color.Value + '">' + color.Text + '</option>');
+                });
+                $('#ColourId').val(ColourId);
+            },
+            error: function (ex) {
+                alert('Failed to retrieve Colors.' + ex);
+            }
+        });
+
+
+
+        //alert($(this).parents('tr').find('td:eq(3)').html());
+        //alert($("#ColourId").val());
+
+
+       // wait(7000);
+
+
+       // alert($(this).parents('tr').find('td:eq(3)').html());
+
+        $(this).parents('tr').css("background-color", "#FF3700").fadeOut(800, function () {
+            $(this).remove();
+        });
+
+        //alert(chk);
+        //var id = data.masterId;
+        //alert(id);
+        //$.when(getOrder(id)).then(function (res) {
+        //    var detArr = [];
+        //    $("#customerName").val(res.result.CustomerName);
+        //    $("#address").val(res.result.Address);
+        //    $("#orderMasterId").val(res.result.MasterId);
+
+        //    $.each(res.result.OrderDetails, function (i, v) {
+        //        detArr.push('<tr><td>' + v.ProductName + '</td><td>' + v.Amount + '</td><td>' + v.Quantity + '</td><td>' + (parseFloat(v.Amount) * parseInt(v.Quantity)) + '</td><td><a data-itemId="' + v.DetailId + '" href="#" class="deleteItem">Delete</a> | <a href="#" data-itemId="' + v.DetailId + '" class="editDetail">Edit</a></td></tr>')
+        //    });
+        //    $("#detailsTable tbody").append(detArr);
+        //    $("#saveOrder").html("Save Update");
+        //    $('#newOrderModal').modal('show');
+
+        //}).fail(function (err) {
+        //    console.log(err);
+        //});
+    });
+
+    function Cancel() {
+        document.location = '@Url.Action("GetPurchaseOrderList", "Order")';
+    }
+
+
+    function SendPurchaseOrderMail()
+    {
+        var r = confirm("Are you sure you want to send mail to supplier ?");
+        if (r == true) {
+            //return true;
+            var idpo = $("#Id").val();
+            $.ajax({
+                url: "/Order/sendPoMail",
+                type: "POST",
+                dataType: "json",
+                //contentType: 'application/json; charset=utf-8',
+                //data: data,
+                data: {
+                    //  __RequestVerificationToken: token,
+                    poId: idpo
+                },
+                success: function (data) {
+                    alert("Mail Sent !!");
+                    //document.location = '@Url.Action("GetPurchaseOrderList", "Order")';
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                }
+            })
+
+        } else {
+            return false;
+        }
+
+    }
+
+
+    function ChangeStatus()
+    {
+            //return true;
+        var idpo = $("#Id").val();
+        var poStatus = $("#PurchaseOrderStatusId option:selected").val();
+            $.ajax({
+                url: "/Order/ChangePOStatus",
+                type: "POST",
+                dataType: "json",
+                //contentType: 'application/json; charset=utf-8',
+                //data: data,
+                data: {
+                    //  __RequestVerificationToken: token,
+                    POMasterId: idpo,
+                    poStatusId: poStatus
+                },
+                success: function (data) {
+                    alert("Status Changed !!");
+                    //document.location = '@Url.Action("GetPurchaseOrderList", "Order")';
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                }
+            })
+
+    }
+
+</script>

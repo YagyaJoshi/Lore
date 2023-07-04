@@ -1,0 +1,145 @@
+﻿@model Loregroup.Core.ViewModels.NotificationsViewModel
+@{
+    //var messages = Model.Notifications.Where(x => x.NotificationType == Loregroup.Core.Enumerations.NotificationType.Message).ToList();
+    //var notifications = Model.Notifications.Where(x => x.NotificationType == Loregroup.Core.Enumerations.NotificationType.Notification).ToList();
+    //var tasks = Model.Notifications.Where(x => x.NotificationType == Loregroup.Core.Enumerations.NotificationType.Task).ToList();
+    var user = ((Loregroup.Core.ViewModels.LayoutModel)ViewBag.LayoutModel).SessionUser;
+}
+<div class="navbar-right">
+    <ul class="nav navbar-nav">
+
+        <!-- Messages: style can be found in dropdown.less-->
+        @*@if (messages != null && messages.Any()) {
+            <li class="dropdown messages-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-envelope"></i>
+                    <span class="label label-success">@messages.Count</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header">You have @messages.Count messages</li>
+                    <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                            @foreach (var message in messages) {
+                                <li>
+                                    <!-- start message -->
+                                    <a href="#" data-action-url="@message.ActionUrl" data-action-type="@message.ActionUrlRequestType">
+                                        <div class="pull-left">
+                                            <img src="/Content/@message.ImageId" class="img-circle" alt="@message.From.FullName" />
+                                        </div>
+                                        <h4>@message.From.FullName
+                                            <small><i class="fa fa-clock-o"></i>@message.Timestamp</small>
+                                        </h4>
+                                        <p>@message.Message</p>
+                                    </a>
+                                </li>
+                                <!-- end message -->
+                            }
+                        </ul>
+                    </li>
+                    @*TODO: Need to configure all messages page url*@
+        @*<li class="footer"><a href="#">See All Messages</a></li>
+                    </ul>
+                </li>
+            }*@
+
+        <!-- Notifications: style can be found in dropdown.less -->
+        @*@if (notifications != null && notifications.Any()) {
+            <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-warning"></i>
+                    <span class="label label-warning">@notifications.Count</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header">You have @notifications.Count notifications</li>
+                    <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                            @foreach (var notification in notifications) {
+                                <li>
+                                    <a href="#" data-action-url="@notification.ActionUrl" data-action-type="@notification.ActionUrlRequestType">
+                                        <i class="ion ion-ios7-people info"></i>@notification.Message
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                    @*TODO: Need to configure all notifications page url*@
+        @*<li class="footer"><a href="#">View all</a></li>
+                    </ul>
+                </li>
+            }*@
+        <!-- Tasks: style can be found in dropdown.less -->
+        @*@if (tasks != null && tasks.Any()) {
+            <li class="dropdown tasks-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-tasks"></i>
+                    <span class="label label-danger">@tasks.Count</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header">You have @tasks.Count tasks</li>
+                    <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                            @foreach (var task in tasks) {
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="#" data-action-url="@task.ActionUrl" data-action-type="@task.ActionUrlRequestType">
+                                        <h3>@task.Message
+                                            <small class="pull-right">@(task.TaskPercent)%</small>
+                                        </h3>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-aqua" style="width: @(task.TaskPercent)%" role="progressbar" aria-valuenow="@(task.TaskPercent)" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">@(task.TaskPercent)% Complete</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- end task item -->
+                            }
+                        </ul>
+                    </li>
+                    <li class="footer">
+                        @*TODO: Need to configure all tasks page url*@
+        @*<a href="#">View all tasks</a>
+                        </li>
+                    </ul>
+                </li>
+            }*@
+
+        @*TODO: Need to configure loggedin user details*@
+        <!-- User Account: style can be found in dropdown.less -->
+        @if (Request.IsAuthenticated)
+        {
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span>@user.FullName <i class="caret"></i></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <!-- User image -->
+                    <li class="user-header bg-light-blue">
+                        @*<img src="@ViewBag.CurrentUrl/Contents/Thumb/@user.DisplayImageId" class="img-circle" alt="@user.FullName" />*@
+                        <img src="@user.Profimage" class="img-circle" alt="@user.FullName" />
+                        <p>
+                            @user.FullName
+                            <small>Member since @user.DateJoined.ToShortDateString()</small>
+                        </p>
+                    </li>
+
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        @*<div class="pull-left">
+                                <a href="/Settings/AddEditAppUsers/@user.Id" class="btn btn-default btn-flat">Profile</a>
+                            </div>*@
+                        <div class="pull-right">
+                            @*<a href="@Url.Action("LoginPage","Loregroup")" class="btn btn-default btn-flat">Sign out</a>*@
+                            <a href="@Url.Action("SignOut", "Account")" class="btn btn-default btn-flat">Sign out</a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        }
+
+    </ul>
+</div>

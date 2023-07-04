@@ -1,0 +1,128 @@
+﻿@model Loregroup.Core.ViewModels.NotificationsViewModel
+@{
+
+}
+<script type="text/javascript">
+
+    function Cancel() {
+        document.location = '@Url.Action("ShowAdminNotification", "Master")';
+    }
+</script>
+<script>
+    var loadFile = function (event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+    };
+</script>
+
+<div class="col-md-12">
+    @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+            <h4>Validation Errors</h4>
+            @Html.ValidationSummary()
+        </div>
+    }
+    @using (Html.BeginForm("Sendnotification", "Master", FormMethod.Post, new { @enctype = "multipart/form-data", id = "profilePictureForm" }))
+    {
+
+        <div class="box box-info col-md-12">
+
+            <div class="box-body">
+
+                @*<div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            
+                            <br />
+                            @Html.ListBox("CategoryID", (MultiSelectList)ViewBag.Categories, new { @class = "form-control", size = 4 })
+                        </div>
+                        @if (TempData["Error2"] != null)
+                        {
+                            <div class="red">
+                                <h4 style="color:red"><strong>Message: </strong>@TempData["Error2"]</h4>
+                            </div>
+                        }
+                    </div>
+                </div>*@
+                @*<div class="row">
+                    <div class="col-md-6">
+                        @Html.RadioButtonFor(m => Model.To, "User")
+                        @Html.Label("End User")
+
+
+                    </div>
+                    <div class="col-md-6">
+                        @Html.RadioButtonFor(model => model.To, "Store", new { name = "Other" })
+                        @Html.Label("Store")
+
+                    </div>
+                    <div class="col-md-6">
+                        @Html.RadioButtonFor(model => model.To, "Mall", new { name = "Other" })
+                        @Html.Label("Mall")
+
+                    </div>
+                </div>*@
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label("Select Store") :
+                            @Html.BootstrapDropDownListFor(m => m.StoreId, new SelectList(Model.Storeviewmodel.Storelist, "Id", "StoreName", Model.StoreId))
+                           @* @Html.ValidationMessageFor(model => model.StateId)*@
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                           @Html.Label("Subject") :
+                            @Html.BsTextBoxWithPHFor(model => model.Description)
+                            @Html.ValidationMessageFor(model => model.Description)
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label("Notification Message") :
+                            @Html.BsTextAreaFor(model =>model.NotificationMessage)
+                            @Html.ValidationMessageFor(model => model.NotificationMessage)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                          
+                            @if (TempData["Error1"] != null)
+                            {
+                                <div class="red">
+                                    <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+
+
+
+            </div>
+        </div>
+
+
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                    <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px">Send</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

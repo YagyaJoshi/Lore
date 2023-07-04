@@ -1,0 +1,69 @@
+﻿@model Loregroup.Core.ViewModels.BaseEntityViewModel
+
+@{
+    ViewBag.Title = "AddNewBaseEntity";
+    Layout = "~/Views/Shared/_Master.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("Index", "Home")';
+    }
+</script>
+
+@using (Html.BeginForm("AddNewBaseEntity", "Setting", FormMethod.Post, new { @class = "form-group", role = "form" }))
+{
+    @*<div class="col-md-2">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image)
+                @Html.ValidationMessageFor(model => model.Image)
+                @Html.BsTextBoxWithPHFor(model => model.Image)
+            </div>
+        </div>*@
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.SystemName)
+                @Html.BsTextBoxWithPHFor(model => model.SystemName, new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.SystemName)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group" float="center">
+                @Html.LabelFor(model => model.TextData)
+                @Html.TextAreaFor(modal => modal.TextData)
+            </div>
+            @*<span>@Html.Raw(Model.TextData)</span>*@
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    <script type="text/javascript">
+        tinymce.init({ menubar: false, statusbar: false, selector: 'textarea', width: 1100, height: 300 });
+    </script>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px"> Cancel</button>
+            <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px"> Save</button>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.Id)
+}
+
+
+
+
+
+
+
+
+

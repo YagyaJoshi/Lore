@@ -1,0 +1,83 @@
+﻿
+@model Loregroup.Core.ViewModels.NotificationsViewModel
+<div class="turnover fadetoggle">
+    <div class="turnover-inner ">
+        <div class="turnover-title">
+            <a class="close">x</a>
+            <h3 id="turnoverHeading">
+              @*  Offer*@
+            </h3>
+        </div>
+        <div class="turnover-content" id="turnoverContent">
+            <!-- left column -->
+            <div class="col-md-12">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h4 class="page-header">Notification</h4>
+                            </div>
+                        </div>
+                    </div>
+                    @*<img src="@Model.Profile" id="output" style="height: 150px; width: 700px; " />*@
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.Label("Name") :
+                                @Html.DisplayTextFor(m => m.Name)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Subject") :
+                                @Html.DisplayTextFor(m => m.Description)
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Label("Notification") :
+                            @Html.DisplayTextFor(m => m.NotificationMessage)
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.KitContent) :
+                                @Html.DisplayTextFor(m => m.KitContent)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.Label("Time Remaining") :
+                                @Html.DisplayTextFor(m => m.Time)
+                            </div>
+                        </div>
+                    </div>*@
+                    @*<div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.ProductName) :
+                                @Html.DisplayTextFor(m => m.ProductName)
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.About) :
+                                @Html.DisplayTextFor(m => m.About)
+                            </div>
+                        </div>
+                    </div>*@
+
+                </div>
+                <!-- /.box-body -->
+                @Html.HiddenFor(m => m.notid)
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</div>

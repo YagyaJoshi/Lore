@@ -1,0 +1,264 @@
+﻿@model Loregroup.Core.ViewModels.NavigationViewModel
+
+@*<html class="bg-black">*@
+<head>
+    <meta charset="UTF-8">
+    <title>AdminLTE | Add/Edit Role Permission</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    @*<link href="../../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css">*@
+
+    <style type="text/css">
+        .input-table td, .input-table th {
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+            .input-table td:nth-child(n), .input-table th:nth-child(n) {
+                width: 22%;
+            }
+
+            .input-table td:nth-child(2n), .input-table th.review {
+                width: 10%;
+                text-align: center;
+            }
+
+        .input-table thead input {
+            display: none;
+        }
+
+        .input-table td {
+        }
+
+        .input-table tr {
+            width: 100%;
+            float: left;
+        }
+
+        .input-table {
+            min-width: 950px;
+        }
+
+        .form-group {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+@*<script type="text/javascript">
+        $(document).ready(function () {
+            $('input:checkbox').removeAttr('checked');
+        });
+    </script>*@
+
+@*<div class="col-md-12">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">*@
+@*<div class="box-header">
+        <h3 class="box-title">Add/Edit Role Permission</h3>
+    </div>*@
+
+@if (@ViewBag.Message1 != null)
+{
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-check"></i> Success!</h4>
+        @ViewBag.Message1
+    </div>
+}
+
+  @using (Html.BeginForm("PermissionMatrix", "User", FormMethod.Post))
+{
+    @*<body>*@
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <br />
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Select Role<span style="color: red; font-weight: bold"> *</span></label>
+                        @Html.BootstrapDropDownListFor(m => m.RoleId, new SelectList(Model.RoleList, "Id", "Name", Model.RoleId))
+                        @Html.ValidationMessageFor(m => m.RoleId)
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @*<button type="submit" id="btnSave" name="Command" value="Save">Save</button>*@
+                        <button type="submit" id="btnSubmit" name="Command" value="Show" class="btn btn-primary pull-right" style="margin-right: 50px;">Show</button>
+                        @*<a href="@Url.Action("PermissionMatrix", "Settings")" class="btn btn-primary pull-right" style="margin-right: 50px;">Show</a>*@
+                    </div>
+                </div>
+
+            </div>
+
+            @if (Model.NavList != null && Model.NavList.Count > 0)
+            {
+                @*<div class="form-boxP pMatrix" id="login-box">*@
+                @*<div class="header">Add/Edit Role Permission</div>*@
+                @*<form action="../../index.html" method="post">*@
+                <div class="body">
+                    <div class="form-group">
+                        @Html.HiddenFor(a => a.Id)
+                        @Html.ValidationMessageFor(m => m.Id)
+                    </div>
+                    <div class="">
+
+                        <table class="input-table">
+                            <thead>
+                                <tr>
+                                    @for (int i = 1; i <= 3; i++)
+                                    {
+                                        <th>Name</th>
+                                        for (var innerCounter = 0; innerCounter < Model.PermissionList[0].RoleList.Count(); innerCounter++)
+                                        {
+                                            @Html.HiddenFor(m => Model.PermissionList[0].RoleList[innerCounter].Id)
+                                            <th class="review">
+                                                @*@Model.PermissionList[0].RoleList[innerCounter].Name*@
+                                                Permission
+                                            </th>
+                                        }
+                                    }
+                                </tr>
+                            </thead>
+
+                            <tr class="text-primary" style="font-size:large;"><td>Navigation</td></tr>
+                            <tr>
+                                @for (var counter = 0; counter < Model.NavList.Count(); counter++)
+                                {
+                                    for (var innerCounter = 0; innerCounter < Model.NavList[counter].RoleList.Count(); innerCounter++)
+                                    {
+                                        //for (int i = 1; i <= 3; i++)
+                                        //{
+                                        <td>
+                                            @Model.NavList[counter].Text
+                                            @Html.HiddenFor(m => Model.NavList[counter].TypeHold)
+                                            @Html.HiddenFor(m => Model.NavList[counter].ActionUrl)
+                                        </td>
+                                        @Html.HiddenFor(m => Model.NavList[counter].Id)
+
+                                        @Html.HiddenFor(m => Model.NavList[counter].RoleList[innerCounter].Id)
+                                        <td>
+                                            <span>
+                                                @Html.CheckBoxFor(m => Model.NavList[counter].RoleList[innerCounter].Value, new { @class = "childCheckBox" })
+                                            </span>
+                                        </td>
+
+                                        @*}*@
+
+                                        @*for (var innerCounter = 0; innerCounter < Model.PermissionList[counter].RoleList.Count(); innerCounter++)
+                                            {
+                                                @Html.HiddenFor(m => Model.PermissionList[counter].RoleList[innerCounter].Id)
+                                                <td>
+                                                    <span>
+                                                        @Html.CheckBoxFor(m => Model.PermissionList[counter].RoleList[innerCounter].Value, new { @class = "childCheckBox" })
+                                                    </span>
+                                                </td>
+                                            }*@
+                                    }
+                                }
+                            </tr>
+                            <tr class="text-primary" style="font-size:large;"><td><hr style="color:gray" />Sub-Navigation</td></tr>
+                            <tr>
+                                @for (var counter = 0; counter < Model.SubNavList.Count(); counter++)
+                                {
+                                    for (var innerCounter = 0; innerCounter < Model.SubNavList[counter].RoleList.Count(); innerCounter++)
+                                    {
+                                        //for (int i = 1; i <= 3; i++)
+                                        //{
+                                        <td>
+                                            @Model.SubNavList[counter].Text
+                                            @Html.HiddenFor(m => Model.SubNavList[counter].TypeHold)
+                                            @Html.HiddenFor(m => Model.SubNavList[counter].ActionUrl)
+                                        </td>
+                                        @Html.HiddenFor(m => Model.SubNavList[counter].Id)
+                                        @Html.HiddenFor(m => Model.SubNavList[counter].RoleList[innerCounter].Id)
+                                        <td>
+                                            <span>
+                                                @Html.CheckBoxFor(m => Model.SubNavList[counter].RoleList[innerCounter].Value, new { @class = "childCheckBox" })
+                                            </span>
+                                        </td>
+
+                                        @*}*@
+
+                                        @*for (var innerCounter = 0; innerCounter < Model.PermissionList[counter].RoleList.Count(); innerCounter++)
+                                            {
+                                                @Html.HiddenFor(m => Model.PermissionList[counter].RoleList[innerCounter].Id)
+                                                <td>
+                                                    <span>
+                                                        @Html.CheckBoxFor(m => Model.PermissionList[counter].RoleList[innerCounter].Value, new { @class = "childCheckBox" })
+                                                    </span>
+                                                </td>
+                                            }*@
+                                    }
+                                }
+                            </tr>
+
+                            @* Widget
+
+                                <tr class="text-primary" style="font-size:large;"><td><hr style="color:gray" />Dashboard Widgets</td></tr>
+                                <tr>
+                                    @for (var counter = 0; counter < Model.WidgetList.Count(); counter++)
+                                    {
+                                        for (var innerCounter = 0; innerCounter < Model.WidgetList[counter].RoleList.Count(); innerCounter++)
+                                        {
+                                            <td>
+                                                @Model.WidgetList[counter].Text
+                                                @Html.HiddenFor(m => Model.WidgetList[counter].TypeHold)
+                                            </td>
+                                            @Html.HiddenFor(m => Model.WidgetList[counter].Id)
+                                            @Html.HiddenFor(m => Model.WidgetList[counter].RoleList[innerCounter].Id)
+                                            <td>
+                                                <span>
+                                                    @Html.CheckBoxFor(m => Model.WidgetList[counter].RoleList[innerCounter].Value, new { @class = "childCheckBox" })
+                                                </span>
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+
+                            *@
+
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" id="btnClose" name="Command" value="Close" class="btn btn-default pull-right" style="margin-right: 10px">Close</button>
+                            <button type="submit" id="btnSave" name="Command" value="Save" class="btn btn-primary pull-right" style="margin-right: 10px">Save Role & Permission</button>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                        @*</form>*@
+                        @*</div>*@
+                        }
+                    </div>
+                </div>
+
+    <!-- jQuery 2.0.2 -->
+    @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>*@
+
+    <!-- Bootstrap -->
+    @*<script src="../../js/bootstrap.min.js" type="text/javascript"></script>*@
+
+    @*</body>*@
+    @*@Html.HiddenFor(m => Model.PermissionList[0].Id)
+        @Html.HiddenFor(m => Model.PermissionList[0].CreatedById)
+        @Html.HiddenFor(m => Model.PermissionList[0].StatusId)
+        @Html.HiddenFor(m => Model.PermissionList[0].ModifiedById)*@
+}
+@*</div>
+            </div>
+        </div>
+    </div>*@
+
+@*</html>*@

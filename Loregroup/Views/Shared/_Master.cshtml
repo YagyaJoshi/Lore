@@ -1,0 +1,103 @@
+﻿@using Loregroup.Core.ViewModels
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var breadCrumb = ((Loregroup.Core.ViewModels.BreadCrumbModel)ViewBag.BreadCrumb);
+    BreadCrumbModel subBreadCrumb = null;
+}
+
+<!-- header logo: style can be found in header.less -->
+<header class="header">
+    <a href="/" class="logo">
+        <!-- Add the class icon to your logo image or logo icon to add the margining -->
+        Alpha.Lore-Group
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+        @Html.Partial("_TopRightNav", ((Loregroup.Core.ViewModels.LayoutModel)ViewBag.LayoutModel).Notifications)
+    </nav>
+</header>
+<div class="wrapper row-offcanvas row-offcanvas-left">
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="left-side sidebar-offcanvas">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            @Html.Partial("_LeftSideNavigation", ((Loregroup.Core.ViewModels.LayoutModel)ViewBag.LayoutModel).LeftSideMenu)
+        </section>
+    </aside>
+
+    <!-- Right side column. Contains the navbar and content of the page -->
+    <aside class="right-side">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            @if (breadCrumb != null)
+            {
+                <h1>
+                    @breadCrumb.Title
+                    @*<small>Control panel</small>*@
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard"></i>Go To Dashboard</a></li>
+                    @if (breadCrumb.SubBreadCrumbModel == null)
+                    {
+                        <li class="active">Dashboard</li>
+                    }
+                    @{
+                    subBreadCrumb = breadCrumb.SubBreadCrumbModel;
+                    while (subBreadCrumb != null)
+                    {
+                        <li><a href="@ViewBag.CurrentUrl/@subBreadCrumb.Url"><i class="fa fa-dashboard"></i> @subBreadCrumb.Title</a></li>
+                        if (subBreadCrumb.SubBreadCrumbModel == null)
+                        {
+                            <li class="active">@subBreadCrumb.Title</li>
+                        }
+                        subBreadCrumb = subBreadCrumb.SubBreadCrumbModel;
+                    }
+                    }
+                </ol>
+            }
+
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <!-- Small boxes (Stat box) -->
+            <div class="row">
+                @* <div class="alert alert-success alert-dismissable hide" id="successMessage">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <b>Alert!</b> Success! Data has been saved successfully.
+                    </div>*@
+                @Html.ValidationSummaryBootstrap()
+                @RenderBody()
+                @Html.Partial("_UploadTemplate")
+                @Html.Partial("_Overlay")
+            </div>
+        </section>
+    </aside>
+</div>
+
+@*<div class="three-quarters spinner hide" id="pageLoader">
+        Loading...
+    </div>*@
+
+@Html.Partial("_DatatableTemplate")
+
+@*<script type="text/javascript">
+        $(document).ready(function() {
+            $("#turnover").click(function () {
+                var data = {
+                    Content: $("#myTurn").html(),
+                    Selctor: ''
+                };
+                Desertfire.attach_turnover(data, $('<div></div>'));
+            });
+        });
+    </script>*@

@@ -1,0 +1,109 @@
+﻿.background {
+    background-color:#3c8dbc;
+}
+.upload_turnover{
+    width:500px;
+    /*background-color:#3c8dbc;*/
+    border-radius:6px;
+}
+.uploaded_turnover{
+    min-height:520px;
+    float:right;
+    width:50%;
+    background-color:white;
+    border-radius:0 3px 3px 0px;
+    overflow:hidden;
+}
+.upload_turnover .turnover{
+    display:block;
+    position:relative;
+    left:auto;
+    top:auto;
+    padding:0px;
+    width:100%;
+}
+.upload_turnover .turnover-inner{
+    padding:0px;
+    box-shadow:none;
+    border-radius:0px;
+    background:none;
+    float:none;
+}
+.upload_turnover .turnover-content{
+    min-height:447px;
+    border-radius:0 0 3px 0;
+}
+.upload_turnover .turnover-title h3{
+    border-radius:0px;
+    border-radius:0px 3px 0 0;
+}
+.upload_functions{
+    border-right: 0px;
+    min-height:520px;
+    float:left;
+    width:50%;
+    margin-right:0px;
+    border-radius:3px 0 0 3px;
+}
+.upload_list_container{
+    margin-left: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 3px 0px 0 3px;
+}
+.uploaded_list {
+    width:100%;
+    border-radius: 3px 0px 0 3px;
+}
+.uploaded_list tr{
+    background-color:#ABC84C;
+    padding:3px;
+    cursor:pointer;
+}
+.uploaded_list tr:hover {
+    background-color:#DFDFDF;
+}
+.uploaded_list tr.active{
+    background-color:#f39c12;
+}
+.uploaded_list td.file-type {
+    width:40px;
+    font-weight:bold;
+    padding:5px;
+}
+.uploaded_list td.file-name {
+    padding-left:5px;
+}
+.uploaded_list{
+    background-color: #ecf1da;
+    padding-left:15px;
+}
+.upload_turnover .cancel{
+    bottom:14px;
+    left:14px;
+    position:absolute;
+}
+.uploaded_list{
+    background:none;
+    width:100%;
+}
+.uploaded_list td.file-status{
+    text-align:center;
+    width:25px;
+}
+.uploaded_list td.file-status.uploading{
+    height:25px;
+    width:25px;
+    background-image: url('/img/loading.gif');
+    background-size:22px 22px;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.uploaded_list td.file-status.name-check{
+    height:25px;
+    width:25px;
+}
+.uploaded_list td.file-status.finished{
+    height:25px;
+    width:25px;
+}

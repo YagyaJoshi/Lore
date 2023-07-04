@@ -1,0 +1,74 @@
+﻿@model Loregroup.Core.ViewModels.DSCMaster
+@{
+    ViewBag.Title = "DSCEnrollment";
+}
+
+@*<h2>DSCEnrollment</h2>*@
+
+@*<div class="box-header">
+
+</div>*@
+@using (Html.BeginForm("DSCEnrollment", "DSCMaster", FormMethod.Post))
+{
+<div class="box box-info col-md-12">
+
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ApplicationNumber)
+                    @Html.BsTextBoxWithPHFor(model => model.ApplicationNumber)
+                    @Html.ValidationMessageFor(model => model.ApplicationNumber)
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ApplicationStatus)
+
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                   
+                   
+                    @Html.RadioButtonFor(m => m.ApplicationStatus, "Paid", new { @checked = true }) 
+                    @Html.Label("Paid", "  Paid")
+                  
+                   
+                    @*@Html.LabelFor(model => model)*@
+                    @*@Html.BsTextBoxWithPHFor(model => model.Cityname)
+                    @Html.ValidationMessageFor(model => model.Cityname)*@
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+
+                    @Html.RadioButtonFor(m => m.ApplicationStatus, "UnPaid")
+                    @Html.Label("UnPaid", "UnPaid")
+
+                    @*@Html.LabelFor(model => model.ApplicationStatus)*@
+                    @*@Html.RadioButtonFor(m => m.ApplicationStatus, "UnPaid")*@
+                   
+                    @*@Html.BsTextBoxWithPHFor(model => model.Cityname)
+                    @Html.ValidationMessageFor(model => model.Cityname)*@
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="box-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+            <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+        </div>
+    </div>
+</div>
+
+}

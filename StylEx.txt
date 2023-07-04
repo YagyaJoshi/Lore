@@ -1,0 +1,8 @@
+Style No. Check Value in Mange Inventary
+Ex:-
+1.0MPL006 - Purple
+2.71108 -White
+3.7D7005
+4.9WY020 - Ivory
+5.9P9007- Pink
+6.9PK001-Ivory

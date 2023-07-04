@@ -1,0 +1,526 @@
+﻿@model Loregroup.Core.ViewModels.ContactViewModel
+
+@{
+    ViewBag.Title = "ContactUs";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<!-- Title page -->
+<section class="bg-img1 txt-center p-lr-15 p-tb-70" style="background:#fff;">
+    <h2 class="ltext-103 cl2 txt-center">
+        Contact <hr>
+    </h2>
+</section>
+
+<!-- Content page -->
+<section class="bg0 p-t-10 p-b-50">
+    <div class="container">
+        <div class="flex-w flex-tr">
+
+            @{ int i = 0; }
+
+            @foreach (var item in Model.ContactList)
+            {
+                i++;
+
+                <div class="size-210 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md br-right-ligray" style="box-shadow: 0px 0px 9px #ccccccbd; margin-right: 5px; margin-bottom: 5px;">
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-map-marker"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                @item.OfficeName
+                            </span>
+
+                            <p class="stext-115 cl6 size-213 p-t-18">
+                                @item.Address
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-phone-handset"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Lets Talk
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                @item.Contactno
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-envelope"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Sale Support
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                @item.Email
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                if (i % 2 == 0)
+                {
+                    <br>
+                }
+
+            }
+        </div>
+
+        @*<div class="flex-w flex-tr" style="box-shadow: 0px 0px 9px #ccccccbd;">
+                <div class="size-210 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md br-right-ligray">
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-map-marker"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                UK Headquarters
+                            </span>
+
+                            <p class="stext-115 cl6 size-213 p-t-18">
+                                Loré House, 7 Iron Bridge Close, London NW10 0UR, United Kingdom
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-phone-handset"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Lets Talk
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                +44 20 8998 0098
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-envelope"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Sale Support
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                sales@lore-group.com
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="size-210 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-map-marker"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                USA Showroom
+                            </span>
+
+                            <p class="stext-115 cl6 size-213 p-t-18">
+                                Showroom #10N102, AmericasMart Bldg 3, 75 John Portman Blvd NW, Atlanta 30303, USA, Georgia
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-phone-handset"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Lets Talk
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                +1 (770) 238 1738
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-envelope"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Sale Support
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                sales@lore-group.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>*@
+        <br>
+
+        @*<div class="flex-w flex-tr" style="box-shadow: 0px 0px 9px #ccccccbd;">
+                <div class="size-210 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md br-right-ligray">
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-map-marker"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Spain Showroom
+                            </span>
+
+                            <p class="stext-115 cl6 size-213 p-t-18">
+                                Trinidad Garcia Larossa, Manuel Vincente Pastor 21, Elche 03206, Spain
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-phone-handset"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Lets Talk
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                +34 96 546 9726
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-envelope"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Sale Support
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                sales@lore-group.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="size-210 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-map-marker"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Greece Showroom
+                            </span>
+
+                            <p class="stext-115 cl6 size-213 p-t-18">
+                                Manos Paradisis, Dimitressa 5, Athens 11528, Greece
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-phone-handset"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Lets Talk
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                +30 694 285 5226
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-envelope"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Sale Support
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                sales@lore-group.com
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br>*@
+
+        @*<div class="flex-w flex-tr" style="box-shadow: 0px 0px 9px #ccccccbd;">
+                <div class="size-210 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md br-right-ligray">
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-map-marker"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Mexico Showroom
+                            </span>
+
+                            <p class="stext-115 cl6 size-213 p-t-18">
+                                Salomon Achar Tuachi, Jose Maria Izazaga 117, Colonia Centro Mexico CDMX 06900, Mexico, México
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-phone-handset"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Lets Talk
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                +52 1 55 6672 6032
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-envelope"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Sale Support
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                sales@lore-group.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="size-210 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-map-marker"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Italy Showroom
+                            </span>
+
+                            <p class="stext-115 cl6 size-213 p-t-18">
+                                Adesso, Via Neghillo 148, Ragusa 97011, Italy
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full p-b-42">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-phone-handset"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Lets Talk
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                +39 320 473 6881
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex-w w-full">
+                        <span class="fs-18 cl5 txt-center size-211">
+                            <span class="lnr lnr-envelope"></span>
+                        </span>
+
+                        <div class="size-212 p-t-2">
+                            <span class="mtext-110 cl2">
+                                Sale Support
+                            </span>
+
+                            <p class="stext-115 cl1 size-213 p-t-18">
+                                sales@lore-group.com
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+
+
+        <div class="flex-w flex-tr">
+            <div class="size-220 p-lr-93 p-tb-100 p-lr-15-lg w-full-md">
+                <h4 class="mtext-105 cl2 txt-center p-b-30">
+                    Drop us a line or just say <b style="color:#ed151f;">Hello!</b>
+                </h4>
+                <div class="row">
+                    <div class="bor8 col-md-6 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="name" id="name" placeholder="Your Full Name">
+                        <img class="how-pos4 pointer-none" src="/Frontend/images/icons/icons8-user-16.png" alt="ICON">
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="bor8 col-md-5 m-b-20 how-pos4-parent">
+                        <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" id="email" placeholder="Your Email Address">
+                        <img class="how-pos4 pointer-none" src="/Frontend/images/icons/icon-email.png" alt="ICON">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="bor8 col-md-12 m-b-30">
+                        <textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" id="msg" placeholder="How Can We Help?"></textarea>
+                    </div>
+                </div>
+                <button type="submit" id="contact_us" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                    Submit
+                </button>
+
+                <div id="loadingImage" style="display:none; position:absolute; width:100px; height:100px; left:50%; top:50%; z-index:100">
+                    <img src="/Frontend/css/ring-alt.gif" height="50px" width="50px" alt="Loading..." />
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+</section>
+
+
+<!-- Map -->
+@*<div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2480.792528479809!2d-0.25486348469946996!3d51.55370327964272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487611a6d45fe705%3A0xde018129fe25f500!2sLondon+NW10+0UR%2C+UK!5e0!3m2!1sen!2sin!4v1536315788059" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>*@<div class="map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2480.792528479809!2d-0.25486348469946996!3d51.55370327964272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487611a6d45fe705%3A0xde018129fe25f500!2sLondon+NW10+0UR%2C+UK!5e0!3m2!1sen!2sin!4v1536315788059" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+</div>
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!-- contact drop message send script -->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        function validateEmail(email) {
+            var reg = /^\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+            if (reg.test(email)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        $('#contact_us').click(function () {
+
+            if ($('#email').val() != '' && $('#name').val() != '' && $('#msg').val() != '') {
+                var mailck = validateEmail($('#email').val())
+                if (mailck == true) { SendContact(); }
+                else { alert("Please enter valid email-id."); $('#email').focus(); }
+            }
+            else {
+                if ($('#name').val() == '') { $('#name').focus(); }
+                else if ($('#email').val() == '') { $('#email').focus(); }
+                    //else if($('#subject').val() == ''){ $('#subject').focus();}
+                else if ($('#msg').val() == '') { $('#msg').focus(); }
+                alert("Please fill all the required fields.");
+            }
+
+        });
+
+        function SendContact() {
+            //alert('cs');
+            var eid = $('#email').val();
+
+            var nm = $('#name').val();
+
+            //var subj = $('#subject').val();
+
+            var mssg = $('#msg').val();
+
+            var type = "";
+            //alert(JSON.stringify(employee));
+
+            $.ajax({
+
+                url: 'http://lorefashions.com/Lore/LoreGroupContactUs?name=' + nm + '&emailid=' + eid + '&message=' + mssg,
+                //type: 'GET',
+                crossDomain: true,
+                //data: JSON.stringify(employee),
+                //data: { emailid: abc, password: def },
+                //dataType: 'json',
+                contentType: "application/json",
+                //contentType: "application/xml; charset=utf-8",
+                beforeSend: function () {
+                    $("#loadingImage").show();
+                },
+                complete: function () {
+                    $("#loadingImage").hide();
+                },
+                success: function (data) {
+                    //alert("Thank you for contacting us!");
+                    alert(data);
+                    //window.location.href = "http://www.bookcommerce.com/";
+                },
+                error: function (data) {
+                    console.log(data);
+                    alert("Some error occured");
+                }
+
+            });
+
+        }
+
+    });
+</script>  

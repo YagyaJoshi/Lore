@@ -1,0 +1,91 @@
+﻿@model Loregroup.Core.ViewModels.DistrictsViewModel
+@{
+    ViewBag.Title = "Zone";
+}
+<script type="text/javascript">
+
+    function Cancel() {
+        document.location = '@Url.Action("ShowAllDistrict", "Master")';
+    }
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+
+
+
+<div class="col-md-12">
+    @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+            <h4>Validation Errors</h4>
+            @Html.ValidationSummary()
+        </div>
+    }
+    @using (Html.BeginForm("District", "Master", FormMethod.Post))
+    {
+
+
+
+        <div class="box-header">
+
+        </div>
+        <div class="box box-info col-md-12">
+
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StateId)
+                            @Html.BootstrapDropDownListFor(m => m.StateId, new SelectList(Model.StateViewModel.StateList, "Id", "Statename", Model.StateId))
+                            @Html.ValidationMessageFor(model => model.StateId)
+                        </div>
+                    </div>
+                
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DistrictName)
+                            @Html.BsTextBoxWithPHFor(model => model.DistrictName)
+                            @Html.ValidationMessageFor(model => model.DistrictName)
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                    <button type="submit" class="btn btn-primary pull-right" id ="btn_save" style="margin-right: 10px">Save</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $('#btn_save').click(function () {
+
+        var city = $('#DistrictName').val();
+        if (!/^[a-zA-Z]*$/g.test(city)) {
+            $('#DistrictName').focus();
+            alert("Please Enter a valid District Name");
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    });
+
+</script>

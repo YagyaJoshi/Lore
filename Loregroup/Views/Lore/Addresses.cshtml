@@ -1,0 +1,603 @@
+﻿@model Loregroup.Core.ViewModels.AddressViewModel
+@{
+    ViewBag.Title = "Addresses";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<style>
+    .bg123 {
+        background: #ff0000;
+    }
+</style>
+
+<h2>Addresses</h2>
+@*<link href="~/Frontend/css/form-wizard-blue.css" rel="stylesheet" />*@
+<script src="~/Frontend/js/form-wizard.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#home").show();
+        $("#profile").hide();
+    });
+
+
+    //$(document).ready(function () {
+    //    $('#btnsave').click(function () {
+    //        if ($('#FirstName').val() == "") {
+    //            alert('Please complete the 1st Name');
+    //        }
+    //    });
+
+    //    $('#btnsave').click(function () {
+    //        if ($('#LastName').val() == "") {
+    //            alert('Please complete the Last Name');
+    //        }
+    //    });
+
+    //    $('#btnsave').click(function () {
+    //        if ($('#AddressLine1').val() == "") {
+    //            alert('Please complete the Address');
+    //        }
+    //    });
+
+    //    $('#btnsave').click(function () {
+    //        if ($('#MobileNo').val() == "") {
+    //            alert('Please complete the MobileNo');
+    //        }
+    //    });
+
+    //    $('#btnsave').click(function () {
+    //        if ($('#EmailId').val() == "") {
+    //            alert('Please complete the EmailId');
+    //        }
+    //    });
+
+
+
+
+    //    $('#btn_submit').click(function () {
+    //        if ($("#ShippingFirstName").val() == "") {
+    //            alert("Please Enter FirstName");
+    //            return false;
+    //        }
+
+    //    });
+
+    //    $('#btn_submit').click(function () {
+    //        if ($("#ShippingLastName").val() == "") {
+    //            alert("Please Enter LastName");
+    //            return false;
+    //        }
+    //    });
+
+    //    $('#btn_submit').click(function () {
+    //        if ($("#ShippingEmailId").val() == "") {
+    //            alert("Please Enter EmailId");
+    //            return false;
+    //        }
+    //    });
+
+    //    $('#btn_submit').click(function () {
+    //        if ($("#ShippingAddressLine1").val() == "") {
+    //            alert("Please Enter Address");
+    //            return false;
+    //        }
+    //    });
+
+    //    $('#btn_submit').click(function () {
+    //        if ($("#ShippingMobileNo").val() == "") {
+    //            alert("Please Enter MobileNo");
+    //            return false;
+    //        }
+
+    //    });
+
+    //});
+
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        if ($("#CountryId").val() == "2") {
+            $('#StateName').attr('disabled', 'disabled');
+            $('#StateId').removeAttr("disabled");
+        }
+        else {
+            $("#StateId").empty();
+            $('#StateId').attr('disabled', 'disabled');
+            $('#StateName').removeAttr('disabled');
+        }
+
+        //selection change event of State
+        $("#CountryId").change(function () {
+
+            if ($("#CountryId").val() == "2") {
+                $('#StateName').attr('disabled', 'disabled');
+                $('#StateId').removeAttr("disabled");
+                $("#StateId").empty();
+                //$("#TownId").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetState", "Master")',
+                    dataType: 'json',
+                    data: { CountryId: $("#CountryId").val() },
+                    success: function (states) {
+                        $("#StateId").append($('<option/>', {
+                            value: 0,
+                            text: "--Select State--"
+                        }));
+                        $.each(states, function (i, state) {
+                            $("#StateId").append('<option value="'
+                                        + state.Value + '">'
+                                        + state.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve States.' + ex);
+                    }
+                });
+            }
+            else {
+                $('#StateId').attr('disabled', 'disabled');
+                $('#StateName').removeAttr('disabled');
+            }
+            return false;
+        });
+
+    });
+
+
+    $(document).ready(function () {
+
+        if ($("#ShippingCountryId").val() == "2") {
+            $('#ShippingStateName').attr('disabled', 'disabled');
+            $('#ShippingStateId').removeAttr("disabled");
+        }
+        else {
+            $("#ShippingStateId").empty();
+            $('#ShippingStateId').attr('disabled', 'disabled');
+            $('#ShippingStateName').removeAttr('disabled');
+        }
+
+        //selection change event of State
+        $("#ShippingCountryId").change(function () {
+
+            if ($("#ShippingCountryId").val() == "2") {
+                $('#ShippingStateName').attr('disabled', 'disabled');
+                $('#ShippingStateId').removeAttr("disabled");
+                $("#ShippingStateId").empty();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetState", "Master")',
+                    dataType: 'json',
+                    data: { CountryId: $("#ShippingCountryId").val() },
+                    success: function (states) {
+                        $("#ShippingStateId").append($('<option/>', {
+                            value: 0,
+                            text: "--Select State--"
+                        }));
+                        $.each(states, function (i, state) {
+                            $("#ShippingStateId").append('<option value="'
+                                        + state.Value + '">'
+                                        + state.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve States.' + ex);
+                    }
+                });
+            }
+            else {
+                $('#ShippingStateId').attr('disabled', 'disabled');
+                $('#ShippingStateName').removeAttr('disabled');
+            }
+
+            return false;
+        });
+
+    });
+</script>
+
+<div class="container bg123">
+    <div class="row bg0 p-t-30 p-b-85">
+        <div class="nav_col">
+            <div class="nav_side_box nav_list">
+                <div class="nav-side-container">
+                    <ul class="nav_side">
+                        <li>
+                            <a href="@Url.Action("DashBoard", "Lore")">
+                                <span class="icon-dashboard"></span>
+                                <span class="text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AccountDetails","Lore")">
+                                <span class="icon-user"></span>
+                                <span class="text">Account Details</span>
+                            </a>
+                        </li>
+                        <li class="activet">
+                            <a href="@Url.Action("Addresses","Lore")">
+                                <span class="icon-map-marker"></span>
+                                <span class="text">Addresses</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("OrderHistory","Lore")">
+                                <span class="icon-shopping-cart"></span>
+                                <span class="text">Order History</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("DownloadImages","Lore")">
+                                <span class="icon-shopping-cart"></span>
+                                <span class="text">Download Order Images</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("SignOut", "Lore")">
+                                <span class="icon-signout"></span>
+                                <span class="text">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col_right m-l-15">
+            <div class="nav_side_box p-tb-15 p-lr-30">
+                <h1 class="box_h1">My Account</h1>
+            </div>
+
+            <div class="nav_side_box m-t-20 p-t-15 p-lr-20 h-100">
+                <div class="tile">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav navi-tabs" role="tablist">
+                        <div class="slider"></div>
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" onclick="ShowHome()" role="tab" aria-controls="home" aria-selected="true">Billing address</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" onclick="ShowProfile()" role="tab" aria-controls="profile" aria-selected="false">Shipping address</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        @using (Html.BeginForm("BillingAddresses", "Lore", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="tab-pane fade show active h-100" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row" style="margin-left:0;">
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(m => m.FirstName)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.FirstName)
+                                        @Html.ValidationMessageFor(model => model.FirstName)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.LastName)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.LastName)
+                                        @Html.ValidationMessageFor(model => model.LastName)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.EmailId)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.EmailId, new { @readonly = "readonly" })
+                                        @Html.ValidationMessageFor(model => model.EmailId)
+                                    </label>
+                                </div>
+                                <div class="row" style="margin-left:0;">
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.MobileNo)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.MobileNo)
+                                        @Html.ValidationMessageFor(model => model.MobileNo)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.AddressLine1)<span class="required_red">*</span>
+                                        @Html.BsTextAreaFor(model => model.AddressLine1)
+                                        @Html.ValidationMessageFor(model => model.AddressLine1)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.AddressLine2)
+                                        @Html.BsTextAreaFor(model => model.AddressLine2)
+                                        @Html.ValidationMessageFor(model => model.AddressLine2)
+                                    </label>
+                                </div>
+                                <div class="row" style="margin-left:0;">
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.CountryId)<span class="required_red">*</span>
+                                        @Html.BootstrapDropDownListFor(m => m.CountryId, new SelectList(Model.CountryList, "Id", "CountryName", Model.CountryId))
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.StateId)
+                                        @Html.BootstrapDropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "StateName", Model.StateId))
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.StateName)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(m => m.StateName)
+                                        @Html.ValidationMessageFor(model => model.StateName)
+                                    </label>
+                                </div>
+                                <div class="row" style="margin-left:0;">
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.City)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.City)
+                                        @Html.ValidationMessageFor(model => model.City)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ZipCode)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.ZipCode)
+                                        @Html.ValidationMessageFor(model => model.ZipCode)
+                                    </label>
+                                </div>
+
+                                <div class="w-100 div_a ft-left m-t-20" style="text-align:center;">
+                                    <button type="submit" id="btnsave" class="btn btn-primary pull-right" style="background-color:lightblue ; margin-right: 10px">Save</button>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(x => x.Id)
+                        }
+
+                        @*@using (Html.BeginForm("Addresses", "Lore", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {*@
+                            <div class="tab-pane fade h-100" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row" style="margin-left:0;">
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingFirstName)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.ShippingFirstName)
+                                        @Html.ValidationMessageFor(model => model.ShippingFirstName)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingLastName)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.ShippingLastName)
+                                        @Html.ValidationMessageFor(model => model.ShippingLastName)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingEmailId)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.ShippingEmailId)
+                                        @Html.ValidationMessageFor(model => model.ShippingEmailId)
+                                    </label>
+                                </div>
+                                <div class="row" style="margin-left:0;">
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingMobileNo)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.ShippingMobileNo)
+                                        @Html.ValidationMessageFor(model => model.ShippingMobileNo)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingAddressLine1)<span class="required_red">*</span>
+                                        @Html.BsTextAreaFor(model => model.ShippingAddressLine1)
+                                        @Html.ValidationMessageFor(model => model.ShippingAddressLine1)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingAddressLine2)
+                                        @Html.BsTextAreaFor(model => model.ShippingAddressLine2)
+                                        @Html.ValidationMessageFor(model => model.ShippingAddressLine2)
+                                    </label>
+                                </div>
+                                <div class="row" style="margin-left:0;">
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingCountryId)<span class="required_red">*</span>
+                                        @Html.BootstrapDropDownListFor(m => m.ShippingCountryId, new SelectList(Model.CountryList, "Id", "CountryName", Model.ShippingCountryId))
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingStateId)
+                                        @Html.BootstrapDropDownListFor(model => model.ShippingStateId, new SelectList(Model.StateList, "Id", "StateName", Model.ShippingStateId))
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingStateName)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(m => m.ShippingStateName)
+                                        @Html.ValidationMessageFor(m => m.ShippingStateName)
+                                    </label>
+                                </div>
+                                <div class="row" style="margin-left:0;">
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingCity)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.ShippingCity)
+                                        @Html.ValidationMessageFor(model => model.ShippingCity)
+                                    </label>
+
+                                    <label class="field a-field a-field_a3 page__field m-t-15 m-r-15 ft-left la-w">
+                                        @Html.LabelFor(model => model.ShippingZipCode)<span class="required_red">*</span>
+                                        @Html.BsTextBoxWithPHFor(model => model.ShippingZipCode)
+                                        @Html.ValidationMessageFor(model => model.ShippingZipCode)
+                                    </label>
+                                </div>
+
+                                <div class="w-100 div_a ft-left m-t-20" style="text-align:center;">
+                                    <input class="btn btn-primary pull-right" type="submit" onclick="changeShippingAddressFunction()" id="btn_submit" value="Save" style="background-color:lightblue;" />
+                                </div>
+
+                            </div>
+
+                        @*}*@
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function ShowHome() {
+        $("#home").show();
+        $("#profile").hide();
+    }
+
+    function ShowProfile() {
+        $("#home").hide();
+        $("#profile").show();
+    }
+
+    //$('.nav_side li').click(function () {
+    //    $(this).addClass('activet')
+    //         .siblings()
+    //         .removeClass('activet');
+    //});
+
+    //$(".navi-tabs a").click(function () {
+    //    var position = $(this).parent().position();
+    //    var width = $(this).parent().width();
+    //    $(".slider").css({ "left": +position.left, "width": width });
+    //});
+    //var actWidth = $(".navi-tabs").find(".active").parent("li").width();
+    //var actPosition = $(".navi-tabs .active").position();
+    //$(".slider").css({ "left": +actPosition.left, "width": actWidth });
+
+
+    function changeShippingAddressFunction() {
+
+        var shipFN = $("#ShippingFirstName").val();
+        if (shipFN != "" && shipFN != null) {
+        }
+        else {
+            alert("Please Enter Shipping First-Name.");
+            $("#ShippingFirstName").focus();
+            return false;
+        }
+
+        var shipLN = $("#ShippingLastName").val();
+        if (shipLN != "" && shipLN != null) {
+        }
+        else {
+            alert("Please Enter Shipping Last-Name.");
+            $("#ShippingLastName").focus();
+            return false;
+        }
+
+        var shipEmail = $("#ShippingEmailId").val();
+        if (shipEmail != "" && shipEmail != null) {
+        }
+        else {
+            alert("Please Enter Shipping Email-Id.");
+            $("#ShippingEmailId").focus();
+            return false;
+        }
+
+        var shipMobile = $("#ShippingMobileNo").val();
+        if (shipMobile != "" && shipMobile != null) {
+        }
+        else {
+            alert("Please Enter Shipping Mobile-No.");
+            $("#ShippingMobileNo").focus();
+            return false;
+        }
+
+        var shipAddress1 = $("#ShippingAddressLine1").val();
+        if (shipAddress1 != "" && shipAddress1 != null) {
+        }
+        else {
+            alert("Please Enter Shipping Address.");
+            $("#ShippingAddressLine1").focus();
+            return false;
+        }
+
+        var shipAddress2 = $("#ShippingAddressLine2").val();
+
+        var shipCountry = $("#ShippingCountryId").val();
+        if (shipCountry > 0) {
+        }
+        else {
+            alert("Please Select Country.");
+            $("#ShippingCountryId").focus();
+            return false;
+        }
+
+        var shipStateId = $("#ShippingStateId").val();
+        var shipStateName = $("#ShippingStateName").val();
+
+        var shipCity = $("#ShippingCity").val();
+        if (shipCity != "" && shipCity != null) {
+        }
+        else {
+            alert("Please Enter City.");
+            $("#ShippingCity").focus();
+            return false;
+        }
+
+        var shipZipCode = $("#ShippingZipCode").val();
+        if (shipZipCode != "" && shipZipCode != null) {
+        }
+        else {
+            alert("Please Enter Zipcode.");
+            $("#ShippingZipCode").focus();
+            return false;
+        }
+
+        //var pcategoryid = $("#categoryidvalue").text();
+        //alert(pcategoryid);
+        $.ajax({
+
+            url: '/Lore/changeShippingAddressFunction?ShipFN=' + shipFN + '&ShipLN=' + shipLN + '&ShipEmail=' + shipEmail + '&ShipAddress=' + shipAddress1 + '&ShipMobile=' + shipMobile + '&ShipAddress2=' + shipAddress2 + '&ShipCountryId=' + shipCountry + '&ShipStateId=' + shipStateId + '&ShipStateName=' + shipStateName + '&ShipCity=' + shipCity + '&ShipZipcode=' + shipZipCode,
+            //type: 'GET',
+            crossDomain: true,
+            //data: JSON.stringify(employee),
+            //data: { emailid: abc, password: def },
+            //dataType: 'json',
+            contentType: "application/json",
+            //contentType: "application/xml; charset=utf-8",
+            beforeSend: function () {
+                $("#myLoadingElement").show();
+            },
+            complete: function () {
+                $("#myLoadingElement").hide();
+            },
+            success: function (data) {
+                //alert("Thank you for contacting us!");
+                if (data == 1) {
+                    alert("Shipping Details Saved.");
+                    //window.location.href = "http://www.dev1.connekt.in/Lore/ResetPasswordSuccess";
+                    //document.location = '/Lore/Products?CategoryId=' + pcategoryid;
+                    //Url.Action("Products", "Lore", new { CategoryId = Model.CategoryId })';
+                    return true;
+                }
+                else if (data == 2) {
+                    alert("Current Password Not Correct!");
+                    $("#CurrentPassword").val('');
+                    return false;
+                }
+                else if (data == 3) {
+                    alert("Please Login again to change our passord.");
+                    document.location = '/Lore/Login';
+                    return false;
+                }
+                else {
+                    alert("Server Error ! please try later.");
+                    return false;
+                }
+                //window.location.href = "http://www.bookcommerce.com/";
+                return false;
+            },
+            error: function (data) {
+                alert("Some error occured");
+                return false;
+            }
+
+        });
+        //return false;
+
+        //$("#cartid").append(lidata);
+    }
+
+
+
+</script>

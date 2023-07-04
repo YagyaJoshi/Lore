@@ -1,0 +1,418 @@
+﻿@model Loregroup.Core.ViewModels.PurchaseOrderViewModel
+@{
+    ViewBag.Title = "GetPurchaseOrderPrintPreview";
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Order</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <link href="/Content/css/OrderReport.css" rel="stylesheet" type="text/css">
+</head>
+<body @*onload='window.print();'*@>
+    <input type="button" onclick="printDiv('PrintSection')" value="Print" style="background-color: #3c8dbc;border-color: #367fa9;font-weight: 500;border-radius: 3px;
+    border: 1px solid transparent;height: 25px;width: 50px;margin-left: 1%;color: WHITE;" />
+
+    <input type="button" onclick="Close()" value="Close" style="background-color: #3c8dbc;border-color: #367fa9;font-weight: 500;border-radius: 3px;
+    border: 1px solid transparent;height: 25px;width: 50px;margin-left: 1%;color: WHITE;" />
+
+    <div id="PrintSection">
+        <table>
+            <tbody>
+
+                <tr>
+                    <td class="order-header">
+                        <table cellpadding="0" cellspacing="0" class="fullwidth">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="http://lorefashions.com/Content/lorelogo.jpg" width="140px">
+                                    </td>
+                                    <td>
+                                        <table cellpadding="0" cellspacing="0" class="order-header-contact-details">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" class="company-name">
+                                                        LORE LIMITED
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p class="address-block">
+                                                            UNIT 139,VIGLEN HOUSE<br />
+                                                            WEMBLEY HA0 1HD<br />
+                                                            TEL: +44 (0)845 224 9601
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="address-block">
+                                                            FAX: +44 (0)20 8998 0080<br />
+                                                            WEB: WWW.LORE-GROUP.COM<br />
+                                                            E-MAIL: SALES@LORE-GROUP.COM
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td class="order-header-title">
+                                        ORDER FORM
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="order">
+                        <table cellpadding="0" cellspacing="0" class="fullwidth">
+                            <tbody>
+                                <tr>
+                                    <td class="padded-border" width="60%">
+                                        <table cellpadding="0" cellspacing="0" class="client-details">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="header">
+                                                        Supplier:
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="detail">
+                                                        Supplier Name: <span id="lblcompname">
+
+                                                            <label id="lblCompanyName"> @Model.CustomerModel.CustomerFullName  </label>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                @*<tr>
+                                                        <td class="detail">
+                                                            Client Name:
+                                                            <span id="lblcontact">
+                                                                <label id="lblContactName"> @Model.CustomerModel.CustomerFullName</label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>*@
+                                                <tr>
+                                                    <td class="detail">
+                                                        Address:
+                                                        <span id="lbladdress">
+                                                            <label id="lblAddress"> @Model.CustomerModel.AddressLine1</label>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                @*<tr>
+                                                        <td class="detail">
+                                                            City:
+                                                            <span id="lblcity">
+                                                                <label id="lblCity"> @Model.CustomerModel.Town</label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="detail">
+                                                            County:
+                                                            <span id="lblcounty">
+                                                                <label id="lblCounty"> </label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="detail">
+                                                            Post Code:
+                                                            <span id="lblpost">
+                                                                <label id="lblZipCode"> @Model.CustomerModel.ZipCode</label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>*@
+                                                <tr>
+                                                    <td class="detail">
+                                                        Country:
+                                                        <span id="lblcountry">
+                                                            <label id="lblCountry"> @Model.CustomerModel.Country</label>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                @*<tr>
+                                                        <td class="detail">
+                                                            Email:
+                                                            <span id="lblemail">
+                                                                <label id="lblEmail">@Model.CustomerModel.EmailId</label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="detail">
+                                                            Tel1:
+                                                            <span id="lblph">
+                                                                <label id="lblPhone"> @Model.CustomerModel.TelephoneNo </label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="detail">
+                                                            Mobile:<span id="lblmob">
+                                                                <label id="lblMobile"> @Model.CustomerModel.MobileNo </label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="detail">
+                                                            Fax:<span id="lblfax">
+                                                                <label id="lblFax"></label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="detail">
+                                                            NIF/VAT:
+                                                            <span id="lblVat">
+                                                                <label id="lblTaxID"> @Model.CustomerModel.CompanyTaxId</label>
+                                                            </span>
+                                                        </td>
+                                                    </tr>*@
+                                                <tr>
+                                                    <td class="detail"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td width="2%"></td>
+                                    <td width="38%">
+                                        <table cellpadding="0" cellspacing="0" class="fullwidth">
+                                            <tbody>
+                                                @*<tr>
+                                                        <td class="border">
+                                                            <table cellpadding="0" cellspacing="0" class="banking-details">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="header" colspan="2">Lore Limited</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail" style="height: 25px">VAT No.:</td>
+                                                                        <td class="detail" style="height: 25px">GB 689932070</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail" colspan="2">Sterling Bank Details:</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail">UK Bank:</td>
+                                                                        <td class="detail">Santander</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail">A/C:</td>
+                                                                        <td class="detail">79664587</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail">Sort Code:</td>
+                                                                        <td class="detail">09-01-27</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail">BIC:</td>
+                                                                        <td class="detail">ABBYGB2LXXX</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail">IBAN:</td>
+                                                                        <td class="detail">GB54 ABBY 0901 2779 6645 87</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="header" colspan="2">Euro Bank Details:</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail">Spain Bank:</td>
+                                                                        <td class="detail">Banco Bilbao Vizcava Argentaria</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail">IBAN:</td>
+                                                                        <td class="detail">ES19-0182-3379-73-0291557045</td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="detail">BIC:</td>
+                                                                        <td class="detail">BBVAESMM</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>*@
+                                                <tr>
+                                                    <td align="right">
+                                                        <table class="order-details" cellpadding="0" cellspacing="0">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="header">DATE OF ORDER:</td>
+                                                                    <td class="detail" align="right" width="180px">
+                                                                        <span id="lblOrderDate">
+                                                                            <label id="lblOrderDate"> @Model.OrderDateString</label>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="header">ORDER REF.:</td>
+                                                                    <td class="detail" align="right">
+                                                                        <span id="lblOrderNo">
+                                                                            <label id="lblOrderReference"> @Model.OrderRefrence </label>
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="order-item-details">
+                        <table id="detailsTable" style="width:90%; padding-bottom:0px; padding-top:0px" border="1" class="table">
+
+                            <thead style="display: table-header-group; vertical-align: middle; border-color: inherit;">
+                                <tr style="display: table-row; vertical-align: inherit; border-color: inherit;">
+                                    <th rowspan="3" style="width:10%;vertical-align: middle;">Product</th>
+                                    <th rowspan="3" style="width:10%;vertical-align: middle;">Color</th>
+                                    @*<th style="width:18%">Price</th>*@
+
+                                    <th>US</th>
+                                    @for (int i = -2; i <= 30; i = i + 2)
+                                    {
+                                        if (i == -2)
+                                        {
+                                            <th>00</th>
+                                        }
+                                        else
+                                        {
+                                            <th>@i</th>
+                                        }
+                                    }
+
+                                    @*<th style="width:10%">Quantity</th>*@
+                                    @*<th style="width:10%">Total</th>*@
+                                    <th rowspan="3" style="width:0%; display:none;"></th>
+                                </tr>
+                                <tr>
+                                    <th style="width:18%">UK</th>
+                                    @for (int i = 2; i <= 34; i = i + 2)
+                                    {
+                                        <th style="width:5%">@i</th>
+                                    }
+                                    <th rowspan="3" style="width:0%; display:none;"></th>
+                                </tr>
+                                <tr>
+                                    <th>EU</th>
+                                    @for (int i = 30; i <= 62; i = i + 2)
+                                    {
+                                        <th>@i</th>
+                                    }
+                                    <th rowspan="3" style="width:0%; display:none;"></th>
+                                </tr>
+                            </thead>
+                            <tbody style="border:solid;border-color:black;border-width:inherit;">
+                                @foreach (var data in Model.ProductList)
+                                {
+                                    Model.Quantity = 0;
+                                    <tr>
+                                        <td style="width:10%"> @data.Product.ProductName</td>
+                                        <td style="width:10%"> @data.Product.ColourName</td>
+                                        @*@if (Model.Currency == "GBP")
+                                            {
+                                                data.Product.CustomerPrice = data.Product.PriceGBP;
+                                                <td style="width:10%"> @data.Product.PriceGBP</td>
+                                            }
+                                            else if (Model.Currency == "EURO")
+                                            {
+                                                data.Product.CustomerPrice = data.Product.PriceEURO;
+                                                <td style="width:10%"> @data.Product.PriceEURO</td>
+                                            }
+                                            else
+                                            {
+                                                data.Product.CustomerPrice = data.Product.PriceUSD;
+                                                <td style="width:10%"> @data.Product.PriceUSD</td>
+                                            }*@
+
+
+                                        @*<td style="width:10%"> @data.SizeModel[0].OrderPrice</td>*@
+                                        <td style="width:10%"> </td>
+                                        @for (int i = 2; i <= 34; i = i + 2)
+                                        {
+                                            try
+                                            {
+                                                var k = i.ToString();
+
+
+                                                <td style="width:10%"> @data.SizeModel.FirstOrDefault(x => x.SizeUK == k).Qty</td>
+                                                Model.Quantity = Model.Quantity + data.SizeModel.FirstOrDefault(x => x.SizeUK == k).Qty;
+                                            }
+                                            catch (Exception ex)
+                                            {
+
+                                            }
+                                        }
+
+                                        @*<td style="width:10%"> @Model.Quantity</td>*@
+                                        @*<td style="width:10%"> @(data.SizeModel[0].OrderPrice * Model.Quantity)</td>*@
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="20" rowspan="2" style="width:10%">
+                                        <div style="padding: 15px;border: 1px solid black;">
+                                            <b>Order Note:</b><br />
+                                            @Model.OrderNote
+                                        </div>
+                                    </td>
+                                </tr>
+                                @*<tr>
+                                        <td colspan="2">Sub Total</td>
+                                        <td>@Model.Amount</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">Delivery</td>
+                                        <td>@Model.ShippingCharge</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"> Tax </td>
+                                        <td>@(Model.Tax * Model.Amount / 100)</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"> Total </td>
+                                        <td> @Model.TotalAmount </td>
+                                    </tr>*@
+                            </tfoot>
+                        </table>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+
+    function Close() {
+        window.close();
+    }
+
+</script>

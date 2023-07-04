@@ -1,0 +1,409 @@
+﻿@model Loregroup.Core.ViewModels.OrderViewModel
+
+@{
+    ViewBag.Title = "Sale by Show Report";
+}
+
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+
+<style>
+    /*#myImg {
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    #myImg:hover {opacity: 0.7;}*/
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        margin-top: 50px;
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+    }
+
+    /* Modal Content (image) */
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 800px;
+    }
+    #ttt{
+        margin:80px;
+    }
+    /* Caption of Modal Image */
+    #caption {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 700px;
+        text-align: center;
+        color: #ccc;
+        padding: 10px 0;
+        height: 150px;
+    }
+
+    /* Add Animation */
+    .modal-content, #caption {
+        -webkit-animation-name: zoom;
+        -webkit-animation-duration: 0.6s;
+        animation-name: zoom;
+        animation-duration: 0.6s;
+    }
+
+    @@-webkit-keyframes zoom {
+        from {
+            -webkit-transform: scale(0);
+        }
+
+        to {
+            -webkit-transform: scale(1);
+        }
+    }
+
+    @@keyframes zoom {
+        from {
+            transform: scale(0);
+        }
+
+        to {
+            transform: scale(1);
+        }
+    }
+
+    /* The Close Button */
+    .closebutton {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+        .closebutton:hover,
+        .closebutton:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    /* 100% Image Width on Smaller Screens */
+    @@media only screen and (max-width: 700px) {
+        .modal-content {
+            width: 100%;
+        }
+    }
+</style>
+
+@using (Html.BeginForm("SaleByShowReport", "Order", FormMethod.Post))
+{
+<div class="box box-info col-md-12">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.Label("Order Locator")
+                    @Html.BootstrapDropDownListFor(m => m.OrderlocatorId, new SelectList(Model.OrderlocatorList, "Id", "OrderLocatorName", Model.OrderlocatorId))
+                    @*@Html.ValidationMessageFor(model => model.OrderlocatorId)*@
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.POmodel.WareHouseId)
+                    @Html.BootstrapDropDownListFor(m => m.POmodel.WareHouseId, new SelectList(Model.POmodel.WareHouseList, "Id", "WareHouseName", Model.POmodel.WareHouseId))
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.Label("From Date")
+                    @Html.TextBoxFor(model => model.OrderDate, new { @class = "form-control datepicker", placeholder = "From Date" })
+                    @Html.ValidationMessageFor(model => model.OrderDate)
+                    @*@Html.Label("Collection Year")
+                        @Html.BootstrapDropDownListFor(m => m.CollectionYearId, new SelectList(Model.CollectionYearList, "Id", "CollectionYear", Model.CollectionYearId))*@
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.Label("To Date")
+                    @Html.TextBoxFor(model => model.OrderDateString, new { @class = "form-control datepicker1", placeholder = "To Date" })
+                    @Html.ValidationMessageFor(model => model.OrderDateString)
+                    @*@Html.Label("Collection Year")
+                        @Html.BootstrapDropDownListFor(m => m.CollectionYearId, new SelectList(Model.CollectionYearList, "Id", "CollectionYear", Model.CollectionYearId))*@
+                </div>
+            </div>
+
+
+            <label style="visibility:hidden" id="kapil">@Model.ColourId</label>
+        </div>
+        
+            <div class="row">
+                <div class="col-md-12">
+
+                    <button id="Search" type="submit" class="btn btn-primary pull-right" style="margin-top: 10px;" onclick="SearchClick()">Get Report</button>
+                </div>
+            
+        </div>
+    </div>
+</div>
+                <div class="box box-info col-md-12">
+                    <div class="col-md-9">
+                        @if (Model.ProductListModel.StockSizeModel.Count > 0)
+                        {
+                            <table id="DataTable" border="1" class="table">
+                                <thead>
+                                    <tr>
+                                        <th> Style Number </th>
+                                        <th> Color </th>
+                                        <th>Price</th>
+
+                                        @*<th> Size (USA/UK/EU)</th>*@
+                                        <th>
+                                            <label> US </label>
+                                            <label> UK </label>
+                                            <label> EU </label>
+                                        </th>
+
+                                        @for (int i = 2; i <= 34; i = i + 2)
+                                        {
+                                            <th style="width:5px;">
+                                                @if (i == 2)
+                                                {
+                                                    <label style="width:30px;"> 00 </label>
+                                                }
+                                                else if (i == 4)
+                                                {
+                                                    <label style="width:30px;"> 0 </label>
+                                                }
+                                                else
+                                                {
+                                                    <label style="width:30px;"> @(i - 4) </label>
+                                                }
+                                                <label style="width:30px;"> @i </label>
+                                                <label style="width:30px;"> @(i + 28) </label>
+                                            </th>
+                                        }
+                                        <th>Quantity</th>
+                                        @*<th> Total </th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var stock in Model.ProductListModel.StockSizeModel)
+                                    {
+                                        var total = 0;
+                                        var Toatalprice = 0;
+                                        <tr id="@stock[0].SizeUK">
+                                            <td>@stock[0].StyleNumber</td>
+                                            <td>@stock[0].ColourName</td>
+                                            <td>@stock[0].OrderPrice</td>
+                                            <td>  </td>
+                                            @foreach (var size in stock)
+                                            {
+                                                <td>
+                                                    @*@if ((size.InStockQty - size.Qty + size.POQty) > 0)
+                        {
+                            <b style="font-size: 16px;color: black;">@(size.InStockQty - size.Qty + size.POQty)</b>
+                            var avai = size.InStockQty - size.Qty + size.POQty;*@
+                                                    @if ((size.Qty) > 0)
+                                                    {
+                                                        <b style="font-size: 16px;color: black;">@(size.Qty )</b>
+                                                        var avai = size.Qty;
+                                                        total += (int)avai;
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>-</label>
+                                                    }
+                                                    @*else
+                        {
+                            <b style="font-size: 16px;color: red;">@(size.InStockQty - size.Qty + size.POQty)</b>
+                        }*@
+                                                </td>
+                                            }
+                                            <td>
+                                                @if (total > 0)
+                                                {
+                                                    <b style="font-size: 16px;color: black;">@total</b> }
+
+                                                else
+                                                { @total}
+                                            </td>
+
+                                         
+                                               @*<b style="font-size: 16px;color: black;">@(stock[0].OrderPrice * total)</b>*@
+                                                @if (total > 0)
+                                                {
+                                                    var avail =  total;
+                                                    Model.GrandTotamount += (Decimal)avail;
+
+
+                                                }
+                                    
+
+                                        </tr>
+
+
+
+
+                                    }
+                                    <tr>
+                                        <td colspan="21"><b style="font-size: 12px;color: black; ">Grand Total</b></td>
+                                      
+                                        <td id="ttt">
+                                            <b style="font-size: 14px;color: black; ">@Model.GrandTotamount </b>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        }
+                        else if (Model.ProductModel.ProductName != null)
+                        {
+                            //<h3>@Model.ProductModel.ProductName</h3>
+                            //<h3>@Model.ProductListModel.SizeModel.Count</h3>
+                            <h3>No Record Found</h3>
+                        }
+                    </div>
+
+
+                </div>
+
+                @Html.HiddenFor(x => x.Id);
+                @Html.HiddenFor(x => x.ProductModel.Id);
+                }
+                @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+            <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+                    type="text/javascript"></script>
+            <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+                  rel="Stylesheet" type="text/css" />*@
+                <script>
+                    debugger;
+                    function SearchClick() {
+                        //alert("hello");
+                        if ($("#POmodel_WareHouseId option:selected").val() == 0 || ("#OrderlocatorId option:selected").val() == 0) {
+                            if ($("#POmodel_WareHouseId option:selected").val() == 0) {
+                                alert("Please Select Warehouse.")
+                            }
+                            if ($("#OrderlocatorId option:selected").val() == 0) {
+                                alert("Please Select Orderlocator.")
+                            }
+                            return false;
+                        }
+                        else{
+                            return true;
+                        }
+
+
+                    }
+                </script>
+      
+                <script type="text/javascript">
+                    $(function () {
+                        debugger;
+                        var dateToday = new Date();
+                        var dateFormat = "mm/dd/yy";
+                        beginDate = $(".datepicker")
+                            .datepicker({
+
+                                changeMonth: true,
+
+                                changeYear: true,
+                                autoclose: true,
+                                yearRange: "-1:+50",
+                                todayHighlight: true,
+                                maxDate: dateToday
+
+
+                            })
+                            .on("change", function () {
+                                endDate.datepicker("option", "minDate", getDate(this));
+
+                            }),
+                            endDate = $(".datepicker1").datepicker({
+
+
+                                changeMonth: true,
+                                changeYear: true,
+                                todayHighlight: true,
+                                maxDate: dateToday
+
+                            })
+                                .on("change", function () {
+                                    beginDate.datepicker("option", "maxDate", getDate(this));
+                                });
+                        function getDate(element) {
+                            var date;
+                            try {
+                                date = $.datepicker.parseDate(dateFormat, element.value);
+                            } catch (error) {
+                                date = null;
+                            }
+                            return date;
+                        }
+                    });
+
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        $("#ProductModel_ProductSalesbyName").autocomplete({
+
+                            source: function (request, response) {
+                                $.ajax({
+                                    url: "/Order/SearchByProductName",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        Prefix: request.term
+                                    },
+                                    success: function (data) {
+                                        response($.map(data, function (item) {
+                                            return { label: item.ProductName, value: item.Id };
+                                        }))
+                                    }
+                                })
+                            },
+                            select: function (e, ui) {
+                                var vn = ui.item.value;
+                                $("#ProductModel_Id").val(vn);
+                                //var currency = $('#CustomerModel_CurrencyName').val();
+                                $.ajax({
+                                    url: "/Order/GetProductById",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        number: vn,
+                                        //currency: currency
+                                    },
+                                    dataFilter: function (data) {
+                                        return data;
+                                    },
+                                    success: function (data) {
+                                        $('#ProductModel_ProductSalesbyName').val(data.ProductName);
+                                    },
+                                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                                    }
+                                })
+                            },
+                        });
+                    })
+
+
+                </script>
+
+

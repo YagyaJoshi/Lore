@@ -1,0 +1,568 @@
+﻿@model Loregroup.Core.ViewModels.CustomerViewModel
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("GetAllUsers", "User")';
+    }
+
+    $(document).ready(function () {
+
+        //clearing district and city dropdown when page is loaded
+        //$("#SelectedDistrictId").empty();
+        //$("#CityId").empty();
+
+        if ($("#CountryId").val() == "2") {
+            $('#StateName').attr('disabled', 'disabled');
+            $('#StateId').removeAttr("disabled");
+        }
+        else {
+            $("#StateId").empty();
+            $('#StateId').attr('disabled', 'disabled');
+            $('#StateName').removeAttr('disabled');
+        }
+
+        //selection change event of State
+        $("#CountryId").change(function () {
+
+            if ($("#CountryId").val() == "2") {
+
+                $('#StateName').attr('disabled', 'disabled');
+                $('#StateId').removeAttr("disabled");
+
+                $("#StateId").empty();
+                //$("#TownId").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetState", "Master")',
+                    dataType: 'json',
+                    data: { CountryId: $("#CountryId").val() },
+                    success: function (states) {
+                        $("#StateId").append($('<option/>', {
+                            value: 0,
+                            text: "--Select State--"
+                        }));
+                        $.each(states, function (i, state) {
+                            $("#StateId").append('<option value="'
+                                        + state.Value + '">'
+                                        + state.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve States.' + ex);
+                    }
+                });
+
+            }
+            else {
+
+                $('#StateId').attr('disabled', 'disabled');
+                $('#StateName').removeAttr('disabled');
+
+            }
+
+            return false;
+        });
+
+        //selection change event of District
+        @*$("#StateId").change(function () {
+            $("#TownId").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCities", "Master")',
+                dataType: 'json',
+                data: { StateId: $("#StateId").val() },
+                success: function (states) {
+                    $("#TownId").append($('<option/>', {
+                        value: 0,
+                        text: "--Select Town--"
+                    }));
+                    $.each(states, function (i, state) {
+                        $("#TownId").append('<option value="'
+                                    + state.Value + '">'
+                                    + state.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Towns' + ex);
+                }
+            });
+            return false;
+        });*@
+
+    });
+
+</script>
+
+@if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        <h4>Validation Errors</h4>
+        @Html.ValidationSummary()
+    </div>
+}
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+@using (Html.BeginForm("CreateUser", "User", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+
+        @if (TempData["ShopNameExist"] != null)
+        {
+            <div class="red">
+                <h4 style="color:red"><strong>Message: </strong>@TempData["ShopNameExist"]</h4>
+            </div>
+        }
+
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FirstName)
+                        @Html.BsTextBoxWithPHFor(model => model.FirstName)
+                        @Html.ValidationMessageFor(model => model.FirstName)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.LastName)
+                        @Html.BsTextBoxWithPHFor(model => model.LastName)
+                        @Html.ValidationMessageFor(model => model.LastName)
+                    </div>
+                </div>
+                @if (Model.Id == 0)
+                {
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password)
+                            @Html.BsPasswordWithPhFor(model => model.Password)
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                    </div>
+                }
+                @*else
+                    {
+                        <div class="col-md-4" style="visibility:hidden">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Password)
+                                @Html.BsPasswordWithPhFor(model => model.Password)
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+                    }*@
+
+            </div>
+
+            @if (Model.Id > 0 && ViewBag.RleId == 1)
+            {
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.Label("Password")
+                            @Html.BsTextBoxWithPHFor(model => model.Keyword)
+                            @Html.ValidationMessageFor(model => model.Keyword)
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top:2%;">
+                        <div class="form-group">
+                            <button type="button" id="changePassword" onclick="return ChangeUserPassword(@Model.Id);" class="btn btn-success pull-left">
+                                Change Password
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="row">
+                @*<div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName)
+                            @Html.BsTextBoxWithPHFor(model => model.UserName)
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </div>
+                    </div>*@
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EmailId)
+                        @Html.BsTextBoxWithPHFor(model => model.EmailId)
+                        @Html.ValidationMessageFor(model => model.EmailId)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CompanyName)
+                        @Html.BsTextBoxWithPHFor(model => model.CompanyName)
+                        @Html.ValidationMessageFor(model => model.CompanyName)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.RoleId)
+                        @Html.BootstrapDropDownListFor(m => m.RoleId, new SelectList(Model.RoleList, "Id", "Name", Model.RoleId))
+                        @*@Html.ValidationMessageFor(m => m.RoleId)*@
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ShopName)
+                        @Html.BsTextBoxWithPHFor(model => model.ShopName)
+                        @Html.ValidationMessageFor(model => model.ShopName)
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Fax)
+                        @Html.BsTextBoxWithPHFor(model => model.Fax)
+                        @Html.ValidationMessageFor(model => model.Fax)
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CompanyTaxId)
+                        @Html.BsTextBoxWithPHFor(model => model.CompanyTaxId)
+                        @Html.ValidationMessageFor(model => model.CompanyTaxId)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MobileNo)
+                        @Html.BsTextBoxWithPHFor(model => model.MobileNo)
+                        @Html.ValidationMessageFor(model => model.MobileNo)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TelephoneNo)
+                        @Html.BsTextBoxWithPHFor(model => model.TelephoneNo)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WebSite)
+                        @Html.BsTextBoxWithPHFor(model => model.WebSite)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AddressLine1)
+                        @Html.BsTextAreaFor(model => model.AddressLine1)
+                        @Html.ValidationMessageFor(model => model.AddressLine1)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AddressLine2)
+                        @Html.BsTextAreaFor(model => model.AddressLine2)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.City)
+                        @Html.BsTextBoxWithPHFor(model => model.City)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CountryId)
+                        @Html.BootstrapDropDownListFor(m => m.CountryId, new SelectList(Model.CountryList, "Id", "CountryName", Model.CountryId))
+                        @*@Html.ValidationMessageFor(model => model.SelectedStateId)*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StateId)
+                        @Html.BootstrapDropDownListFor(m => m.StateId, new SelectList(Model.StateList, "Id", "StateName", Model.StateId))
+                        @*@Html.ValidationMessageFor(model => model.SelectedDistrictId)*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.StateName)
+                        @Html.BsTextBoxWithPHFor(m => m.StateName)
+                        @*@Html.ValidationMessageFor(model => model.SelectedDistrictId)*@
+                    </div>
+                </div>
+                @*<div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TownId)
+                            @Html.BootstrapDropDownListFor(m => m.TownId, new SelectList(Model.CityList, "Id", "CityName", Model.TownId))
+                        </div>
+                    </div>*@
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ZipCode)
+                        @Html.BsTextBoxWithPHFor(model => model.ZipCode)
+                        @Html.ValidationMessageFor(model => model.ZipCode)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Currency)
+                        @Html.EnBsDropDownListFor(m => m.Currency, new Dictionary<string, object>())
+                        @Html.ValidationMessageFor(m => m.Currency)
+                    </div>
+                </div>
+                <div id="DistributionPoint" class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DistributionPoint)
+                        @Html.EnBsDropDownListFor(m => m.DistributionPoint, new Dictionary<string, object>())
+                        @Html.ValidationMessageFor(m => m.DistributionPoint)
+                    </div>
+                </div>
+                @*<div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Tax)
+                            @Html.CheckBoxFor(m => m.Tax)
+                            @Html.ValidationMessageFor(m => m.Tax)
+                        </div>
+                    </div>*@
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("Latitude")
+                        @Html.BsTextBoxFor(x => x.Latitude)
+                        @Html.ValidationMessageFor(x => x.Latitude)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("Longitude")
+                        @Html.BsTextBoxFor(x => x.Longitude)
+                        @Html.ValidationMessageFor(x => x.Longitude)
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AgentsId)
+                        @Html.BootstrapDropDownListFor(m => m.AgentsId, new SelectList(Model.AgentsList, "Id", "territory", Model.AgentsId))
+                        @*@Html.ValidationMessageFor(model => model.SelectedDistrictId)*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ShowOnMap)
+                        @Html.CheckBoxFor(m => m.ShowOnMap)
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick="Cancel();" style="margin-right: 10px">Cancel</button>
+
+                        @if (Model.StatusId == 3 || Model.StatusId == 4)
+                        {
+                            <button type="button" id="ActiveUser" onclick="ActivateUser(@Model.Id);" class="btn btn-success pull-right">
+                                Active
+                            </button>
+                        }
+
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.Id)
+}
+
+<script>
+
+    $(document).ready(function () {
+        //$("#RoleId").change(function()
+        //{
+        //    if($("#RoleId").val() == 4)
+        //    {
+        //    }
+        //});
+        
+        //$("#CountryId").change(function () {
+
+        //    if($("#CountryId option:selected").val() == 3)
+        //    {
+        //        //$(".icheckbox_minimal").;
+        //    }
+
+        //});
+
+        $('#btn_submit').click(function () {
+            
+            //var state_id = $('#Gender option:selected').val();
+            //if (state_id == 0) {
+            //    $('#Gender').focus();
+            //    alert("Please Select Gender");
+
+            //    return false;
+            //}
+
+            if(@Model.Id==0)
+            {
+                //alert("Hello");
+                if($("#Password").val()=="")
+                {
+                    alert("Please Enter Password");
+                    return false;
+                }
+            }
+            
+            var Role_id = $('#RoleId option:selected').val();
+            if (Role_id == 0) {
+                $('#RoleId').focus();
+                alert("Please Select Customer Type");
+
+                return false;
+            }
+
+            var Country_id = $('#CountryId option:selected').val();
+            if (Country_id == 0) {
+                $('#CountryId').focus();
+                alert("Please Select Country");
+                return false;
+            }        
+
+            if ($("#CountryId").val() == "2") {
+                var state_id = $('#SelectedStateId option:selected').val();
+                if (state_id == 0) {
+                    $('#SelectedStateId').focus();
+                    alert("Please Select State");
+                    return false;
+                }
+            }
+            else {
+                var state_nm = $('#StateName').val();
+                if (state_nm == null || state_nm == "") {
+                    $('#StateName').focus();
+                    alert("Please Enter State-Name");
+                    return false;
+                }
+            }
+                       
+            //var state_id = $('#SelectedDistrictId option:selected').val();
+            //if (state_id == 0) {
+            //    $('#SelectedDistrictId').focus();
+            //    alert("Please Select District");
+            //    return false;            
+            //}
+            //var state_id = $('#CityId option:selected').val();
+            //if (state_id == 0) {
+            //    $('#CityId').focus();
+            //    alert("Please Select City");
+            //    return false;
+            //}
+            //var state_id = $('#RoleId option:selected').val();
+            //if (state_id == 0) {
+            //    $('#RoleId').focus();
+            //    alert("Please Assign Role");
+            //    return false;
+            //}
+        });
+        
+    });
+    
+    function ActivateUser(uid) {
+        $.ajax({
+            url: '/User/ActivateUser?id=' + uid,
+            //type: 'GET',
+            crossDomain: true,
+            //data: JSON.stringify(employee),
+            //data: { emailid: abc, password: def },
+            //dataType: 'json',
+            contentType: "application/json",
+            //contentType: "application/xml; charset=utf-8",
+            beforeSend: function () {
+                $("#loadingImage").show();
+            },
+            complete: function () {
+                $("#loadingImage").hide();
+            },
+            success: function (data) {
+                //alert("Thank you for contacting us!");
+                if (data == "Success") {
+                    alert("User Activated");
+                }
+                else {
+                    alert(data);
+                }
+                //window.location.href = "http://www.bookcommerce.com/";
+            },
+            error: function (data) {
+                console.log(data);
+                alert("Some error occured");
+            }
+
+        });
+    }
+
+    function ChangeUserPassword(uid) {
+        var password = $('#Keyword').val();
+        if (password == null || password == "") {
+            $('#Keyword').focus();
+            alert("Please Enter Password");
+            return false;
+        }
+
+        $.ajax({
+            url: '/User/changePassword?id=' + uid + '&keyword=' + password,
+            //type: 'GET',
+            crossDomain: true,
+            //data: JSON.stringify(employee),
+            //data: { emailid: abc, password: def },
+            //dataType: 'json',
+            contentType: "application/json",
+            //contentType: "application/xml; charset=utf-8",
+            beforeSend: function () {
+                $("#changePassword").html('Processing...');
+                $("#loadingImage").show();
+            },
+            complete: function () {
+                $("#changePassword").html('Change Password');
+                $("#loadingImage").hide();
+            },
+            success: function (data) {
+                //alert("Thank you for contacting us!");
+                if (data == "Success") {
+                    alert("Password Changed Successfully! Please inform to user..");
+                }
+                else {
+                    alert(data);
+                }
+                //window.location.href = "http://www.lorefashions.com/";
+            },
+            error: function (data) {
+                console.log(data);
+                alert("Some error occured");
+            }
+        });
+    }
+
+</script>

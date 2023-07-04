@@ -1,0 +1,585 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddMaterials" xml:space="preserve">
+    <value>Add Materials</value>
+  </data>
+  <data name="AddProperty" xml:space="preserve">
+    <value>Add Properties</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="AddSignature" xml:space="preserve">
+    <value>Add Signature</value>
+  </data>
+  <data name="Affiliation" xml:space="preserve">
+    <value>Affiliation</value>
+  </data>
+  <data name="AffiliationValidation" xml:space="preserve">
+    <value>Please Fill Affiliation.</value>
+  </data>
+  <data name="AnalysisTechnique" xml:space="preserve">
+    <value>Analysis Technique</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Applications</value>
+  </data>
+  <data name="AssignedTo" xml:space="preserve">
+    <value>Assigned To</value>
+  </data>
+  <data name="BannerImages" xml:space="preserve">
+    <value>Banner Images</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>Blog</value>
+  </data>
+  <data name="Box1Content" xml:space="preserve">
+    <value>Box 1 Content</value>
+  </data>
+  <data name="Box2Content" xml:space="preserve">
+    <value>Box 2 Content</value>
+  </data>
+  <data name="Box3Content" xml:space="preserve">
+    <value>Box 3 Content</value>
+  </data>
+  <data name="Box4Content" xml:space="preserve">
+    <value>Box 4 Content</value>
+  </data>
+  <data name="Business" xml:space="preserve">
+    <value>Business</value>
+  </data>
+  <data name="BusinessViewModelValidation" xml:space="preserve">
+    <value>Business View Model must be less 50 word.</value>
+  </data>
+  <data name="BussnessPleaseSelect" xml:space="preserve">
+    <value>Please Select bussness Id.</value>
+  </data>
+  <data name="ButtonAddNewBanner" xml:space="preserve">
+    <value>Add New Banner</value>
+  </data>
+  <data name="ButtonCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ButtonDeleteBanner" xml:space="preserve">
+    <value>Delete Banner</value>
+  </data>
+  <data name="ButtonDeleteSocialWidget" xml:space="preserve">
+    <value>Delete Social Widget</value>
+  </data>
+  <data name="buttonDeleteWhyes" xml:space="preserve">
+    <value>Delete Why ES</value>
+  </data>
+  <data name="ButtonSocialWidget" xml:space="preserve">
+    <value>Add New Social Widget</value>
+  </data>
+  <data name="ButtonSubmit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="CityPleaseSelect" xml:space="preserve">
+    <value>Please Select City.</value>
+  </data>
+  <data name="Communities" xml:space="preserve">
+    <value>Communities</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="CompanyValidation" xml:space="preserve">
+    <value>Please Select Company.</value>
+  </data>
+  <data name="Countriesvalidation" xml:space="preserve">
+    <value>Please select countries name.</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="CountryPleaseSelect" xml:space="preserve">
+    <value>Please Select Country.</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="DepartmentPleaseSelect" xml:space="preserve">
+    <value>Please Select Department.</value>
+  </data>
+  <data name="DepartmentValidation" xml:space="preserve">
+    <value>Please select Validation.</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Description1" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionValidation" xml:space="preserve">
+    <value>Description must be less 250 word.</value>
+  </data>
+  <data name="Designation" xml:space="preserve">
+    <value>Designation</value>
+  </data>
+  <data name="DesignationPleaseSelect" xml:space="preserve">
+    <value>Please Select Designation.</value>
+  </data>
+  <data name="DesiredUsernameValidation" xml:space="preserve">
+    <value>Desired Username must be less 50 word.</value>
+  </data>
+  <data name="DisplayName" xml:space="preserve">
+    <value>Display Name</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailValidation" xml:space="preserve">
+    <value>A valid email address is required.</value>
+  </data>
+  <data name="FacebookTitle" xml:space="preserve">
+    <value>Facebook Title</value>
+  </data>
+  <data name="FacebookUrl" xml:space="preserve">
+    <value>Facebook Redirect Url</value>
+  </data>
+  <data name="FileDetailViewModels" xml:space="preserve">
+    <value>File Detail ViewModels</value>
+  </data>
+  <data name="FileType" xml:space="preserve">
+    <value>Fiile Type</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="FirstNameValidation" xml:space="preserve">
+    <value>FirstName must be less 25 word.</value>
+  </data>
+  <data name="FooterContactCenter" xml:space="preserve">
+    <value>Footer Contact Center</value>
+  </data>
+  <data name="FooterContactLeft" xml:space="preserve">
+    <value>Footer Contact Left</value>
+  </data>
+  <data name="FooterContactRight" xml:space="preserve">
+    <value>Footer Contact Right</value>
+  </data>
+  <data name="FooterContactSocialConnect" xml:space="preserve">
+    <value>Footer Contact Social Connect</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="GeneralQueryType" xml:space="preserve">
+    <value>General Query Type</value>
+  </data>
+  <data name="GooglePlusTitle" xml:space="preserve">
+    <value>Google Plus Title</value>
+  </data>
+  <data name="GooglePlusUrl" xml:space="preserve">
+    <value>Google Plus Redirect Url</value>
+  </data>
+  <data name="Hardware" xml:space="preserve">
+    <value>Hardware</value>
+  </data>
+  <data name="HardwareViewModels" xml:space="preserve">
+    <value>Add Hardwares</value>
+  </data>
+  <data name="HeaderLogo" xml:space="preserve">
+    <value>Header Logo</value>
+  </data>
+  <data name="HostName" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Invalid Email</value>
+  </data>
+  <data name="InvalidNumber" xml:space="preserve">
+    <value>Invalid Number</value>
+  </data>
+  <data name="IsLocked" xml:space="preserve">
+    <value>Lock User</value>
+  </data>
+  <data name="IsVerified" xml:space="preserve">
+    <value>Verified ?</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="LastNameValidation" xml:space="preserve">
+    <value>LastName must be less 25 word.</value>
+  </data>
+  <data name="LengthLessthan100" xml:space="preserve">
+    <value>Length Should be less than 100</value>
+  </data>
+  <data name="LengthLessthan50" xml:space="preserve">
+    <value>Length Should be less than 50</value>
+  </data>
+  <data name="LockedReason" xml:space="preserve">
+    <value>Select Reason</value>
+  </data>
+  <data name="MajorVersion" xml:space="preserve">
+    <value>Major Version</value>
+  </data>
+  <data name="MapImages" xml:space="preserve">
+    <value>Map Images</value>
+  </data>
+  <data name="MaterialName" xml:space="preserve">
+    <value>Material Name</value>
+  </data>
+  <data name="MaterialType" xml:space="preserve">
+    <value>Material Type</value>
+  </data>
+  <data name="MaterialTypeValidation" xml:space="preserve">
+    <value>Material Type must be select.</value>
+  </data>
+  <data name="MaxSize" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="MenuBanner" xml:space="preserve">
+    <value>Banner</value>
+  </data>
+  <data name="MenuBasic" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="MenuBox1" xml:space="preserve">
+    <value>Box 1</value>
+  </data>
+  <data name="MenuBox2" xml:space="preserve">
+    <value>Box 2</value>
+  </data>
+  <data name="MenuBox3" xml:space="preserve">
+    <value>Box 3</value>
+  </data>
+  <data name="MenuBox4" xml:space="preserve">
+    <value>Box 4</value>
+  </data>
+  <data name="MenuContinent" xml:space="preserve">
+    <value>Continent</value>
+  </data>
+  <data name="MenuCountries" xml:space="preserve">
+    <value>Countries</value>
+  </data>
+  <data name="MenuDataCenter" xml:space="preserve">
+    <value>Data Centre</value>
+  </data>
+  <data name="MenuFooter" xml:space="preserve">
+    <value>Footer Contacts</value>
+  </data>
+  <data name="MenuFooterWidget" xml:space="preserve">
+    <value>Footer Social Widget</value>
+  </data>
+  <data name="MenuHeader" xml:space="preserve">
+    <value>Header</value>
+  </data>
+  <data name="MenuMapArea" xml:space="preserve">
+    <value>Map Area</value>
+  </data>
+  <data name="MenuMetroArea" xml:space="preserve">
+    <value>Metro Areas</value>
+  </data>
+  <data name="MetaDescription" xml:space="preserve">
+    <value>Meta Description</value>
+  </data>
+  <data name="MetaKeywords" xml:space="preserve">
+    <value>Meta Keywords</value>
+  </data>
+  <data name="MetaTitle" xml:space="preserve">
+    <value>Meta Title</value>
+  </data>
+  <data name="MicroVersion" xml:space="preserve">
+    <value>Micro Version</value>
+  </data>
+  <data name="MinorVersion" xml:space="preserve">
+    <value>Minor Version</value>
+  </data>
+  <data name="MinSize" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NameValidation" xml:space="preserve">
+    <value>Name must be less 25 word.</value>
+  </data>
+  <data name="DesertfireAddress" xml:space="preserve">
+    <value>Arc Address</value>
+  </data>
+  <data name="DesertfireLaboratoryAddress" xml:space="preserve">
+    <value>Laboratory Address</value>
+  </data>
+  <data name="NoContinent" xml:space="preserve">
+    <value>No of Continent</value>
+  </data>
+  <data name="NoCountries" xml:space="preserve">
+    <value>No of Countries</value>
+  </data>
+  <data name="NoDataCentre" xml:space="preserve">
+    <value>No of Data Centres</value>
+  </data>
+  <data name="NoMetroAreas" xml:space="preserve">
+    <value>No of Metro-Areas</value>
+  </data>
+  <data name="NumbersOnly" xml:space="preserve">
+    <value>Please Enter Numbers Only</value>
+  </data>
+  <data name="OsType" xml:space="preserve">
+    <value>Operating System</value>
+  </data>
+  <data name="PageImage" xml:space="preserve">
+    <value>Page Image</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Page Title</value>
+  </data>
+  <data name="PageUrl" xml:space="preserve">
+    <value>Page Url</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordValidation" xml:space="preserve">
+    <value>Password must be less 6 word.</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="PhoneNumberValidation" xml:space="preserve">
+    <value>A valid phone number is required.</value>
+  </data>
+  <data name="PopupNotification" xml:space="preserve">
+    <value>Popup Notification</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>Postal Code.</value>
+  </data>
+  <data name="PostalCodeValidation" xml:space="preserve">
+    <value>A valid postal code is required.</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ProductPartViewModels" xml:space="preserve">
+    <value>Add Product Parts</value>
+  </data>
+  <data name="ProductPartViewModelsValidation" xml:space="preserve">
+    <value>Product Part View Model must be less 50 word.</value>
+  </data>
+  <data name="ProductPleaseSelect" xml:space="preserve">
+    <value>Please Select Product.</value>
+  </data>
+  <data name="ProductViewModels" xml:space="preserve">
+    <value>Add Products</value>
+  </data>
+  <data name="ProductViewModelsValidation" xml:space="preserve">
+    <value>Product View Models less than 50 word.</value>
+  </data>
+  <data name="PropertyName" xml:space="preserve">
+    <value>Property Name</value>
+  </data>
+  <data name="PropertyType" xml:space="preserve">
+    <value>Property Type</value>
+  </data>
+  <data name="PropertyValue" xml:space="preserve">
+    <value>Property Value</value>
+  </data>
+  <data name="RequireSSL" xml:space="preserve">
+    <value>Require SSL</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>User Role</value>
+  </data>
+  <data name="RoleValidation" xml:space="preserve">
+    <value>User Role Type Must be select</value>
+  </data>
+  <data name="SerialNumber" xml:space="preserve">
+    <value>Serial Number</value>
+  </data>
+  <data name="SerialNumberValidation" xml:space="preserve">
+    <value>Please fill Serial Number.</value>
+  </data>
+  <data name="SpecialChrsNotAllowed" xml:space="preserve">
+    <value>Special Characters not allowed</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="StatePleaseSelect" xml:space="preserve">
+    <value>Please Select States.</value>
+  </data>
+  <data name="SubTitle" xml:space="preserve">
+    <value>Sub Title</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Title1" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="TitleValidation" xml:space="preserve">
+    <value>Title must be less 50 word.</value>
+  </data>
+  <data name="TwitterTitle" xml:space="preserve">
+    <value>Twitter Title</value>
+  </data>
+  <data name="TwitterUrl" xml:space="preserve">
+    <value>Twitter Redirect Url</value>
+  </data>
+  <data name="UploadBannerImage" xml:space="preserve">
+    <value>Upload Banner Image</value>
+  </data>
+  <data name="UploadIconImage" xml:space="preserve">
+    <value>Upload Icon Image</value>
+  </data>
+  <data name="UploadMapImages" xml:space="preserve">
+    <value>Upload Map Area Image</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Desired Username</value>
+  </data>
+  <data name="UserNameValidation" xml:space="preserve">
+    <value>Only a-z or A-Z only entered.</value>
+  </data>
+  <data name="Websiteurl1" xml:space="preserve">
+    <value>First Website Url</value>
+  </data>
+  <data name="Websiteurl2" xml:space="preserve">
+    <value>Second Website Url</value>
+  </data>
+  <data name="Websiteurl3" xml:space="preserve">
+    <value>Third Website Url</value>
+  </data>
+  <data name="WorkOrderType" xml:space="preserve">
+    <value>Work Order Type</value>
+  </data>
+  <data name="WorkOrderTypeValidation" xml:space="preserve">
+    <value>Please select work order type.</value>
+  </data>
+  <data name="WorkStatus" xml:space="preserve">
+    <value>Work Status</value>
+  </data>
+</root>

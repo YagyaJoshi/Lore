@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutCompany" xml:space="preserve">
+    <value>About Company</value>
+  </data>
+  <data name="Addressline1" xml:space="preserve">
+    <value>Address line 1</value>
+  </data>
+  <data name="Addressline2" xml:space="preserve">
+    <value>Address line 2</value>
+  </data>
+  <data name="Addressline3" xml:space="preserve">
+    <value>Address line 3</value>
+  </data>
+  <data name="amountsign" xml:space="preserve">
+    <value>$</value>
+  </data>
+  <data name="AreaInformation" xml:space="preserve">
+    <value>Area Information</value>
+  </data>
+  <data name="buttonSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ChargesAfterwards" xml:space="preserve">
+    <value>Charges Afterwards</value>
+  </data>
+  <data name="ChargesBreakdown" xml:space="preserve">
+    <value>Charges Breakdown</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="CompanyABCPackageInformation" xml:space="preserve">
+    <value>Company ABC Package Information</value>
+  </data>
+  <data name="CompanyABCSiteInformation" xml:space="preserve">
+    <value>Company ABC Site Information</value>
+  </data>
+  <data name="CompanyAddress" xml:space="preserve">
+    <value>Company Address</value>
+  </data>
+  <data name="CompanyCommunicationEmailID" xml:space="preserve">
+    <value>Company Communication Email ID</value>
+  </data>
+  <data name="CompanyContactInfo" xml:space="preserve">
+    <value>Company Contact Info</value>
+  </data>
+  <data name="CompanyInformation" xml:space="preserve">
+    <value>Company Information</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="DeploymentCost" xml:space="preserve">
+    <value>Deployment Cost</value>
+  </data>
+  <data name="EnterTimePeriod" xml:space="preserve">
+    <value>Enter Time Period</value>
+  </data>
+  <data name="FreeProcedureAvailable" xml:space="preserve">
+    <value>Free Procedure Available</value>
+  </data>
+  <data name="GeneralInformation" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="IndustryType" xml:space="preserve">
+    <value>Industry Type</value>
+  </data>
+  <data name="InvoiceandRemindersDetails" xml:space="preserve">
+    <value>Invoice and Reminders Details</value>
+  </data>
+  <data name="Keep1copyofsentinvoicetoDFOmailbox" xml:space="preserve">
+    <value>Keep 1 copy of sent invoice to DFO mailbox</value>
+  </data>
+  <data name="Keep1copyofsentinvoicetoNotificationrow" xml:space="preserve">
+    <value>Keep 1 copy of sent invoice to Notification row</value>
+  </data>
+  <data name="LicenseScheme" xml:space="preserve">
+    <value>License Scheme</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Members</value>
+  </data>
+  <data name="ModeOfPayment" xml:space="preserve">
+    <value>Mode Of Payment</value>
+  </data>
+  <data name="PackageInformation" xml:space="preserve">
+    <value>Package Information</value>
+  </data>
+  <data name="PaymentHistory" xml:space="preserve">
+    <value>Payment History</value>
+  </data>
+  <data name="PaymentInformation" xml:space="preserve">
+    <value>Payment Information</value>
+  </data>
+  <data name="PaymentSchedule" xml:space="preserve">
+    <value>Payment Schedule</value>
+  </data>
+  <data name="PaymentScheduled" xml:space="preserve">
+    <value>Payment Scheduled</value>
+  </data>
+  <data name="PerProcedureCharges" xml:space="preserve">
+    <value>Per Procedure Charges</value>
+  </data>
+  <data name="PopupPaymentReminder" xml:space="preserve">
+    <value>Pop-up Payment Reminder</value>
+  </data>
+  <data name="PrimaryEmail" xml:space="preserve">
+    <value>Primary Email</value>
+  </data>
+  <data name="PrimaryPhone" xml:space="preserve">
+    <value>Primary Phone</value>
+  </data>
+  <data name="ProductionDepartment" xml:space="preserve">
+    <value>Production Department</value>
+  </data>
+  <data name="RemindMeBefore" xml:space="preserve">
+    <value>Remind Me Before</value>
+  </data>
+  <data name="SecondaryEmail" xml:space="preserve">
+    <value>Secondary Email</value>
+  </data>
+  <data name="SecondaryPhone" xml:space="preserve">
+    <value>Secondary Phone</value>
+  </data>
+  <data name="Send1copyofsentinvoicetoMYOB" xml:space="preserve">
+    <value>Send 1 copy of sent invoice to MYOB</value>
+  </data>
+  <data name="SendInvoiceAutomatically" xml:space="preserve">
+    <value>Send Invoice Automatically</value>
+  </data>
+  <data name="SendInvoiceBefore" xml:space="preserve">
+    <value>Send Invoice Before</value>
+  </data>
+  <data name="SitewiseBillingAmount" xml:space="preserve">
+    <value>Sitewise Billing Amount</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="TotalnumberofSites" xml:space="preserve">
+    <value>Total number of Sites</value>
+  </data>
+  <data name="UsageStatistics" xml:space="preserve">
+    <value>Usage Statistics</value>
+  </data>
+  <data name="WhitelabelSystem" xml:space="preserve">
+    <value>White label System</value>
+  </data>
+  <data name="ZipCode" xml:space="preserve">
+    <value>Zip Code</value>
+  </data>
+</root>

@@ -1,0 +1,286 @@
+﻿@model Loregroup.Core.ViewModels.CustomerViewModel
+
+@{
+    ViewBag.Title = "UserMap";
+}
+
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Maps Multiple Markers</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtc3taqG0VBdfkFWyKqhWqjeZnYSLYV54&callback=initMap" type="text/javascript"></script>
+</head>
+<body>
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.Label("Country")
+                        @Html.BsTextBoxFor(x => x.Country)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="map" style="height: 400px; width: 90%;left : 5%;">
+
+    </div>
+
+    <div id="LoaderImage" style="display:none; position:absolute; width:100px; height:100px; left:50%; top:50%; z-index:100">
+        <img src="~/Content/img/ajax-loader1.gif" height="100px" width="100px" alt="Loading..." />
+    </div>
+    
+</body>
+@Html.HiddenFor(x => x.location)
+</html>
+
+@*AutoComplete For Country Start*@
+<script type="text/javascript">
+
+    var locations = [];
+    var CountryName = "";
+
+    $(document).ready(function () {
+
+        $.ajax({
+            url: "/User/GetAllUsersForMap",
+            type: "POST",
+            dataType: "json",
+            //data: {
+            //    CountryId: vn,               
+            //},
+
+            dataFilter: function (data) {
+                return data;
+            },
+            beforeSend: function () {
+                $("#LoaderImage").show();
+            },
+            complete: function () {
+                $("#LoaderImage").hide();
+            },
+            success: function (data) {
+                //alert(data[0][1]);
+                //alert(CountryName);
+                //$("#Country").val(CountryName);
+                $("#location").val(data);
+                //alert($("#Country").val());
+
+                $.each(data, function (i) {
+                    //alert(data[i].UserName);
+                    var Location = [];
+                    Location.push(data[i].ShopName);
+                    Location.push(data[i].Latitude);
+                    Location.push(data[i].Longitude);
+                    Location.push(data[i].isonmap);// Add new 06-10-2021
+                    locations.push(Location);
+                });
+                //alert(kapil[0][1])
+                ShowMap();
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+            }
+        })
+
+    })
+    
+
+    $(document).ready(function () {
+        $("#Country").autocomplete({
+
+            source: function (request, response) {
+                $.ajax({
+                    url: "/User/SearchCountry",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        Prefix: request.term
+                    },
+
+                    success: function (data) {
+                        locations = [];
+                        response($.map(data, function (item) {
+                            return { label: item.countryName, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (e, ui) {
+
+                //CountryName = item.countryName;
+                //alert(ui.item.value);
+                //alert(ui.item.label);
+                CountryName = ui.item.label;
+                var vn = ui.item.value;
+                $("#POId").val(vn);
+                //var currency = $('#CustomerModel_CurrencyName').val();
+                $.ajax({
+                    url: "/User/GetUserByCountry",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        CountryId: vn,
+                        //currency: currency
+                    },
+
+                    dataFilter: function (data) {
+                        return data;
+                    },
+                    beforeSend: function () {
+                        $("#LoaderImage").show();
+                    },
+                    complete: function () {
+                        $("#LoaderImage").hide();
+                    },
+                    success: function (data) {
+                        //alert(data[0][1]);
+                        //alert(CountryName);
+                        $("#Country").val(CountryName);
+                        $("#location").val(data);
+                        //alert($("#Country").val());
+
+                        $.each(data, function (i) {
+                            //alert(data[i].UserName);
+                            var Location = [];
+
+                            Location.push(data[i].ShopName);
+                            Location.push(data[i].Latitude);
+                            Location.push(data[i].Longitude);
+                            Location.push(data[i].isonmap);// Add new 06-10-2021
+                            locations.push(Location);
+                        });
+                        //alert(kapil[0][1])
+                        ShowMap();
+
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                    }
+                })
+
+                //$('#FromColorId').empty();
+                //GetFromColours();
+
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+    
+    function ShowMap() {
+        // alert(locations.length)
+        //alert("Kapil")
+        // var d = $("#location").val();
+        //alert(d)
+        //$.each(d, function (i) {
+        //    alert(d[i][0]);
+        //});
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 2,
+            center: new google.maps.LatLng(locations[0][1], locations[0][2]),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        // var locations = $("#location").val();
+        //alert($("#location").val());
+
+        for (i = 0; i < locations.length; i++)
+        {
+            //alert(locations[i][0]);
+            var isred = locations[i][3];
+           // alert(isred);
+            if (isred == "1")
+            {
+               // alert('Red');
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                    map: map,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                });
+            }
+            else
+            {
+                //alert('blue');
+                marker = new google.maps.Marker(
+                    {
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map,
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                    });
+            }
+            google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(locations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
+    }
+
+</script>
+
+@*AutoComplete For Countrty End*@
+<script type="text/javascript">
+    //var locations = [
+    //  ['Bondi Beach', -33.890542, 151.274856],
+    //  ['Coogee Beach', -33.923036, 151.259052],
+    //  ['Cronulla Beach', -34.028249, 151.157507],
+    //  ['Manly Beach', -33.80010128657071, 151.28747820854187],
+    //  ['Maroubra Beach', -33.950198, 151.259302],
+    //  ['Indore Palasia', 22.7257649, 75.8810814],
+    //];
+
+    //function ShowMap() {
+    //    //alert("Kapil")
+    //    var d = $("#location").val();
+    //    //alert(d)
+    //    $.each(d, function (i) {
+    //        alert(d[i][0]);
+    //    });
+
+    //    var map = new google.maps.Map(document.getElementById('map'), {
+    //        zoom: 0,
+    //        center: new google.maps.LatLng(-33.92, 151.25),
+    //        mapTypeId: google.maps.MapTypeId.ROADMAP
+    //    });
+
+    //    var infowindow = new google.maps.InfoWindow();
+
+    //    var marker, i;
+
+    //    var locations = $("#location").val();
+    //    //alert($("#location").val());
+
+
+    //    for (i = 0; i < locations.length(); i++)
+    //    {
+
+    //        marker = new google.maps.Marker({
+    //            position: new google.maps.LatLng(location[i].Latitude,  location[i].Longitude),
+    //            map: map
+    //        });
+
+    //        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    //            return function () {
+    //                infowindow.setContent(location[i].UserName);
+    //                infowindow.open(map, marker);
+    //            }
+    //        })(marker, i));
+    //    }
+    //}
+</script>

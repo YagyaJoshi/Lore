@@ -1,0 +1,50 @@
+﻿body 
+{
+    /*background-color: #e295fc;*/
+    /*background-color: white;*/
+    /*color: #1a1a1a;*/
+    /*font-size: .85em;*/
+    /*font-family: "segoe ui", verdana, helvetica, sans-serif;*/
+    /*margin: 1.5em;*/
+    /*padding: 0;*/
+}
+
+.PGrid 
+{
+     font-size: .85em;
+    font-family: "segoe ui", verdana, helvetica, sans-serif;
+    margin:2%;
+    border-collapse:collapse;
+    width:95%;
+}
+.Header 
+{
+     font-size: .85em;
+    font-family: "segoe ui", verdana, helvetica, sans-serif;
+    font-weight:bold;
+    background-color:#60acf6;
+    color:#ff6a00;
+    text-decoration:none;
+}
+.PGrid th, .PGrid td
+{
+     font-size: .85em;
+    font-family: "segoe ui", verdana, helvetica, sans-serif;
+    border:1px solid #0094ff;
+    padding:5px;
+}
+.altRow {
+     font-size: .85em;
+    font-family: "segoe ui", verdana, helvetica, sans-serif;
+    color:brown;
+    background-color:#808080;
+}
+.hide
+ {
+     font-size: .85em;
+    font-family: "segoe ui", verdana, helvetica, sans-serif;
+    display:none;
+
+}
+
+ 

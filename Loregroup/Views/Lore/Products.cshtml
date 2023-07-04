@@ -1,0 +1,333 @@
+﻿@model Loregroup.Core.ViewModels.ProductCollectionViewModel
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">*@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+<style type="text/css">
+    input:focus, select:focus, option:focus, textarea:focus, form:focus, button:focus {
+        outline: 0;
+    }
+
+    *:focus {
+        outline: 0;
+    }
+</style>
+
+<!-- Product -->
+<div class="bg0 m-t-23 p-b-140">
+    <div class="container">
+
+        @using (Html.BeginForm("Products", "Lore", FormMethod.Post, new { id = "productForm", name = "productForm" }))
+        {
+        <div class="flex-w flex-sb-m p-b-52" style="margin-top: 5%;">
+
+            <div class="size-221 m-lr-auto">
+                <div class="form-group">
+                    <center>@Html.LabelFor(model => model.CategoryId)<br /></center>
+                    @Html.DropDownList("CategoryId", new SelectList(Model.CategoryList, "Id", "Category", Model.CategoryId), new { @class = "select_mate", onchange = "changeCategory()" })
+                    @Html.ValidationMessageFor(model => model.CategoryId)
+                </div>
+            </div>
+
+            <div class="size-221 m-lr-auto">
+                <div class="form-group">
+                    <center>@Html.LabelFor(model => model.CollectionId)<br /></center>
+                    @Html.DropDownList("CollectionId", new SelectList(Model.CollectionList, "Id", "CollectionYear", Model.CollectionId), new { @class = "select_mate", onchange = "this.form.submit();" })
+                    @Html.ValidationMessageFor(model => model.CollectionId)
+                </div>
+            </div>
+
+            <div class="size-221 m-lr-auto">
+                <div class="form-group">
+                    <center>@Html.LabelFor(model => model.CutofdressId)<br /></center>
+                    @Html.DropDownList("CutofdressId", new SelectList(Model.CutofdressList, "Id", "CutOfDress", Model.CutofdressId), new { @class = "select_mate", onchange = "this.form.submit();" })
+                    @Html.ValidationMessageFor(model => model.CutofdressId)
+                </div>
+            </div>
+
+            <div class="size-221 m-lr-auto">
+                <div class="form-group">
+                    <center>@Html.LabelFor(model => model.ColourId)<br /></center>
+                    @Html.DropDownList("ColourId", new SelectList(Model.ColourList, "Id", "Colour", Model.ColourId), new { @class = "select_mate", onchange = "this.form.submit();" })
+                    @Html.ValidationMessageFor(model => model.ColourId)
+                </div>
+            </div>
+
+            <div class="size-221 m-lr-auto">
+                <div class="form-group">
+                    <center>@Html.LabelFor(model => model.FabricId)<br /></center>
+                    @Html.DropDownList("FabricId", new SelectList(Model.FabricList, "Id", "FabricName", Model.FabricId), new { @class = "select_mate", onchange = "this.form.submit();" })
+                    @Html.ValidationMessageFor(model => model.FabricId)
+                </div>
+            </div>
+
+
+            @*<div class="product-menu-desktop " style="margin-top: 3%;margin-left: 8%;">
+            <ul class="product-main-menu">
+
+                <li class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CategoryId)<br />
+                        @Html.DropDownList("CategoryId", new SelectList(Model.CategoryList, "Id", "Category", Model.CategoryId), new { onchange = "this.form.submit();" })
+                        @Html.ValidationMessageFor(model => model.CategoryId)
+                    </div>
+                </li>
+
+                <li class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CollectionId)<br />
+                        @Html.DropDownList("CollectionId", new SelectList(Model.CollectionList, "Id", "CollectionYear", Model.CollectionId), new { onchange = "this.form.submit();" })
+                        @Html.ValidationMessageFor(model => model.CollectionId)
+                    </div>
+                </li>
+
+                <li class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CutofdressId)<br />
+                        @Html.DropDownList("CutofdressId", new SelectList(Model.CutofdressList, "Id", "CutOfDress", Model.CutofdressId), new { onchange = "this.form.submit();" })
+                        @Html.ValidationMessageFor(model => model.CutofdressId)
+                    </div>
+                </li>
+
+                <li class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ColourId)<br />
+                        @Html.DropDownList("ColourId", new SelectList(Model.ColourList, "Id", "Colour", Model.ColourId), new { onchange = "this.form.submit();" })
+                        @Html.ValidationMessageFor(model => model.ColourId)
+                    </div>
+                </li>
+
+                <li class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FabricId)<br />
+                        @Html.DropDownList("FabricId", new SelectList(Model.FabricList, "Id", "FabricName", Model.FabricId), new { onchange = "this.form.submit();" })
+                        @Html.ValidationMessageFor(model => model.FabricId)
+                    </div>
+                </li>
+
+            </ul>
+        </div>*@
+            @if (Model.Userid == 0 )
+            {
+        <div class="col-md-12" style="text-align: center;margin-top: 30px;">
+            <h4 style="color: #1e1e27;font-size: 18px;line-height: 1.8rem;">"Please login to see our Latest Collection"</h4></div>
+            }
+            </div>
+           
+            <div class="row isotope-grid">
+
+                <div id="person-list">
+                    @Html.Partial("ProductList")
+                </div>
+
+                @*<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+                        <div class="block2">
+                            <div class="block2-pic hov-img0">
+                                <img src="collections/61051S.jpg" alt="IMG-PRODUCT">
+
+                                <a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+                                    Quick View
+                                </a>
+                            </div>
+
+                            <div class="block2-txt flex-w flex-t p-t-14">
+                                <div class="block2-txt-child1 flex-col-l ">
+                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                        Esprit Ruffle Shirt
+                                    </a>
+
+                                    <span class="stext-105 cl3">
+                                        $16.64
+                                    </span>
+                                </div>
+
+                                <div class="block2-txt-child2 flex-r p-t-3">
+                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png" alt="ICON">
+                                        <img class="icon-heart2 dis-block trans-04 ab-t-l" src="images/icons/icon-heart-02.png" alt="ICON">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+
+            </div>
+
+            <div id="product-tablepaging" class="isotope-item">
+
+                @*<table border="1" class="@Model.ProductList.TableStyle" style="position: absolute; left: 0%; top: 445px;">*@
+                @*<table border="1" class="isotope-item">
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    @for (int i = 1; i <= Model.ProductList.NumberOfPages; i++)
+                                    {
+                                        if (i == Model.ProductList.CurrentPage)
+                                        {
+                                            @i
+                                        }
+                                        else
+                                        {
+                                            <a class="page-number" href="javascript:void();" onclick="myFunction(@i);">@i</a>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>*@
+
+                <ul class="pagination" style="display: block;">
+                    @for (int i = 1; i <= Model.ProductList.NumberOfPages; i++)
+                    {
+                        if (i == Model.ProductList.CurrentPage)
+                        {
+                            <li class="active"><a>@i</a></li>
+                        }
+                        else
+                        {
+                            <li><a class="page-number" href="javascript:void();" onclick="myFunction(@i);">@i</a></li>
+                        }
+                    }
+                </ul>
+
+            </div>
+
+            @*<div id="product-tablepaging">
+                    @Html.Partial("ProductPageTable")
+                </div>*@
+
+            <!-- Load more -->
+            @*<div class="flex-c-m flex-w w-full p-t-45">
+                    <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+                        Load More
+                    </a>
+                </div>*@
+
+            @Html.HiddenFor(x => x.ProductList.CallingPage)
+            @Html.HiddenFor(x => x.ProductList.CurrentPage)
+
+        }
+    </div>
+</div>
+
+
+<!-- Modal1 -->
+<div class="wrap-modal1 js-modal1 p-t-60 p-b-20" id='myModalpopup'>
+    <div class="overlay-modal1 js-hide-modal1"></div>
+
+    <div class="container">
+        <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
+            <button class="how-pos3 hov3 trans-04" id="closbtnpopup">
+                <img src="/Frontend/images/icons/icon-close.png" alt="CLOSE">
+            </button>
+
+            <div class="row" id='myModalContent'>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<div id='myModalpopup' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+    </div>*@
+
+
+@*<script type="text/javascript" src="http://collectionhair-001-site71.atempurl.com/Scripts/isotope.pkgd.min.js"></script>*@
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // $(".page-number").live("click", function () {
+
+        @*$(".page-number").on("click", function () {
+            alert('cs');
+            var page = parseInt($(this).html());
+            alert(page);
+            $.ajax({
+                url: '@Url.Action("ProductListPaging")',
+                data: { "page": page },
+                success: function (data) {
+                    $("#person-list").html(data);
+                }
+            });
+        });*@
+
+    });
+
+    @*function myFunction(page) {
+        //alert(page);
+        $.ajax({
+            url: '@Url.Action("ProductList")',
+            data: { "page": page },
+            success: function (data) {
+                $("#person-list").html(data);
+                //$("#product-tablepaging").html(data);
+
+                //call the code to initialize the isotope
+                var $container = $('.isotope-grid').isotope();
+                $container.isotope({
+                    itemSelector: '.grid-item'
+                });
+            }
+        });
+    }*@
+
+    function myFunction(page) {
+        //alert(page);
+        $("#ProductList_CallingPage").val(page);
+        document.productForm.submit();
+    }
+
+  function changeCategory() {
+      var categoryId = $('#CategoryId').val();
+      window.location.href = '@Url.Action("Products", "Lore")?CategoryId=' + categoryId;
+  }
+</script>
+
+
+<script>
+    var TeamDetailPostBackURL = '/Lore/ProductPopDetail';
+    $(function () {
+        $(".anchorDetail").click(function () {
+            debugger;
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            //var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+                    debugger;
+                    $('#myModalContent').html(data);
+                    //$('#myModalpopup').modal(options);
+                    $('#myModalpopup').modal('show');
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+        });
+        //$("#closebtn").on('click',function(){
+        //    $('#myModal').modal('hide');
+
+        $("#closbtnpopup").click(function () {
+            $('#myModalpopup').modal('hide');
+        });
+    });
+
+</script>  

@@ -1,0 +1,51 @@
+﻿@model Loregroup.Core.Helpers.PagedData<Loregroup.Data.Entities.Product>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>
+                ProductName
+            </th>
+            <th>
+                title
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var person in Model.Data)
+        {
+            <tr>
+                <td>
+                    @person.ProductName
+                </td>
+                <td>
+                    @person.Title
+                </td>
+                <td>
+                    @person.PriceUSD
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">
+                @for (int i = 1; i <= Model.NumberOfPages; i++)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        @i
+                    }
+                    else
+                    {
+                        @*<a class="page-number" href="javascript:void(0);" onclick="myFunction(@i);">@i</a>*@
+    <a class="page-number" href="javascript:void();" onclick="myFunction(@i);">@i</a>
+                    }
+                }
+            </td>
+        </tr>
+    </tfoot>
+</table>

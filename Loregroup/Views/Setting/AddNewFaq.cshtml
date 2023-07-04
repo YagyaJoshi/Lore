@@ -1,0 +1,59 @@
+﻿@model Loregroup.Core.ViewModels.FaqViewModel
+
+@{
+    ViewBag.Title = "AddNewFaq";
+}
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("GetAllFaq", "Setting")';
+    }
+
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+@using (Html.BeginForm("AddNewFaq", "Setting", FormMethod.Post))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Question)
+                        @Html.BsTextBoxWithPHFor(model => model.Question)
+                        @Html.ValidationMessageFor(model => model.Question)
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Answer)
+                        @Html.BsTextAreaFor(model => model.Answer)
+                        @Html.ValidationMessageFor(model => model.Answer)
+                    </div>
+                </div>               
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.Id)       
+}

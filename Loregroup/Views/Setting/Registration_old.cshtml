@@ -1,0 +1,604 @@
+﻿@model Loregroup.Core.ViewModels.CustomerViewModel
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<h2>Registration</h2>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("Registration", "Setting")';
+    }
+
+    $(document).ready(function () {
+
+        if ($("#CountryId").val() == "2") {
+            $('#StateName').attr('disabled', 'disabled');
+            $('#StateId').removeAttr("disabled");
+        }
+        else {
+            $("#StateId").empty();
+            $('#StateId').attr('disabled', 'disabled');
+            $('#StateName').removeAttr('disabled');
+        }
+
+        //selection change event of State
+        $("#CountryId").change(function () {
+
+            if ($("#CountryId").val() == "2") {
+
+                $('#StateName').attr('disabled', 'disabled');
+                $('#StateId').removeAttr("disabled");
+                $("#StateId").empty();
+                //$("#TownId").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetState", "Master")',
+                    dataType: 'json',
+                    data: { CountryId: $("#CountryId").val() },
+                    success: function (states) {
+                        $("#StateId").append($('<option/>', {
+                            value: 0,
+                            text: "--Select State--"
+                        }));
+                        $.each(states, function (i, state) {
+                            $("#StateId").append('<option value="'
+                                        + state.Value + '">'
+                                        + state.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve States.' + ex);
+                    }
+                });
+            }
+            else {
+
+                $('#StateId').attr('disabled', 'disabled');
+                $('#StateName').removeAttr('disabled');
+
+            }
+
+            return false;
+        });
+
+    });
+
+</script>
+
+@if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+{
+    <div class="alert alert-danger">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        <h4>Validation Errors</h4>
+        @Html.ValidationSummary()
+    </div>
+}
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+<!-- Content page -->
+@using (Html.BeginForm("Registration", "Setting", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="box box-info col-md-12">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="rightRegisterContainer">
+                        <h2 class="h2_class">Registration Is For Business / Stores Only</h2>
+                        <div class="p-t-30"></div>
+                        <div class="row">
+                            <div class="col-sm-6 ">
+                                <fieldset class="customer_fieldset r-main">
+                                    <legend><h2>Billing Detail:</h2></legend>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.FirstName)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.FirstName)
+                                                @Html.ValidationMessageFor(model => model.FirstName)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.LastName)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.LastName)
+                                                @Html.ValidationMessageFor(model => model.LastName)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.EmailId)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.EmailId)
+                                                @Html.ValidationMessageFor(model => model.EmailId)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.MobileNo)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.MobileNo)
+                                                @Html.ValidationMessageFor(model => model.MobileNo)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.AddressLine1)<span class="required_red">*</span>
+                                                @Html.BsTextAreaFor(model => model.AddressLine1)
+                                                @Html.ValidationMessageFor(model => model.AddressLine1)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.AddressLine2)
+                                                @Html.BsTextAreaFor(model => model.AddressLine2)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        @*<div class="col-md-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.RoleId)<span class="required_red">*</span>
+                                                    @Html.BootstrapDropDownListFor(m => m.RoleId, new SelectList(Model.RoleList, "Id", "Name", Model.RoleId))
+                                                    @Html.ValidationMessageFor(m => m.RoleId)
+                                                </div>
+                                            </div>*@
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.CompanyName)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.CompanyName)
+                                                @Html.ValidationMessageFor(model => model.CompanyName)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ZipCode)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.ZipCode)
+                                                @Html.ValidationMessageFor(model => model.ZipCode)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.CountryId)<span class="required_red">*</span>
+                                                @Html.BootstrapDropDownListFor(m => m.CountryId, new SelectList(Model.CountryList, "Id", "CountryName", Model.CountryId))
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.StateId)
+                                                @Html.BootstrapDropDownListFor(model => model.StateId, new SelectList(Model.StateList, "Id", "StateName", Model.StateId))
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.City)
+                                                @Html.BsTextBoxWithPHFor(m => m.City)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Workphone)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.Workphone)
+                                                @Html.ValidationMessageFor(model => model.Workphone)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Fax)
+                                                @Html.BsTextBoxWithPHFor(model => model.Fax)
+                                                @Html.ValidationMessageFor(model => model.Fax)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group form-default">
+                                                <label>Business Licence </label>
+                                                <input id="bus_agrrement" name="bus_agrrement" class="form-control " type="file">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.CompanyTaxId)
+                                                @Html.BsTextBoxWithPHFor(model => model.CompanyTaxId)
+                                                @Html.ValidationMessageFor(model => model.CompanyTaxId)
+                                            </div>
+                                        </div>
+                                        @*@if (Model.Id == 0)
+                                        {
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Password)<span class="required_red">*</span>
+                                                    @Html.BsPasswordWithPhFor(model => model.Password)
+                                                    @Html.ValidationMessageFor(model => model.Password)
+                                                </div>
+                                            </div>
+                                        }*@
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Password)
+                                                @Html.BsTextBoxWithPHFor(model => model.Password)
+                                                @Html.ValidationMessageFor(model => model.Password)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ConfirmPassowrd)
+                                                @Html.BsTextBoxWithPHFor(model => model.ConfirmPassowrd)
+                                                @Html.ValidationMessageFor(model => model.ConfirmPassowrd)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group form-default">
+                                                <label>
+                                                    <form method="post" action="#">
+                                                        <input id="check" class="hidden-field" type="checkbox" value="true" onclick="this.form.submit();" />&nbsp;&nbsp;
+                                                        Yes, I want to be informed about Special Promotions
+                                                    </form>
+                                                </label>
+                                                <script type="text/javascript">
+                                                    $(document).on("click", "#check", function(){
+                                                        if ($(this).is(':checked')) {
+                                                            alert(" Ok");
+                                                            $('form').submit();
+                                                        }
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+
+                            <div class="col-sm-6 col-xs-12">
+                                <div class="same_as_billing">
+                                    <label class="checkAll">
+                                        <input type="checkbox" id="checkbox1" />
+                                        <em>Same as billing detail?</em>
+                                    </label>
+
+                                    <script language="JavaScript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>
+                                    <script type="text/javascript">
+                                        $(document).ready(function(){
+                                            $("#checkbox1").change(function() {
+                                                if(this.checked) {
+                                                    alert("Same Data");
+
+                                                    $FirstName = $("#FirstName").val();
+                                                    $LastName = $("#LastName").val();
+                                                    $CountryId = $("#CountryId").val();
+                                                    $StateId = $("#StateId").val();
+                                                    $StateName = $("#StateName").val();
+                                                    $AddressLine1 = $("#AddressLine1").val();
+                                                    $AddressLine2 = $("#AddressLine2").val();
+                                                    $EmailId = $("#EmailId").val();
+                                                    $MobileNo= $("#MobileNo").val();
+                                                    $CompanyName = $("#CompanyName").val();
+                                                    $ZipCode = $("#ZipCode").val();
+                                                    $RoleId =$("#RoleId").val();
+                                                    $ShopName =$("#ShopName").val();
+                                                    $Fax =$("#Fax").val();
+                                                    $Workphone = $("#Workphone").val();
+
+                                                    console.log("FirstName");
+                                                    console.log("LastName");
+                                                    console.log("CountryId");
+                                                    console.log("StateId");
+                                                    console.log("StateName");
+                                                    console.log("EmailId");
+                                                    console.log("CompanyName");
+                                                    console.log("MobileNo");
+                                                    console.log("Fax");
+                                                    console.log("ZipCode");
+                                                    console.log("ShopName");
+                                                    console.log("RoleId");
+                                                    console.log("AddressLine1");
+                                                    console.log("AddressLine2");
+
+                                                    $("#shippingfirstname").val($FirstName);
+                                                    $("#shippinglastname").val($LastName );
+                                                    $("#ShippingModel_CountryId").val($CountryId);
+                                                    $("#ShippingModel.StateId").val($StateId);
+                                                    $("#shippingstatename").val($StateName);
+                                                    $("#shippingemailid").val($EmailId );
+                                                    $("#shippingshopname").val($ShopName );
+                                                    $("#shippingfax").val($Fax );
+                                                    $("#shippingmobileno").val($MobileNo );
+                                                    $("#ShippingModel_RoleId").val($RoleId );
+                                                    $("#shippingzipcode").val($ZipCode);
+                                                    $("#shippingcompanyname").val($CompanyName );
+                                                    $("#shippingaddress1").val($AddressLine1);
+                                                    $("#shippingaddress2").val($AddressLine2);
+                                                    $("shippingworkphone").val($Workphone);
+                                                }
+                                                else
+                                                {
+                                                    $("#shippingfirstname").val("");
+                                                    $("#shippinglastname").val("");
+                                                    $("#ShippingModel_CountryId").val("");
+                                                    $("#ShippingModel.StateId").val("");
+                                                    $("#shippingstatename").val("");
+                                                    $("#shippingemailid").val("");
+                                                    $("#shippingshopname").val("");
+                                                    $("#shippingfax").val("" );
+                                                    $("#shippingmobileno").val("");
+                                                    $("#ShippingModel_RoleId").val("");
+                                                    $("#shippingzipcode").val("");
+                                                    $("#shippingcompanyname").val("");
+                                                    $("#shippingaddress1").val("");
+                                                    $("#shippingaddress2").val("");
+                                                    $("shippingworkphone").val("");
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                                <fieldset class="customer_fieldset r-main">
+                                    <legend><h2>Shipping Detail :</h2></legend>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.FirstName)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.FirstName, new { id = "shippingfirstname" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.FirstName)
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.LastName)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.LastName, new { id = "shippinglastname" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.LastName)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.EmailId)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.EmailId, new { id = "shippingemail" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.EmailId)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.MobileNo)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.MobileNo, new { id = "shippingmobileno" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.MobileNo)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.AddressLine1)<span class="required_red">*</span>
+                                                @Html.BsTextAreaFor(model => model.ShippingModel.AddressLine1, new { id = "shippingaddress1" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.AddressLine1)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.AddressLine2)
+                                                @Html.BsTextAreaFor(model => model.ShippingModel.AddressLine2, new { id = "shippingaddress2" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.CompanyName)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.CompanyName, new { id = "shippingcompanyname" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.CompanyName)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group" id="shippingzipcode">
+                                                @Html.LabelFor(model => model.ShippingModel.ZipCode)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.ZipCode, new { id = "shippingzipcode" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.ZipCode)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.CountryId)<span class="required_red">*</span>
+                                                @Html.BootstrapDropDownListFor(model => model.ShippingModel.CountryId, new SelectList(Model.CountryList, "Id", "CountryName", Model.CountryId)@*, new { @id = "shippingcountryid" }*@)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.StateId)
+                                                @Html.BootstrapDropDownListFor(model => model.ShippingModel.StateId, new SelectList(Model.StateList, "Id", "StateName", Model.StateId)@*, new { @id = "shippingstateid" }*@)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.City)
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.City, new { id = "shippingstatename" })
+                                            </div>
+                                        </div>
+                                    </div>       
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.Workphone)<span class="required_red">*</span>
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.Workphone, new { id = "shippingworkphone" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.Workphone)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.ShippingModel.Fax)
+                                                @Html.BsTextBoxWithPHFor(model => model.ShippingModel.Fax, new { id = "shippingfax" })
+                                                @Html.ValidationMessageFor(model => model.ShippingModel.Fax)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="text-align:justify;">
+                                        <p>If you already have an account with us, please login at the login page.</p>
+                                        <p>All retailers are welcome to apply for wholesale status; however you must have a valid Sales Tax Exemption Number/Resale Certificate Number to be considered for approval. If you are a buyer for a large retailer and are unsure of the Sales Tax Exempt number of your company, please type in TBA in the Sales Tax Exemption box.</p>
+                                        <p>All wholesale costs and suggested retail prices will be made available for viewing on this site once you are approved.</p>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Reset</button>
+                                    <button type="submit" id="btn_submit" class="btn btn-success pull-right" style="margin-right: 10px">Register</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        @Html.HiddenFor(m => m.Id)
+
+    </div>
+}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#RoleId").change(function()
+        {
+            if($("#RoleId").val() == 4)
+            {
+
+            }
+        });
+
+        //$("#CountryId").change(function () {
+
+        //    if($("#CountryId option:selected").val() == 3)
+        //    {
+        //        //$(".icheckbox_minimal").;
+        //    }
+
+        //});
+
+        $('#btn_submit').click(function () {
+
+
+            //var state_id = $('#Gender option:selected').val();
+            //if (state_id == 0) {
+            //    $('#Gender').focus();
+            //    alert("Please Select Gender");
+
+            //    return false;
+            //}
+
+            if(@Model.Id==0)
+            {
+                //alert("Hello");
+                if($("#Password").val()=="")
+                {
+                    alert("Please Enter Password");
+                    return false;
+                }
+            }
+
+
+            //var Role_id = $('#RoleId option:selected').val();
+            //if (Role_id == 0) {
+            //    $('#RoleId').focus();
+            //    alert("Please Select Customer Type");
+            //    return false;
+            //}
+
+            var Country_id = $('#CountryId option:selected').val();
+            if (Country_id == 0) {
+                $('#CountryId').focus();
+                alert("Please Select Country");
+                return false;
+            }
+
+            if ($("#CountryId").val() == "2") {
+                var state_id = $('#SelectedStateId option:selected').val();
+                if (state_id == 0) {
+                    $('#SelectedStateId').focus();
+                    alert("Please Select State");
+
+                    return false;
+                }
+            }
+            else {
+                var state_nm = $('#StateName').val();
+                if (state_nm == null || state_nm == "") {
+                    $('#StateName').focus();
+                    alert("Please Enter State-Name");
+
+                    return false;
+                }
+            }
+
+            //var state_id = $('#SelectedDistrictId option:selected').val();
+            //if (state_id == 0) {
+            //    $('#SelectedDistrictId').focus();
+            //    alert("Please Select District");
+            //    return false;
+            //}
+
+            //var state_id = $('#CityId option:selected').val();
+            //if (state_id == 0) {
+            //    $('#CityId').focus();
+            //    alert("Please Select City");
+            //    return false;
+            //}
+            //var state_id = $('#RoleId option:selected').val();
+            //if (state_id == 0) {
+            //    $('#RoleId').focus();
+            //    alert("Please Assign Role");
+            //    return false;
+            //}
+        });
+    });
+</script>
+
+
+
+
+

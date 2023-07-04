@@ -1,0 +1,83 @@
+﻿@model Loregroup.Core.ViewModels.WidgetViewModels
+
+@*<div class="page-header">
+    <h4>Click on tab for switch user</h4>
+</div>*@
+
+
+<div class="row placeholders">
+     @*1:-Super Admin
+    2:-StoreOwner
+    3:-User
+    4:- Mall
+    mall user store*@
+
+    @if (TempData["Error1"] != null)
+    {
+        <div class="red">
+            <h5 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h5>
+        </div>
+    }
+    
+    @if (TempData["Error2"] != null)
+    {
+        <div class="red">
+            <h5 style="color:red"><strong>Message: </strong>@TempData["Error2"]</h5>
+        </div>
+    }
+    @if (@Model.RoleId == 2)
+{
+    <div class="col-xs-6 col-sm-3 placeholder">
+
+        <a href="@Url.Action("SwitchUserFunction", "Master", new { @id = "4" })">
+
+           
+            <img src="~/Content/img/Mall.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        </a>
+        
+    </div>
+          <div class="col-xs-6 col-sm-3 placeholder">
+
+        <a href="@Url.Action("SwitchUserFunction", "Master", new { @id = "3" })">
+            
+            <img src="~/Content/img/UserNew.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        </a>
+       
+    </div>
+    }
+    @if (@Model.RoleId == 3)
+{
+    <div class="col-xs-6 col-sm-3 placeholder">
+        <a href="@Url.Action("SwitchUserFunction", "Master", new { @id = "4" })">
+        
+            <img src="~/Content/img/Mall.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+         
+</div>
+        <div class="col-xs-6 col-sm-3 placeholder">
+        <a href="@Url.Action("SwitchUserFunction", "Master", new { @id = "2" })">
+        
+            <img src="~/Content/img/Store.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+          
+</div>
+    }
+    @if (@Model.RoleId == 4)
+{
+    <div class="col-xs-6 col-sm-3 placeholder">
+        
+        <a href="@Url.Action("SwitchUserFunction", "Master", new { @id = "2" })">
+            <img src="~/Content/img/Store.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        </a>
+        
+      
+    </div>
+         <div class="col-xs-6 col-sm-3 placeholder">
+        
+        <a href="@Url.Action("SwitchUserFunction", "Master", new { @id = "3" })">
+            <img src="~/Content/img/UserNew.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+        </a>
+        
+       
+    </div>
+    }
+  
+</div>

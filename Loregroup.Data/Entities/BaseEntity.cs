@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Loregroup.Data.Entities {
+    public class BaseEntity {
+        public BaseEntity()
+        {
+            StatusId = 1;
+            CreatedById = 1;
+            CreationDate = DateTime.UtcNow;
+            ModifiedById = 1;
+            ModificationDate = DateTime.UtcNow;
+        }
+
+        [Key]
+        public Int64 Id { get; set; }
+        /// <summary>
+        /// based on enum Status
+        /// </summary>
+        public int StatusId { get; set; }
+
+        public Int64 CreatedById { get; set; }
+        public Int64 ModifiedById { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime ModificationDate { get; set; }
+    }
+}

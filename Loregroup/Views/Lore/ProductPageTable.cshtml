@@ -1,0 +1,24 @@
+﻿@model Loregroup.Core.ViewModels.ProductCollectionViewModel
+
+@*@model Loregroup.Core.Helpers.PagedData<Loregroup.Core.ViewModels.ProductViewModel>*@
+
+<table border="1" class="@Model.ProductList.TableStyle" style="position: absolute; left: 0%; top: 445px;">
+    <tfoot>
+        <tr>
+            <td>
+                @for (int i = 1; i <= Model.ProductList.NumberOfPages; i++)
+                {
+                    if (i == Model.ProductList.CurrentPage)
+                    {
+                        @i
+                    }
+                    else
+                    {
+                        @*<a class="page-number" href="javascript:void(0);" onclick="myFunction(@i);">@i</a>*@
+                        <a class="page-number" href="javascript:void();" onclick="myFunction(@i);">@i</a>
+                    }
+                }
+            </td>
+        </tr>
+    </tfoot>
+</table>

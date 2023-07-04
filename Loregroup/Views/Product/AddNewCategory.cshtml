@@ -1,0 +1,150 @@
+﻿@model Loregroup.Core.ViewModels.CategoryViewModel
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("GetAllCategory", "Product")';
+    }
+
+</script>
+
+<script type="text/javascript">
+   
+    function getNameFromPath(strFilepath) {
+        var objRE = new RegExp(/([^\/\\]+)$/);
+        var strName = objRE.exec(strFilepath);
+
+        if (strName == null) {
+            return null;
+        }
+        else {
+            return strName[0];
+        }
+    }
+
+    var loadImage1 = function (event) {
+
+        var file = getNameFromPath($("#Img1").val());
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'jpeg':
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        else {
+            flag = false;
+        }
+
+        if (file == null) {
+            document.getElementById("image1").style["height"] = "0px";
+            document.getElementById("image1").style["width"] = "0px";
+            document.getElementById("image1").style["margin-top"] = "0px";
+            var output = document.getElementById('image1');
+            output.src = null;
+            return false;
+        }
+        else if (flag == false) {
+
+            $("#Spanimg1").text("You can upload only jpg, jpeg, png, gif extension file");
+            document.getElementById("image1").style["height"] = "0px";
+            document.getElementById("image1").style["width"] = "0px";
+            document.getElementById("image1").style["margin-top"] = "0px";
+            var output = document.getElementById('image1');
+            output.src = null;
+            //  alert($("#SpanBrideFile").text());
+            // document.getElementById("btn_save").style["visibility"] = hidden;
+
+            return false;
+        }
+        else {
+            $("#Spanimg1").text("");
+            document.getElementById("image1").style["height"] = "130px";
+            document.getElementById("image1").style["width"] = "130px";
+            document.getElementById("image1").style["margin-top"] = "10px";
+
+            var output = document.getElementById('image1');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+
+
+
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+@using (Html.BeginForm("AddNewCategory", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="box box-info col-md-12">
+        <div class="box-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Category)
+                        @Html.BsTextBoxWithPHFor(model => model.Category)
+                        @Html.ValidationMessageFor(model => model.Category)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description)
+                        @Html.BsTextAreaFor(m => m.Description)
+                        @Html.ValidationMessageFor(m => m.Description)
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <i>Image size should be less than 3 MB.</i>
+                </div>
+                <div class="col-md-4">
+                    @if (Model.ImagePath == "" || Model.ImagePath == null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ImagePath)
+                            <input type="file" name="Img1" id="Img1" onchange="loadImage1(event)" accept="image/*" />
+                            <img id="image1" src="@Model.ImagePath" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg1"></span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ImagePath)
+                            <input type="file" name="Img1" id="Img1" onchange="loadImage1(event)" accept="image/*" />
+                            <img id="image1" src="@Model.ImagePath" style="height: 100px; width: 100px; margin-top:10px; " type="file" name="file" />
+                            <span style="color:red; font:bold; margin-top:5px;" id="Spanimg1"></span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(model => model.ImagePath)
+
+}

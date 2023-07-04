@@ -1,0 +1,118 @@
+﻿@model Loregroup.Core.ViewModels.EventViewModel
+
+@{
+    ViewBag.Title = "TradeShows";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<!-- Title page -->
+    <section class="bg-img1 txt-center p-lr-15 p-t-70 p-b-20 " style="background:#fff;">
+        <h2 class="ltext-103 cl2 txt-center">
+            Trade Shows<hr>
+        </h2>
+    </section>
+
+<!-- Content page -->
+<section class="bg0 p-t-10 p-b-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                @foreach (var item in Model.EventList)
+                {
+                    <a class="a" target="_blank" href="http://@item.WebsiteUrl">
+                        <div class="col-md-6 col-lg-6 c-box c-box--lg zero-padding">
+                            <div class="c-box__inner d-box_inner hov-img0">
+                                <div class="c-box__fixdiv">
+                                    @if (item.image != "" && item.image != null)
+                                    {
+                                        <img class="imagetofitTTShow" src="@item.image" />
+                                    }
+                                    else
+                                    {
+                                        <img class="imagetofitTTShow" src="/Frontend/images/blankimage.png" />
+                                    }
+                                </div>
+
+                                <div class="c-box__cont">
+                                    <h1>@item.Title</h1>
+                                    <p>@item.Address </p>
+                                    <p>@item.State, @item.city , @item.Zipcode</p>
+                                   
+                                    <p>Booth No: @item.BoothNumber</p>
+                                    <p style="color:#042cb9">
+                                        @*@item.WebsiteUrl*@
+                                        Click For More Information
+                                    </p>
+                                </div>
+                                <div class="c-box__date">
+                                    <p class="">@item.FromDate</p>
+                                    <p class="">TO</p>
+                                    <p class="">@item.EndDate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+
+                @*<div class="col-md-6 col-lg-6 c-box c-box--lg zero-padding">
+                        <div class="c-box__inner d-box_inner hov-img0">
+                            <img class="" src="/Frontend/event-images/DALLAS.jpg" />
+                            <div class="c-box__cont">
+                                <h1>DALLAS MARKET</h1>
+                                <p>222 The Merchandise Mart Plaza</p>
+                                <p>Chicago, Illinois 60654</p>
+                                <p>T: 1-800-677-6278</p>
+                                <p>www.mmart.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-6 c-box c-box--lg zero-padding">
+                        <div class="c-box__inner d-box_inner hov-img0">
+                            <img class="" src="/Frontend/event-images/atlanta.jpg" />
+                            <div class="c-box__cont">
+                                <h1>ATLANTA MARKET</h1>
+                                <p>222 The Merchandise Mart Plaza</p>
+                                <p>Chicago, Illinois 60654</p>
+                                <p>T: 1-800-677-6278</p>
+                                <p>www.mmart.com</p>
+                            </div>
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+        <br>
+        <!-- <div class="row" style="box-shadow: 0px 0px 9px 3px #cccccca6;"> -->
+        <!-- <div class="col-sm-6 col-lg-6" style="margin:auto;"> -->
+        <!-- <img class="tr-img" src="event-images/DALLAS1.jpg"/> -->
+        <!-- </div> -->
+        <!-- <div class="col-sm-6 col-lg-6 tr-box-black" style="text-align:center; margin:auto;"> -->
+        <!-- <div> -->
+        <!-- <h1>DALLAS MARKET</h1> -->
+        <!-- <p>222 The Merchandise Mart Plaza</p> -->
+        <!-- <p>Chicago, Illinois 60654</p> -->
+        <!-- <p>T: 1-800-677-6278</p> -->
+        <!-- <p>www.mmart.com</p> -->
+        <!-- </div> -->
+        <!-- </div>		 -->
+        <!-- </div> -->
+        <!-- <br> -->
+        <!-- <div class="row" style="box-shadow: 0px 0px 9px 3px #cccccca6;"> -->
+        <!-- <div class="col-sm-6 col-lg-6" style="margin:auto;"> -->
+        <!-- <img class="tr-img" src="event-images/Atlanta.jpg"/> -->
+        <!-- </div> -->
+        <!-- <div class="col-sm-6 col-lg-6 tr-box-black" style="text-align:center; margin:auto;"> -->
+        <!-- <div> -->
+        <!-- <h1>ATLANTA MARKET</h1> -->
+        <!-- <p>222 The Merchandise Mart Plaza</p> -->
+        <!-- <p>Chicago, Illinois 60654</p> -->
+        <!-- <p>T: 1-800-677-6278</p> -->
+        <!-- <p>www.mmart.com</p> -->
+        <!-- </div> -->
+        <!-- </div>		 -->
+        <!-- </div> -->
+        <!-- </div> -->
+</section>
+

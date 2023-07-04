@@ -1,0 +1,197 @@
+﻿@model Loregroup.Core.ViewModels.OrderViewModel
+@using Loregroup.Core.ViewModels
+
+@{
+    var frontmodel = (FrontendLayoutModel)ViewBag.FrontLayoutModel;
+}
+
+@{
+    ViewBag.Title = "OrderHistory";
+    Layout = "~/Views/Shared/_MasterFrontend.cshtml";
+}
+
+<h2>OrderHistory</h2>
+
+
+@if (frontmodel.UserId > 0)
+{
+    <!-- breadcrumb -->
+    <div class="container">
+        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+            <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+                Home
+                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+            </a>
+
+            <span class="stext-109 cl4">
+                Orders
+            </span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row bg0 p-t-30 p-b-85">
+            <div class="nav_col">
+                <div class="h-100 nav_side_box nav_list">
+                    <div class="nav-side-container">
+                        <ul class="nav_side">
+                            <li>
+                                <a href="@Url.Action("DashBoard", "Lore")">
+                                    <span class="icon-dashboard"></span>
+                                    <span class="text">Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("AccountDetails","Lore")">
+                                    <span class="icon-user"></span>
+                                    <span class="text">Account Details</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Addresses","Lore")">
+                                    <span class="icon-map-marker"></span>
+                                    <span class="text">Addresses</span>
+                                </a>
+                            </li>
+                            <li class="activet">
+                                <a href="@Url.Action("OrderHistory","Lore")">
+                                    <span class="icon-shopping-cart"></span>
+                                    <span class="text">Order History</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("DownloadImages","Lore")">
+                                    <span class="icon-shopping-cart"></span>
+                                    <span class="text">Download Order Images</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("SignOut", "Lore")">
+                                    <span class="icon-signout"></span>
+                                    <span class="text">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col_right m-l-15">
+                <div class="nav_side_box p-tb-15 p-lr-30">
+                    <h1 class="box_h1">My Account</h1>
+                </div>
+
+                <div class="nav_side_box m-t-20 p-t-15 p-lr-20 h-100">
+                    <div style="overflow-x:auto;">
+                        <table class="table">
+                            <tr>
+                                <th>Order</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                @if (frontmodel.CurrencyId == 1)
+                                {
+                                    <th>Total($)</th>
+                                }
+                                else if (frontmodel.CurrencyId == 2)
+                                {
+                                    <th>Total(€)</th>
+                                }
+                                else if (frontmodel.CurrencyId == 3)
+                                {
+                                    <th>Total(£)</th>
+                                }
+                                else
+                                {
+                                    <th>Total($)</th>
+                                }
+                                <th>Order Receipt</th>
+
+                            </tr>
+                            <tbody>
+
+                                @foreach (var x in Model.OrderList)
+                                {
+                                    <tr>
+                                        <td>@x.OrderNo</td>
+                                        <td>@x.OrderDateString</td>
+                                        <td><span style="background-color:@x.StatusColor; color:white;">@x.OrderStatus</span></td>
+                                        <td>@x.TotalAmount</td>
+                                        <td>
+                                            <div class="view-circle ft-left">
+                                                <a href="/Order/GetPrintPreview?id=@x.Id" target="_blank"><span title="view Invoice" class="icon-file"></span></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div>
+        <div style="margin:30px 0;">
+            <div class="success-circle">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+        </div>
+        <center> <h1> You have not Logged - In.</h1> </center>
+    </div>
+}
+
+
+
+<!--===============================================================================================-->
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/bootstrap/js/popper.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/select2/select2.min.js"></script>
+<script>
+    $(".js-select2").each(function () {
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2')
+        });
+    })
+</script>
+<!--===============================================================================================-->
+<script src="vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+<!--===============================================================================================-->
+<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script>
+    $('.js-pscroll').each(function () {
+        $(this).css('position', 'relative');
+        $(this).css('overflow', 'hidden');
+        var ps = new PerfectScrollbar(this, {
+            wheelSpeed: 1,
+            scrollingThreshold: 1000,
+            wheelPropagation: false,
+        });
+
+        $(window).on('resize', function () {
+            ps.update();
+        })
+    });
+</script>
+<!--===============================================================================================-->
+<script src="js/main.js"></script>
+<script>
+
+    $('.nav_side li').click(function () {
+
+        $(this).addClass('activet')
+             .siblings()
+             .removeClass('activet');
+
+    });
+</script>
+
+

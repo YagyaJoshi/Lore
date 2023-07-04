@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "CheckStatus";
+}
+
+@model Loregroup.Core.ViewModels.CheckStatusViewModel
+
+
+<script language="javascript">
+
+    
+    function printdiv(printpage) {
+        alert("Data fetched");
+        //var headstr = "<html><head><title></title></head><body>";
+        var headstr = "<html><head><title></title></head><body style='font-size:8px;width:500px;height:700px;size:auto;margin:0'>";
+        var footstr = "</body></html>";
+        var newstr = document.all.item(printpage).innerHTML;
+        var oldstr = document.body.innerHTML;
+        document.body.innerHTML = headstr + newstr + footstr;
+        window.print();
+        document.body.innerHTML = oldstr;
+        return false;
+
+       
+    }
+</script>
+
+
+
+<style>
+    .print_size {
+        font-size: 8px;
+    }
+</style>
+
+
+
+@using (Html.BeginForm("CheckStatus", "Home", FormMethod.Post))
+{
+    <div class="box-header">
+
+        <div class="box box-info col-md-12">
+
+            @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+            {
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert">×</a>
+                    <h4>Validation Errors</h4>
+                    @Html.ValidationSummary()
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ConsumerNo)
+                        @Html.BsTextBoxWithPHFor(m => m.ConsumerNo)
+                        @Html.ValidationMessageFor(m => m.ConsumerNo)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary pull-left" style="margin-right: 10px">Check</button>
+
+                </div>
+            </div>
+        </div>
+
+        @*if status of consumer is other than open*@
+        <div class="row" style="text-align:center">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label> @Html.DisplayFor(m => m.MsgAccToStatus, new { id = "lblMsg" })</label>
+                </div>
+            </div>
+        </div>
+
+
+        @*if status of consumer is open then following code will generate reciept*@
+        @if (Model.bstatus == "Success")
+        {
+
+            <div class="row">
+
+                @*To Show Receipt*@
+                <div class="col-md-6">
+                    <div style="text-align:left;margin-left:5%;">
+
+                        <div style="font-size:12px;text-align:left;margin-left:5%">
+                            <div style="text-align:left;margin-left:5%;width:200px">
+                                <h5 style="font-size:13px; text-align:center;">@Html.DisplayFor(m => m.UserFullName)</h5>
+                                <h5 style="font-size:14px; text-align:center">@Html.DisplayFor(m => m.UserCity)</h5>
+                                <h5 style="font-size:14px; text-align:center">BOOKING CUM DELIVERY SLIP</h5>
+                            </div>
+                                <h5>@Html.LabelFor(m => m.ConsumerNo) @Html.DisplayFor(m => m.ConsumerNo)</h5>
+                                <h5>@Html.LabelFor(m => m.Name) @Html.DisplayFor(m => m.Name) </h5>
+                                <h5>@Html.LabelFor(m => m.BookingDate) @Html.DisplayFor(m => m.onlydate)</h5>
+                                <h5>@Html.LabelFor(m => m.BookingNo) @Html.DisplayFor(m => m.BookingNo)</h5>
+                                <h5>@Html.LabelFor(m => m.Amount) @Html.DisplayFor(m => m.Amount)</h5>
+                                <h5>@Html.DisplayFor(m => m.declaration)</h5>
+                                <br>
+                                <label style="margin-top:0px;margin-bottom:0px;">@Html.DisplayFor(m => m.Username)</label><span style="margin-left:40%;margin-top:0px;margin-bottom:0px;">@Html.LabelFor(m => m.signaure)</span><br>
+
+                            </div>
+                        <input name="b_print" id="btn_print" type="button" class="btn btn-primary" onclick="printdiv('Print_Section');" value=" Print ">
+                    </div>
+                </div>
+            
+                @*To Print Receipt*@
+                <div class="col-md-6">
+                    <div id="Print_Section"  style="font-size:8px;margin-top:0px;margin-bottom:0px;text-align:left;margin-left:5%;width:175px;visibility:hidden">
+
+                        <h5 style="font-size:11px; text-align:center;margin-top:0px;margin-bottom:0px;">@Html.DisplayFor(m => m.UserFullName)</h5>
+                        <h5 style="font-size:12px; text-align:center;margin-top:0px;margin-bottom:0px;">@Html.DisplayFor(m => m.UserCity)</h5>
+                        <h5 style="font-size:12px; text-align:center;margin-top:0px;margin-bottom:0px;">BOOKING CUM DELIVERY SLIP</h5>
+                        <h5 style="font-size:8px;margin-top:0px;margin-bottom:0px;">@Html.LabelFor(m => m.ConsumerNo) @Html.DisplayFor(m => m.ConsumerNo)</h5>
+                        <h5 style="font-size:8px;margin-top:0px;margin-bottom:0px;">@Html.LabelFor(m => m.Name) @Html.DisplayFor(m => m.Name) </h5>
+                        <h5 style="font-size:8px;margin-top:0px;margin-bottom:0px;">@Html.LabelFor(m => m.BookingDate) @Html.DisplayFor(m => m.onlydate)</h5>
+                        <h5 style="font-size:8px;margin-top:0px;margin-bottom:0px;">@Html.LabelFor(m => m.BookingNo) @Html.DisplayFor(m => m.BookingNo)</h5>
+                        <h5 style="font-size:8px;margin-top:0px;margin-bottom:0px;">@Html.LabelFor(m => m.Amount) @Html.DisplayFor(m => m.Amount)</h5>
+                        <h5 style="font-size:8px;margin-top:0px;margin-bottom:0px;">@Html.DisplayFor(m => m.declaration)</h5>
+                        <br>
+                        <label style="font-size:8px;margin-top:0px;margin-bottom:0px;">@Html.DisplayFor(m => m.Username)</label><span style="font-size:8px;margin-left:40%;margin-top:0px;margin-bottom:0px;">@Html.LabelFor(m => m.signaure)</span><br>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+}

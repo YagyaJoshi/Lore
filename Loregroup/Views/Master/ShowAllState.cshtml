@@ -1,0 +1,135 @@
+﻿@*<div class="col-md-12">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box-header">
+
+                </div>
+                <div class="box">
+                    <div class="box-body table-responsive" id="StateTable">
+                        <table id="example2" class="table table-bordered table-hover"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Desertfire.State.datatable_setup("#StateTable");
+        });
+    </script>*@
+
+
+@model Loregroup.Core.ViewModels.StateViewModel
+    @{
+        ViewBag.Title = "State List";
+    }
+
+    @*<link href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" />*@
+
+    <link href="~/Content/css/datatables/dataTables.bootstrap.css" rel="stylesheet" />
+    <style type="text/css">
+        .data-table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+    </style>
+
+    <div class="col-md-12">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+
+
+                    @*@ <button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px;">@PWA.Core.Resource.UserSettingsResource.Add Company</button> *@
+                    @*<input type="button" style="float: right; margin: 5px 5px 5px 5px;" class="btn btn-primary pull-right" id="btnAddBulk" value="Add Bulk Users" />*@
+                </div>
+                <!-- /.box-header -->
+                <!--      <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Select Role<span style="color: red; font-weight: bold"> *</span></label>
+                  @*      @Html.BootstrapDropDownListFor(m => m.RoleId, new SelectList(Model.RoleViewModels.Roles, "Id", "Name", Model.RoleId))
+                        @Html.ValidationMessageFor(m => m.RoleId) *@
+                    </div>
+                </div>
+                -->
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <a href="~/Master/State" class="btn btn-primary pull-right">Add New State</a>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        @*<button type="button" class="btn btn-primary btn-md refresh-button pull-right" id="refresh-button" style="margin-right: 10px;">Refresh</button>*@
+                        @*@<button type="submit" class="btn btn-primary pull-right" style="margin-right: 10px;">Submit</button>*@
+                    </div>
+                </div>
+
+                @*<div class="row"><br /><hr /></div>*@
+
+                <table id="data-table" class="table table-striped table-bordered" style="width:100%; overflow-x:scroll"></table>
+            </div>
+
+        </div>
+    </div>
+
+    @*<script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>*@
+    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+    <script src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+
+        var mpvalue = "";
+
+        $(function () {
+
+            var productListVM = {
+                dt: null,
+
+                init: function () {
+                    dt = $('#data-table').DataTable({
+                        "ordering": false,
+                        "serverSide": true,
+                        "processing": true,
+                        "scrollY": 450,
+                        //"jQueryUI": true,
+
+                        "ajax": {
+                            "url": "/Master/GetAllStates?&rid=" + mpvalue, //$('#aioConceptName :selected').text();
+                            "type": "POST"
+                        },
+
+                        //"ajax": "/AllReports/GetProfitLossReportData?&mpid=0", //+ $('#MarketPlaceId').val(),
+                        "columns": [
+
+                            { "title": "Country", "data": "Countryname" },
+                            { "title": "State", "data": "Statename" },
+                            { "title": "", "data": "Edit", "searchable": false },
+                            { "title": "", "data": "Delete", "searchable": false },
+                            //{ "title": "Currency Name", "data": "currencyName" },
+                            //{ "title": "Currency Symbol", "data": "currencySymbol" },
+
+                        ],
+                        "lengthMenu": [[50, 100, 200, 500], [50, 100, 200, 500]]
+                    });
+                },
+
+                //refresh: function () {
+                //    mpvalue = $('#RoleId :selected').val();
+                //    //alert(mpvalue);
+
+                //    dt.ajax.url('/Master/getAllCountry?&rid=' + mpvalue).load();
+                //}
+            }
+
+            $('#refresh-button').on("click", productListVM.refresh);
+
+            /////////////////////////////////////////////////////////////////
+            // Let's kick it all off
+            productListVM.init();
+        })
+
+    </script>

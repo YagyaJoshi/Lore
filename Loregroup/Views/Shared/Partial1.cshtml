@@ -1,0 +1,124 @@
+﻿
+<head>
+
+    <link href="~/Content/css1/style.css" rel="stylesheet" />
+    <link href="~/Content/css1/css/style.css" rel="stylesheet" />
+    <link href="~/Content/css1/css/swiper.css" rel="stylesheet" />
+       
+            
+        </head>
+
+
+        <fieldset>
+            <a href="#"><img style="max-width:50px;" src="~/Content/images1/logo.png"></a>
+            <div class="login_box" style="line-height: 2em; text-align:left;">
+                <h3 style="color:#e03440;border-bottom: 2px solid;padding: 6px; margin-bottom:10px;">Login to Loregroup</h3>
+                <ul>
+                    <li>
+                        <label>Email ID/ Mobile No.</label>
+                        <input type="text" placeholder=" Enter your Email ID/ Mobile No." />
+                    </li>
+                    <li>
+                        <label>Password</label>
+                        <input type="password" placeholder=" Your password" />
+                    </li>
+                    @*<li><input style="width:100%; background:#6a7f58; margin-top:10px !important;" type="button" name="next" class="next action-button my_btn" class="continue" type="submit" value="LOGIN"></li>*@
+            <li><input type="button" style="float: right; margin: 5px 5px 5px 5px;" class="btn btn-primary pull-right" id="btnAddBulk" onclick="ResDetails()" value="Login/Signup" /></li>
+         </ul>
+        <table style="margin-top:15px;">
+            <tr>
+                <td>
+                    <p><a href="#">forgot Password ??</a></p>
+                    <p>
+                        <input style="float:left;     margin-right: 7px;
+    margin-top: 5px;" type="checkbox"> Keep me logged in
+                    </p>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <input style="float:left; width:98%;    position: absolute;
+    margin-top: -60px;
+    width: 150px;
+    float: right;
+    margin-right: 41px;" type="button" name="next" class="next action-button continue" type="submit" value="Signup">
+    <p><img style="max-height: 32px; max-width:200px;" src="~/Content/images1/or.jpg"></p>
+    <p><a href="#"><img style="    max-height: 32px;" src="~/Content/images1/fb_sign.jpg"></a></p>
+    <!--  <p><a href="#"><img style="    max-height: 32px;" src="images/in_sign.jpg"></a></p>-->
+    <p><a href="#"><img style="    max-height: 32px;" src="~/Content/images1/google_sign.jpg"></a></p>
+    <div class="login_left login_left_popup next action-button continue" style="background: #cc0000; color: #fff; padding: 5px; position: absolute;  font-size: 19px; left: -28px; width: 51.5%; ">
+
+        <input style="margin-right:10px;" type="radio" width="50" name="store" value="register">Register for your Store 
+    </div>
+    @*<div class="login_right login_right_popup nnn next action-button continue" style=" background: #cc0000; color: #fff; padding: 5px; position: absolute; bottom: -19px; font-size: 19px; right: -28px; padding-left: -28px !important; width: 52.5%;">
+        <input style="margin-right:10px;" type="radio" name="store" value="register">Register for your Mall
+    </div>*@
+
+    <!--<input type="button" name="next" class="next action-button" value="Next" />-->
+</fieldset>
+
+
+<div id="departmentdialog1" style="display:none;"></div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+@*<script src="~/Content/js1/jquery-1.7.1.js"></script>
+    <script src="~/Content/js1/jquery-1.8.16.js"></script>*@
+<link href="~/Content/css1/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/css1/jquery.ui.dialog.css" rel="stylesheet" />
+
+
+<script>
+    function InitializeDialoge($element) {
+        //alert('hii');
+        $element.dialog({
+
+            autoOpen: false,
+            width: 900,
+            height: 600,
+            resizable: true,
+            //draggable: true,
+            title: "",
+            model: true,
+            show: 'slide',
+            closeText: 'Close',
+            dialogClass: 'alert',
+            closeOnEscape: true,
+            position: ['Fixed'],
+
+            open: function (event, ui) {
+                //Load the Partial View Here using Controller and Action
+                //$element.load('/Site/AddUserPartialView', { nodeId: selectedId });
+                //return false;
+            },
+            close: function () {
+                $(this).dialog('close');
+            }
+
+        });
+    }
+</script>
+
+<script>
+    function ResDetails(selectedId) {
+        //alert('hello');
+        $.ajax({
+            type: 'GET',
+            url: "/Account/Registrationmain?nodeId=" + selectedId,
+            //data: nodeId,//encodeURI("nodeId=" + nodeId),
+            success: function (view) {
+                InitializeDialoge($("#departmentdialog1"));
+                $("#departmentdialog1").dialog("open");
+                //$('#PopUpDetailsResult').dialog();
+                $("#departmentdialog1").html(view);
+              
+                //return false;
+            }
+        });
+    }
+
+
+</script>

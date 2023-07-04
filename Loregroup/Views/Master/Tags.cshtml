@@ -1,0 +1,10 @@
+﻿<script type="text/javascript" src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.js"></script>
+<link href="http://twitter.github.io/typeahead.js/css/examples.css" rel="stylesheet" />
+<input type="textbox" placeholder="Search Song" id="search-box" />
+
+<script type="text/javascript">
+    $('input#search-box').typeahead({
+        name: 'name',
+        local: ['yasser', 'shyam', 'sujesh', 'siddhesh', 'vaibhav']
+    });
+</script>

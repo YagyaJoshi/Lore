@@ -1,0 +1,541 @@
+﻿@model Loregroup.Core.ViewModels.IndexViewModel
+
+@{
+
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+    var user = ((Loregroup.Core.ViewModels.LayoutModel)ViewBag.LayoutModel).SessionUser;
+}
+
+@*<script src="~/Content/js1/jquery-2.1.1.js"></script>
+    <script src="~/Content/js1/jquery.mixitup.min.js"></script>
+    <script src="~/Content/js1/main.js"></script>*@
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script src="~/Content/js1/jquery-1.7.1.js"></script>
+    <script src="~/Content/js1/jquery-1.8.16.js"></script>
+    <link href="~/Content/css1/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/css1/jquery.ui.dialog.css" rel="stylesheet" />*@
+
+@*<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
+<link href="~/Content/css1/style.css" rel="stylesheet" />
+<link href="~/Content/css1/css/style.css" rel="stylesheet" />
+<link href="~/Content/css1/css/swiper.css" rel="stylesheet" />*@
+
+<link href="~/Content/AutoComplete/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/AutoComplete/jquery-1.5.1.js"></script>
+
+<script>
+
+    $(function () {
+
+        $("#globalsearch").autocomplete({
+            minLength: 0,
+            //position: { my: "left top+20" }, // , at: "left bottom"
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Loregroup/GlobalSearch",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    select: function (event, ui) {
+                        $("#globalsearch").val(ui.item.GetName);
+                        $("#globalsearch-i").val(ui.item.GetID);
+                        return false;
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.GetName, value: item.GetID };
+                        }))
+                    }
+
+                });
+            },
+            //appendTo: "#results",
+            //open: function() {
+            //    var position = $("#globalsearch").position(),
+            //        left = position.left, top = position.top;
+
+            //    $("#globalsearch > ul").css({
+            //        left: left + 10 + "px",
+            //        top: top + 8 + "px" });
+
+            //},
+            select: function (event, ui) {
+                if (ui.item.value.indexOf('_') > -1) {
+                    var splitted = ui.item.value.split("_");
+                    var Ids = splitted[0];
+                    var type = splitted[1];
+                    if (type == "Store") {
+                        //alert("selectS");
+                        window.location.href = '/Loregroup/storesingle?id=' + Ids;                                                
+                    }
+                    else if (type == "Mall") {
+                        //alert("selectM");
+                        window.location.href = '/Loregroup/Mall?Id=' + Ids;
+                    }
+                }
+            }           
+        });
+        //.data("ui-autocomplete")._renderItem = function (ul, item) {
+        //    return $("<li>")
+        //    .append("<a>" + item.GetName + "</ br>" + item.GetType + "</a>")
+        //    .appendTo(ul);
+        //};
+    });
+  
+</script>
+
+
+<style>
+    .ui-autocomplete {
+        left: 70% !important;
+        width: 26.3%;
+        max-height: 300px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        top: 14% !important;
+    }
+
+    #logocd {
+        font-family: 'Ubuntu', serif;
+        font-size: 20px;
+        color: #009eff;
+    }
+
+    .boxh {
+        font-family: 'Ubuntu', serif;
+    }
+</style>
+<div id="MainMaster">
+    <div class="new_header">
+        <div class="inner_wrapper">
+            <div class="hed_left_new">
+                <a href="@Url.Action("Master", "Loregroup")"><img style="max-width:100%;" src="~/Content/images1/logofinal.png"></a>
+            </div>
+            <div class="hed_right_new">
+                <ul>
+                    <li><a href="#">Download App</a></li>
+@if (@user.Id == 0 || @user.Id == null)
+     {
+
+                     <li><a href="@Url.Action("LoginPage", "Loregroup")">Post Classifieds</a></li> 
+}
+else
+{
+          <li><a href="@Url.Action("Classified", "User")">Post Classifieds</a></li>
+}
+                    @if (@user.Id == 0 || @user.Id == null)
+                    {
+                       
+                        <li><a href="@Url.Action("LoginPage", "Loregroup")">Post Deals</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="#">Post Deals</a></li>
+                    }
+                 
+@if (@user.Id == 0 || @user.Id == null)
+     {
+                     <li><a href="@Url.Action("LoginPage", "Loregroup")">Advertise</a></li>
+}
+else
+                    {
+                   
+    <li><a href="@Url.Action("AddAdvertisement", "Master")">Advertise</a></li>
+}
+                    <li><a href="@Url.Action("Index", "Home")">Go to Dashboard</a></li>
+                    @if (@user.Id == 0 || @user.Id == null)
+                    {
+                    <li><a href="@Url.Action("LoginPage", "Loregroup")" style="color:white; "><div style="background:#00aff0; padding:3px 5px 3px 5px;">Login/Signup</div></a></li>
+                    }
+                    else
+                    {
+                    <li><a style="font-weight:bold"> Hello  @user.FirstName </a></li> 
+                        <li><a href="@Url.Action("SignOut", "Account")" style="color:white; "><div style="background:#00aff0; padding:3px 5px 3px 5px;">Log Out</div></a></li> 
+                    }
+                </ul>
+            </div>
+         
+            <ul>
+                <li>
+                   
+                </li>
+                <li>
+                    <div class="search_right" style="width:300px;">
+                        <input id="globalsearch" type="text" placeholder=" Search By Mall , Store" />
+                        @*<input id="project" />*@
+                        <input type="hidden" id="globalsearch-id" />
+
+                        @*<input type="text" placeholder=" Search" />*@
+                    </div>
+                    <div class="search_right" >
+                        @*<select style="margin-right: 20px; margin-top: 7px; border: 2px solid #00aff0; border-radius: 4px; width: 100px;">
+                            <option>Indore</option>
+                            <option>Katni</option>
+                            <option>Jabalpur</option>
+                            
+                        </select>*@
+                        @using (Html.BeginForm("Master", "Loregroup", FormMethod.Post))//, new { id = "demoForm", name = "demoForm" }
+{
+    <div class="food_title_right" style="margin-right: 20px; margin-top: 7px; border: 0px solid #00aff0; border-radius: 4px; width: 100px;">
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.CityId)*@
+            @*@Html.BootstrapDropDownListFor(m => m.CityId, new SelectList(Model.CityViewModel.CityList, "Id", "Cityname", Model.CityId , onchange = "this.form.submit();" ))*@
+            @Html.DropDownList("CityId", new SelectList(Model.CityViewModel.CityList, "Id", "Cityname", Model.CityId), new { onchange = "this.form.submit();" })
+        </div>
+    </div>
+}
+                        
+
+                    </div>
+                   
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--popup start-->
+<!--first popup popup start -->
+<input class="modal-state" id="modal-1" type="checkbox" />
+<div class="modal clearfix">
+    <label class="modal__bg" for="modal-1"></label>
+    <div class="modal__inner">
+        <label class="modal__close" for="modal-1"></label>
+        <!-- multistep form -->
+        <form id="msform">
+            <!-- progressbar
+               <ul id="progressbar">
+               <li class="active">Account Setup</li>
+               <li>Social Profiles</li>
+               <li>Personal Details</li>
+               </ul>-->
+            <!-- fieldsets -->
+            <fieldset>
+                <a href="index.html"><img style="max-width:50px;" src="~/Content/images1/logo.gif"></a>
+                <div class="login_box" style="line-height: 2em; text-align:left;">
+                    <h3 style="color:#cc0000;border-bottom: 2px solid;padding: 6px; margin-bottom:10px;">Login to Loregroup</h3>
+                    <ul>
+                        <li>
+                            <label>Email ID/ Mobile No.</label>
+                            <input type="text" placeholder=" Enter your Email ID/ Mobile No." />
+                        </li>
+                        <li>
+                            <label>Password</label>
+                            <input type="password" placeholder=" Your password" />
+                        </li>
+                        <li><input style="width:100%; background:#cc0000; margin-top:10px !important;" type="button" name="next" class="next action-button my_btn" class="continue" type="submit" value="LOGIN"></li>
+                    </ul>
+                    <table style="margin-top:15px;">
+                        <tr>
+                            <td>
+                                <p><a href="#">forgot Password ??</a></p>
+                                <p>
+                                    <input style="float:left;     margin-right: 7px;
+      margin-top: 5px;" type="checkbox"> Keep me logged in
+                                </p>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <input style="float:left; width:98%;    position: relative;
+      margin-top: -60px;
+      width: 150px;
+      float: right;
+      margin-right: 41px;" type="button" name="next" class="next action-button continue" type="submit" value="Signup">
+                <p><img style="max-height: 32px; max-width:200px;" src="~/Content/images1/or.jpg"></p>
+                <p><a href="#"><img style="    max-height: 32px;" src="~/Content/images1/fb_sign.jpg"></a></p>
+                <!--  <p><a href="#"><img style="    max-height: 32px;" src="images/in_sign.jpg"></a></p>-->
+                <p><a href="#"><img style="    max-height: 32px;" src="~/Content/images1/google_sign.jpg"></a></p>
+                <div class="login_left login_left_popup next action-button continue" style="    background: #cc0000;
+      color: #fff;
+      padding: 5px;
+      position: relative;
+      bottom: -52px;
+      font-size: 19px;
+      left: -28px;
+      width: 51.5%;">
+                    <input style="margin-right:10px;" type="radio" name="store" value="register">Register to get Deals
+                </div>
+                <div class="login_right login_right_popup nnn next action-button continue" style="    background: #cc0000;
+      color: #fff;
+      padding: 5px;
+      position: relative;
+      bottom: -19px;
+      font-size: 19px;
+      right: -27px;
+      padding-left: -28px !important;
+      width: 52.8%;
+      margin-top:-3px;">
+                    <input style="margin-right:10px;" type="radio" name="store" value="register">Register for your Mail
+                </div>
+                <!--<input type="button" name="next" class="next action-button" value="Next" />-->
+            </fieldset>
+            <fieldset>
+                <a href="index.html"><img style="max-width:50px;" src="~/Content/images1/logo.gif"></a>
+                <div class="login_box" style="line-height: 2em; text-align:left;">
+                    <h3 style="color:#e03440;border-bottom: 2px solid;padding: 6px; margin-bottom:10px;">Signup as a Store</h3>
+                    <ul>
+                        <li>
+                            <label>Store Name</label>
+                            <input type="text" placeholder=" Enter your desired Username" />
+                        </li>
+                        <li>
+                            <label>Email ID</label>
+                            <input type="text" placeholder=" Enter your Email ID" />
+                        </li>
+                        <li>
+                            <label>Mobile Number</label>
+                            <input type="text" placeholder=" Enter Mobile No." />
+                        </li>
+                        <li>
+                            <label>Password</label>
+                            <input type="text" placeholder=" Password" />
+                        </li>
+                        <li>
+                            <input type="checkbox"> Notify me with Awesome Deals
+                        </li>
+                    </ul>
+                </div>
+                <input style="float: left;width: 46%;background: #cc0000;margin:0 4% 0 4%;"
+                       type="button" name="previous" class="previous action-button" value="Previous" />
+                <input style="    float: right;
+      width: 45.7%;
+      background: #cc0000;
+      margin:0 4% 0 4%;margin-top:-39px" type="button" name="next" class="next action-button" value="Continue" />
+            </fieldset>
+            <fieldset>
+                <a href="index.html"><img style="max-width:50px;" src="~/Content/images1/logo.gif"></a>
+                <div class="login_box" style="line-height: 2em; text-align:left;">
+                    <h3 style="color:#e03440;border-bottom: 2px solid;padding: 6px; margin-bottom:10px;">Complete your Profile</h3>
+                    <ul>
+                        <li>
+                            <label>Store Name</label>
+                            <input type="text" placeholder=" Enter your Store Name" />
+                        </li>
+                        <li>
+                            <label>Contact Person</label>
+                            <input type="text" placeholder=" Enter Name to Contact" />
+                        </li>
+                        <li>
+                            <label style="width:100%; float:left;">Upload Cancelled Cheque</label>
+                            <input type="file" /> for identity Verification
+                        </li>
+                        <li>
+                            <label>Locality</label>
+                            <select>
+                                <option>option</option>
+                                <option>option</option>
+                                <option>option</option>
+                                <option>option</option>
+                                <option>option</option>
+                            </select>
+                        </li>
+                        <li>
+                            <label>Category</label>
+                            <select>
+                                <option>option</option>
+                                <option>option</option>
+                                <option>option</option>
+                                <option>option</option>
+                                <option>option</option>
+                            </select>
+                        </li>
+                        <li>
+                            <table style="width:100%;    float: left;
+      margin-top: 10px;">
+                                <tr>
+                                    <td style="width:50%;">
+                                        <input type="checkbox"> Register under a Mall
+                                    </td>
+                                    <td>
+                                        <span style="float:left; margin-right:10px;">Mall: </span><select style="float:right; width:80%;">
+                                            <option>option</option>
+                                            <option>option</option>
+                                            <option>option</option>
+                                            <option>option</option>
+                                            <option>option</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li>
+                            <input type="checkbox"> Mark Store as a New Opening
+                        </li>
+                    </ul>
+                </div>
+                <input style="float: left;width: 46%;background: #cc0000;margin:0 4% 0 4%;"
+                       type="button" name="previous" class="previous action-button" value="Previous" />
+                <input style="    float: right;
+      width: 45.7%;
+      background: #cc0000;
+      margin:0 4% 0 4%;margin-top: -39px" type="button" class="action-button" value="Continue" />
+            </fieldset>
+        </form>
+    </div>
+</div>
+<!--first popup end-->
+<!--popup end-->
+@RenderBody()
+</div>
+<div id="departmentdialog" style="display:none;"></div>
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>*@
+@*<script src="~/Content/js1/jquery-1.7.1.js"></script>
+    <script src="~/Content/js1/jquery-1.8.16.js"></script>*@
+
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<link href="~/Content/css1/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/css1/jquery.ui.dialog.css" rel="stylesheet" />*@
+
+
+<script src="~/Content/AutoComplete/jquery-ui-1.8.11.min.js"></script>
+
+
+<script>
+    function InitializeDialog($element) {
+        //alert('hii');
+        $element.dialog({
+
+            autoOpen: false,
+            width: 900,
+            height: 600,
+            resizable: true,
+            //draggable: true,
+            title: "",
+            model: true,
+            show: 'slide',
+            closeText: 'Close',
+            dialogClass: 'alert',
+            closeOnEscape: true,
+            position: ['Fixed'],
+
+            open: function (event, ui) {
+                //Load the Partial View Here using Controller and Action
+                //$element.load('/Site/AddUserPartialView', { nodeId: selectedId });
+                //return false;
+            },
+            close: function () {
+                $(this).dialog('close');
+            }
+
+        });
+    }
+</script>
+
+<script>
+    function EditDetails(selectedId) {
+        //alert('hello');
+        $.ajax({
+            type: 'GET',
+            url: "/Account/EditNodePartialView?nodeId=" + selectedId,
+            //data: nodeId,//encodeURI("nodeId=" + nodeId),
+            success: function (view) {
+                InitializeDialog($("#departmentdialog"));
+                $("#departmentdialog").dialog("open");
+                //$('#PopUpDetailsResult').dialog();
+                $("#departmentdialog").html(view);
+                //return false;
+            }
+        });
+    }
+
+
+</script>
+
+<script>
+    $(function () {
+
+        //jQuery time
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var left, opacity, scale; //fieldset properties which we will animate
+        var animating; //flag to prevent quick multi-click glitches
+
+        $(".next").click(function () {
+            if (animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            //activate next step on progressbar using the index of next_fs
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale current_fs down to 80%
+                    scale = 1 - (1 - now) * 0.2;
+                    //2. bring next_fs from the right(50%)
+                    left = (now * 50) + "%";
+                    //3. increase opacity of next_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({ 'transform': 'scale(' + scale + ')' });
+                    next_fs.css({ 'left': left, 'opacity': opacity });
+                },
+                duration: 800,
+                complete: function () {
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".previous").click(function () {
+            if (animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            //de-activate current step on progressbar
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+            //show the previous fieldset
+            previous_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale previous_fs from 80% to 100%
+                    scale = 0.8 + (1 - now) * 0.2;
+                    //2. take current_fs to the right(50%) - from 0%
+                    left = ((1 - now) * 50) + "%";
+                    //3. increase opacity of previous_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({ 'left': left });
+                    previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity });
+                },
+                duration: 800,
+                complete: function () {
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+        $(".submit").click(function () {
+            return false;
+        })
+
+    });
+</script>
+
+
+
+
+
+
+

@@ -1,0 +1,373 @@
+﻿@model Loregroup.Core.ViewModels.EventViewModel
+
+@{
+    ViewBag.Title = "AddNewEvents";
+}
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+
+<script type="text/javascript">
+    function Cancel() {
+        document.location = '@Url.Action("GetAllEvents", "Product")';
+    }
+</script>
+
+@if (TempData["Error1"] != null)
+{
+    <div class="red">
+        <h4 style="color:red"><strong>Message: </strong>@TempData["Error1"]</h4>
+    </div>
+}
+
+<script type="text/javascript">
+
+    function getNameFromPath(strFilepath) {
+        var objRE = new RegExp(/([^\/\\]+)$/);
+        var strName = objRE.exec(strFilepath);
+
+        if (strName == null) {
+            return null;
+        }
+        else {
+            return strName[0];
+        }
+    }
+
+    var loadImage1 = function (event) {
+
+        var file = getNameFromPath($("#Img1").val());
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            // alert(extension);
+            switch (extension) {
+                case 'jpg':
+                case 'png':
+                case 'gif':
+                case 'jpeg':
+                    flag = true;
+                    break;
+                default:
+                    flag = false;
+            }
+        }
+        else {
+            flag = false;
+        }
+
+        if (file == null) {
+            document.getElementById("image1").style["height"] = "0px";
+            document.getElementById("image1").style["width"] = "0px";
+            document.getElementById("image1").style["margin-top"] = "0px";
+            var output = document.getElementById('image1');
+            output.src = null;
+            return false;
+        }
+        else if (flag == false) {
+
+            $("#Spanimg1").text("You can upload only jpg, jpeg, png, gif extension file");
+            document.getElementById("image1").style["height"] = "0px";
+            document.getElementById("image1").style["width"] = "0px";
+            document.getElementById("image1").style["margin-top"] = "0px";
+            var output = document.getElementById('image1');
+            output.src = null;
+
+            return false;
+        }
+        else {
+            $("#Spanimg1").text("");
+            document.getElementById("image1").style["height"] = "200px";
+            document.getElementById("image1").style["width"] = "200px";
+            document.getElementById("image1").style["margin-top"] = "10px";
+
+            var output = document.getElementById('image1');
+            output.src = URL.createObjectURL(event.target.files[0]);
+        }
+    };
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        if ("@Model.EventTypeId" == "TrunkShows") {
+            $("#booth").hide();
+            $("#shop").show();
+            $("#mob").show();
+        }
+        else {
+            $("#booth").show();
+            $("#shop").hide();
+            $("#mob").hide();
+        }
+
+        $("#CustomerModel_ShopName").autocomplete({
+
+            source: function (request, response) {
+
+                $.ajax({
+                    url: "/Order/SearchByShopName",
+                    type: "POST",
+                    dataType: "json",
+
+                    data: {
+
+                        Prefix: request.term
+                    },
+                    success: function (data) {
+                        $("#OrderNo").val("");
+                        response($.map(data, function (item) {
+                            return { label: item.ShopName, value: item.Id };
+                        }))
+                    }
+                })
+            },
+            select: function (e, ui) {
+                var vn = ui.item.value;
+                $.ajax({
+                    url: "/Order/GetCustomerById",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        number: vn
+                    },
+
+                    dataFilter: function (data) {
+                        return data;
+                    },
+                    success: function (data) {
+                        $('#CustomerModel_Id').val(data.Id);
+                        $('#CustomerModel_Country').val(data.Country);
+                        $('#CustomerModel_CountryId').val(data.CountryId);
+                        $('#CustomerModel_ShopName').val(data.ShopName);
+                        $('#Address').val(data.AddressLine1);
+                        $('#mobileno').val(data.MobileNo);
+                        $('#city').val(data.City);
+                        $('#State').val(data.StateName);
+                        $('#Zipcode').val(data.ZipCode);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error getting prospect list: " + textStatus + '---' + errorThrown + '===' + XMLHttpRequest);
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    })
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#EventTypeId").change(function () {
+            if ($(this).val() == "1") {
+                //$("#contact").show();
+                //$("#ShopName").show();
+                //$("#BoothNumber").hide();
+                $("#booth").hide();
+                $("#shop").show();
+                $("#mob").show();
+            } else {
+                //$("#contact").hide();
+                //$("#ShopName").hide();
+                //$("#BoothNumber").show();
+                $("#booth").show();
+                $("#shop").hide();
+                $("#mob").hide();
+            }
+
+        });
+    });
+
+    //$(function () {
+    //    $("#EventTypeId").change(function () {
+    //        if ($(this).val() == "1") {
+    //            $("#ShopName").show();
+    //            $("#BoothNumber").hide();
+    //        } else {
+    //            $("#ShopName").hide();
+    //            $("#BoothNumber").show();
+    //        }
+    //    });
+    //});
+</script>
+
+
+@using (Html.BeginForm("AddNewEvents", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="box box-info col-md-4">
+        <div class="box-body">
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EventTypeId)
+                    @Html.EnBsDropDownListFor(model => model.EventTypeId, new Dictionary<string, object>())
+                    @Html.ValidationMessageFor(model => model.EventTypeId)
+                </div>
+            </div>
+
+            <div class="col-md-4" id="shop">
+                <div class="form-group">
+                    @if (Model.Id > 0)
+                    {
+                        <div class="form-group" id="contact">
+                            @Html.Label("Shop Name")
+                            @Html.BsTextBoxWithPHFor(model => model.CustomerModel.ShopName)
+                            @Html.ValidationMessageFor(model => model.CustomerModel.ShopName)
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group" id="contact">
+                            @Html.Label("Shop Name")
+                            @Html.BsTextBoxWithPHFor(model => model.CustomerModel.ShopName)
+                            @Html.ValidationMessageFor(model => model.CustomerModel.ShopName)
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="box box-info col-md-12">
+        <div class="box-body" id="mainform">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Title)
+                        @Html.BsTextBoxWithPHFor(model => model.Title)
+                        @Html.ValidationMessageFor(model => model.Title)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FromDate)
+                        @Html.TextBoxFor(model => model.FromDate, new { @class = "form-control datepicker", placeholder = "From Date" })
+                        @Html.ValidationMessageFor(model => model.FromDate)
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EndDate)
+                        @Html.TextBoxFor(model => model.EndDate, new { @class = "form-control datepicker", placeholder = "End Date" })
+                        @Html.ValidationMessageFor(model => model.EndDate)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address)
+                        @Html.BsTextBoxWithPHFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address1)
+                        @Html.BsTextBoxWithPHFor(model => model.Address1)
+                        @*@Html.ValidationMessageFor(model => model.Address)*@
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.State)
+                        @Html.ValidationMessageFor(model => model.State)
+                        @Html.BsTextBoxWithPHFor(model => model.State)
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.city)
+                        @Html.ValidationMessageFor(model => model.city)
+                        @Html.BsTextBoxWithPHFor(model => model.city)
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Zipcode)
+                        @Html.ValidationMessageFor(model => model.Zipcode)
+                        @Html.BsTextBoxWithPHFor(model => model.Zipcode)
+                    </div>
+                </div>
+                <div class="col-md-4" id="mob">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.mobileno)
+                        @Html.BsTextBoxWithPHFor(model => model.mobileno)
+                        @Html.ValidationMessageFor(model => model.mobileno)
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.WebsiteUrl)
+                        @Html.ValidationMessageFor(model => model.WebsiteUrl)
+                        @Html.BsTextBoxWithPHFor(model => model.WebsiteUrl)
+                    </div>
+                </div>
+                <div class="col-md-4" id="booth">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BoothNumber)
+                        @Html.ValidationMessageFor(model => model.BoothNumber)
+                        @Html.BsTextBoxWithPHFor(model => model.BoothNumber)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @if (Model.image == "" || Model.image == null)
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.image) (Upload Image in 520x320 pixel -- Width x Height)
+                                <input type="file" name="Img1" id="Img1" onchange="loadImage1(event)" accept="image/*" />
+                                <img id="image1" src="@Model.image" style="height: 0px; width: 0px; margin-top:10px; " type="file" name="file" />
+                                <span style="color:red; font:bold; margin-top:5px;" id="Spanimg1"></span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.image)
+                                <input type="file" name="Img1" id="Img1" onchange="loadImage1(event)" accept="image/*" />
+                                <img id="image1" src="@Model.image" style="height: 200px; width: 200px; margin-top:10px; " type="file" name="file" />
+                                <span style="color:red; font:bold; margin-top:5px;" id="Spanimg1"></span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="reset" class="btn btn-default pull-right" onclick=" Cancel();" style="margin-right: 10px">Cancel</button>
+                        <button type="submit" id="btn_submit" class="btn btn-primary pull-right" style="margin-right: 10px">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(x => x.CustomerModel.Id)
+
+}
+
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.js"></script>*@
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css" />
+
+<script type="text/javascript">
+    $(function () { //will trigger when the document is ready
+        $('.datepicker').datepicker({
+            dateFormat: "dd-mm-yy",
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: "-1:+50",
+            todayHighlight: true,
+        });
+    });
+</script>
